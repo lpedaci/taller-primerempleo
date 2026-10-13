@@ -813,6 +813,32 @@ button.copy.is-copied {
 .no-js .mg-frame {
   display: none;
 }
+/* Ejemplos de foto de perfil */
+.fotos {
+  margin: 0 0 1.5rem;
+}
+.fotos-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  max-width: 26rem;
+}
+.fotos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  background: var(--surface-2);
+}
+.fotos figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
 .station .mg {
   max-width: 43rem;
 }
