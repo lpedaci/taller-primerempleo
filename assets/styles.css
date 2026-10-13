@@ -1315,6 +1315,10 @@ main {
   width: 1.6rem;
   height: 1.6rem;
 }
+.station h3:focus,
+.refs h2:focus {
+  outline: 0;
+}
 .station h3 {
   font-size: clamp(1.5rem, 3.1vw, 2.15rem);
 }
@@ -2048,10 +2052,9 @@ mark {
 /* Cierre de parada */
 .station-end {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 1.25rem;
+  gap: 0.75rem 1rem;
   margin-top: 2.25rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--rule);
@@ -2114,6 +2117,71 @@ mark {
   text-decoration: none;
   transition: transform 0.3s var(--ease);
 }
+.prev {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 3.25rem;
+  padding: 0.4rem 1.4rem 0.4rem 0.45rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.prev .ic {
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0.7rem;
+  border-radius: 50%;
+  background: var(--surface-2);
+  transform: rotate(180deg);
+  transition: transform 0.4s var(--ease);
+}
+.prev:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+.prev:hover .ic {
+  transform: rotate(180deg) translateX(3px);
+}
+.prev:active {
+  transform: scale(0.97);
+}
+/* Pie de parada: Anterior y Marcar no se achican; Siguiente parte su texto si no entra */
+.prev,
+.done {
+  flex: 0 0 auto;
+}
+.next {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+@media (max-width: 767px) {
+  .station-end {
+    flex-wrap: wrap;
+  }
+  .done {
+    order: -1;
+    flex: 1 0 100%;
+  }
+  /* En pantallas chicas "Anterior" queda como botón redondo (el texto sigue para lectores de pantalla)
+     y "Siguiente" ocupa el resto de la fila */
+  .prev {
+    gap: 0;
+    padding: 0.4rem;
+    font-size: 0;
+  }
+  .next {
+    flex: 1 1 0;
+    justify-content: space-between;
+    border-radius: 1.75rem;
+  }
+}
 .checklist {
   margin: 0 0 1rem;
   padding: 0;
@@ -2162,6 +2230,11 @@ mark {
 .guide,
 .refs {
   margin-top: var(--sec);
+}
+/* Con una parada por vez, lo que se muestra queda siempre arriba de todo */
+.js .line-head.line-2,
+.js .refs {
+  margin-top: 0;
 }
 .guide h2,
 .refs h2 {
@@ -2226,14 +2299,15 @@ mark {
   white-space: nowrap;
 }
 .ref-list {
-  margin: 0;
+  margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
   font-size: 0.98rem;
+  line-height: 1.55;
 }
 .ref-list li {
-  margin-bottom: 0.9rem;
-  padding-left: 2.2em;
+  padding: 0.85rem 0 0.85rem 2.2em;
+  border-top: 1px solid var(--rule);
   text-indent: -2.2em;
   overflow-wrap: anywhere;
 }
@@ -2477,6 +2551,7 @@ code {
   .mg,
   .done,
   .next,
+  .prev,
   .copy,
   .reset,
   .skip,
@@ -2489,7 +2564,10 @@ code {
   .layout {
     display: block;
   }
-  .cvpanel[hidden] {
+  .cvpanel[hidden],
+  .station[hidden],
+  .refs[hidden],
+  .line-head[hidden] {
     display: block !important;
   }
   .reveal {

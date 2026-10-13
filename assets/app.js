@@ -182,7 +182,6 @@
 
   /* ---------- Riel: parada actual y avance ---------- */
   var stations = $$("section.station");
-  var railList = $(".rail-list");
   var railLinks = $$(".rail-list a, .rail-extra a");
   function setCurrent(id) {
     railLinks.forEach(function (a) {
@@ -211,27 +210,46 @@
     topNow.classList.add("is-out");
     nowTimer = setTimeout(apply, 160);
   }
+  /* ---------- Una parada por vez ----------
+     Se muestra solo la parada elegida (o Referencias). Se cambia con "Siguiente", con el panel
+     de paradas, con el mapa o con cualquier enlace a #pN. Sin JavaScript se ve todo el contenido. */
+  var views = stations.concat($$("#referencias"));
+  var lineHeads = $$(".line-head");
+  var main = $("#contenido");
+  var currentView = null;
+  function viewFor(hash) {
+    var id = (hash || "").slice(1);
+    return views.filter(function (v) { return v.id === id; })[0] || null;
+  }
+  function show(view, jump) {
+    currentView = view;
+    views.forEach(function (v) { v.hidden = v !== view; });
+    lineHeads.forEach(function (h) {
+      h.hidden = !["line-1", "line-2"].some(function (c) { return h.classList.contains(c) && view.classList.contains(c); });
+    });
+    setCurrent(view.id);
+    if (!jump) return;
+    setNow(view);
+    view.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
+    var title = $("h3, h2", view);
+    if (title) { title.tabIndex = -1; title.focus({ preventScroll: true }); }
+  }
+  window.addEventListener("hashchange", function () {
+    var view = viewFor(location.hash);
+    if (view) show(view, true);
+  });
+  /* Sin #destino en la dirección, abre en la primera parada sin recorrer */
+  var first = viewFor(location.hash);
+  var pending = stations.filter(function (s) { return !state.stations[s.id]; })[0];
+  show(first || pending || stations[0], !!first);
+
   if ("IntersectionObserver" in window) {
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        setNow(e.target);
-        if (e.target.classList.contains("station")) setCurrent(e.target.id);
+        if (e.isIntersecting) setNow(e.target === main ? currentView : e.target);
       });
     }, { rootMargin: "-20% 0px -55% 0px" });
-    stations.concat($$("[data-now]")).forEach(function (s) { spy.observe(s); });
-    /* Referencias es corta y está al final: no siempre llega a la franja de lectura.
-       Se marca cuando se ve casi entera; al salir, vuelve la parada que quedó en pantalla. */
-    var refs = $("#referencias");
-    if (refs) new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { setNow(refs); setCurrent("referencias"); return; }
-        if (!$('.rail-extra a.is-current')) return;
-        var y = window.innerHeight * 0.3;
-        var back = stations.filter(function (s) { var r = s.getBoundingClientRect(); return r.top <= y && r.bottom > y; })[0] || stations[stations.length - 1];
-        setNow(back); setCurrent(back.id);
-      });
-    }, { threshold: 0.75 }).observe(refs);
+    $$(".hero, .mapa").concat([main]).forEach(function (el) { spy.observe(el); });
   }
 
   /* ---------- Menú de paradas en pantallas chicas ---------- */
