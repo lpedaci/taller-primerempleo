@@ -718,8 +718,8 @@ button.copy.is-copied {
   transition: background-color 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease);
 }
 .mini i.is-done {
-  background: var(--deep);
-  color: var(--t3);
+  background: var(--yes);
+  color: var(--on-line);
   transform: scale(1.08);
 }
 .linea-go {
@@ -957,10 +957,11 @@ button.copy.is-copied {
   width: 1.1rem;
   height: 1.1rem;
 }
+/* Parada recorrida: círculo verde lleno con la tilde, igual en el mapa, el panel y el encabezado */
 .is-done .dot {
-  border-color: var(--deep);
-  background: var(--deep);
-  color: var(--t3);
+  border-color: var(--yes);
+  background: var(--yes);
+  color: var(--on-line);
 }
 .is-done .dot .dot-n {
   display: none;
@@ -1152,6 +1153,11 @@ button.copy.is-copied {
   border-color: var(--tile);
   background: var(--tile);
   color: var(--tile-ink);
+}
+.rail-list a.is-done .dot {
+  border-color: var(--yes);
+  background: var(--yes);
+  color: var(--on-line);
 }
 .rail-extra {
   display: grid;
