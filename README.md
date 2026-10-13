@@ -1,12 +1,24 @@
 # Del aula al primer trabajo
 
-Sitio del taller de primer empleo (2 horas) para estudiantes de 6to año que buscan pasantías o empleo para 7mo, y para quienes quieren cambiar de trabajo. Funciona como un mapa de recorrido: dos líneas (una hora cada una) y diez paradas.
+Sitio web estático de una sola página que acompaña un taller de dos horas sobre inserción laboral para estudiantes de 6to año de escuela técnica que buscan una pasantía o su primer empleo, y para quienes quieren cambiar de trabajo. El contenido se organiza como un mapa de recorrido: dos líneas de una hora cada una y diez paradas, cada una con una idea clave, ejemplos y una actividad.
 
-Docentes: Lic. Lourdes Pedaci y Lic. Julieta Taraborrelli, 2026.
+Está desarrollado con HTML, CSS y JavaScript sin frameworks ni proceso de compilación.
+
+## Características
+
+- **Avance del estudiante:** cada parada se marca como recorrida y el progreso se guarda en `localStorage`, junto con la lista de tareas del plan de 30 días.
+- **Plantillas para copiar:** mapa personal, bitácora de prácticas, CV compatible con ATS y pitch de 60 segundos, con copia al portapapeles en un clic.
+- **Tema claro y oscuro:** sigue la preferencia del sistema y permite cambiarlo a mano; los colores se definen con propiedades personalizadas de CSS.
+- **Diseño adaptable:** panel lateral de navegación en escritorio y menú desplegable en pantallas chicas; las tablas se apilan en móvil.
+- **Accesibilidad:** HTML semántico, enlace para saltar al contenido, estados anunciados a lectores de pantalla, foco visible y respeto por la preferencia de movimiento reducido.
+- **Animaciones explicativas:** tres composiciones HyperFrames (lectura de un ATS, titular de LinkedIn y método STAR) incrustadas en vivo, que heredan el tema del sitio.
+
+Contenido: Lic. Lourdes Pedaci y Lic. Julieta Taraborrelli, 2026.
 
 ## Recorrido
 
 **Línea 1. Conocerte y prepararte (primera hora)**
+
 1. El mundo laboral hoy
 2. Autoconocimiento
 3. Frustración y autoperdón
@@ -14,6 +26,7 @@ Docentes: Lic. Lourdes Pedaci y Lic. Julieta Taraborrelli, 2026.
 5. Habilidades, tecnología e idiomas
 
 **Línea 2. Mostrarte (segunda hora)**
+
 6. CV para ATS
 7. LinkedIn
 8. Porfolio y proyectos propios
@@ -55,16 +68,3 @@ npx hyperframes render . -q high -o ./renders/video.mp4
 ```
 
 Si cambiás `videos/_shared/mg.css` o `mg-embed.js`, copiá el archivo a cada carpeta de composición.
-
-## Publicar en GitHub Pages
-
-1. Subir el contenido de esta carpeta a un repositorio (con `index.html` en la raíz).
-2. En **Settings > Pages > Build and deployment**, elegir **Deploy from a branch**, rama `main` y carpeta `/ (root)`.
-3. El sitio queda en `https://<usuario>.github.io/<repositorio>/`.
-
-## Notas para editar
-
-- Cada parada es un `<section class="station line-1|line-2" id="pN">`. Los minutos de cada parada aparecen en dos lugares: el encabezado de la parada y el mapa.
-- Las plantillas copiables son `<pre id="tpl-...">` con un botón `data-copy="tpl-..."`.
-- El avance del estudiante se guarda en `localStorage` bajo la clave `primer-empleo-v1`; el tema elegido, en `primer-empleo-tema`.
-- Los datos estadísticos son de 2025 y 2026; conviene revisarlos al reutilizar el material.
