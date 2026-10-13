@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1200, height=900" />
+    <title>El titular de LinkedIn</title>
+    <link rel="stylesheet" href="mg.css" />
+    <script src="mg-embed.js"></script>
+    <script src="gsap.min.js"></script>
+    <style>
+      /* Azul de LinkedIn: el de marca en tema claro, su versión clara en tema oscuro */
+      :root {
+        --in: #70b5f9;
+        --on-in: #0f1218;
+      }
+      :root[data-theme="light"] {
+        --in: #0a66c2;
+        --on-in: #ffffff;
+      }
+      #card {
+        position: absolute;
+        left: 72px;
+        top: 64px;
+        width: 1056px;
+        height: 500px;
+        border-radius: 28px;
+        background: var(--surface);
+        box-shadow: 0 0 0 2px var(--rule);
+        overflow: hidden;
+      }
+      #banner {
+        height: 132px;
+        background: var(--in);
+      }
+      #logo {
+        position: absolute;
+        right: 36px;
+        top: 30px;
+        font-size: 76px;
+        color: var(--on-in);
+      }
+      #avatar {
+        position: absolute;
+        left: 48px;
+        top: 52px;
+        width: 156px;
+        height: 156px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 62px;
+        background: var(--ink);
+        color: var(--surface);
+        box-shadow: 0 0 0 8px var(--surface);
+      }
+      #name {
+        position: absolute;
+        left: 48px;
+        top: 232px;
+        font-size: 58px;
+      }
+      #old {
+        position: absolute;
+        left: 48px;
+        top: 322px;
+        font-size: 46px;
+        color: var(--muted);
+      }
+      #old-in {
+        position: relative;
+        display: inline-block;
+      }
+      #strike {
+        position: absolute;
+        left: -8px;
+        right: -8px;
+        top: 52%;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--no);
+      }
+      #head {
+        position: absolute;
+        left: 48px;
+        top: 330px;
+        width: 960px;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 12px;
+        font-size: 29px;
+        white-space: nowrap;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .sep {
+        display: block;
+        flex: 0 0 3px;
+        width: 3px;
+        height: 30px;
+        border-radius: 2px;
+        background: var(--muted);
+      }
+      .part {
+        display: block;
+      }
+      #tags {
+        position: absolute;
+        left: 72px;
+        top: 606px;
+        width: 1056px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .tag {
+        padding-top: 18px;
+        border-top: 8px solid var(--in);
+        font-size: 34px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .tag small {
+        display: block;
+        font-size: 28px;
+        font-weight: 400;
+        color: var(--muted);
+      }
+      #note {
+        position: absolute;
+        left: 72px;
+        top: 794px;
+        width: 1056px;
+        font-size: 48px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Íconos: Font Awesome Free (fontawesome.com), licencia CC BY 4.0 -->
+    <div id="root" data-composition-id="linkedin" data-start="0" data-duration="9" data-width="1200" data-height="900">
+      <div id="scene" class="clip" data-start="0" data-duration="9" data-track-index="0">
+        <div id="card">
+          <div id="banner"></div>
+          <div id="logo"><svg class="ic" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z"/></svg></div>
+          <div id="avatar" class="d">TF</div>
+          <div id="name" class="d">Tomás Ferreyra</div>
+          <div id="old"><span id="old-in">Estudiante<span id="strike"></span></span></div>
+          <div id="head">
+            <span class="part" id="part-1">Soporte técnico IT</span>
+            <span class="sep" id="sep-1"></span>
+            <span class="part" id="part-2">Estudiante de Técnico en Informática</span>
+            <span class="sep" id="sep-2"></span>
+            <span class="part" id="part-3">Inglés B1</span>
+          </div>
+        </div>
+
+        <div id="tags">
+          <div class="tag" id="tag-1">El puesto que buscás<small>Soporte técnico IT</small></div>
+          <div class="tag" id="tag-2">Lo que estudiás<small>Técnico en Informática</small></div>
+          <div class="tag" id="tag-3">Un diferencial<small>Inglés B1</small></div>
+        </div>
+        <div id="note" class="d">Tu titular: no pongas solo “Estudiante”.</div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const rise = { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" };
+
+      tl.fromTo("#card", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.15);
+      tl.fromTo("#avatar", { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 0.45);
+      tl.fromTo("#logo", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.6);
+      tl.fromTo("#name", { opacity: 0, y: 18 }, rise, 0.7);
+      tl.fromTo("#old", { opacity: 0, y: 18 }, rise, 0.9);
+
+      tl.fromTo("#strike", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, 2.0);
+      tl.to("#old", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 2.6);
+
+      [1, 2, 3].forEach(function (n, i) {
+        const at = 3.0 + i * 1.25;
+        if (n > 1) tl.fromTo("#sep-" + (n - 1), { opacity: 0 }, { opacity: 1, duration: 0.2 }, at - 0.1);
+        tl.fromTo("#part-" + n, { opacity: 0, y: 20 }, rise, at);
+        tl.fromTo("#tag-" + n, { opacity: 0, y: 24 }, rise, at + 0.25);
+      });
+      tl.fromTo("#note", { opacity: 0, y: 20 }, rise, 6.9);
+
+      window.__timelines["linkedin"] = tl;
+      tl.seek(0);
+      if (window.__mgBridge) window.__mgBridge("linkedin", tl);
+    </script>
+  </body>
+</html>

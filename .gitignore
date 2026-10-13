@@ -1,0 +1,8 @@
+# Archivos locales de herramientas
+videos/*/.hyperframes/
+node_modules/
+
+# Copia del diseño anterior y selector de estilos de prueba (no se usan en el sitio)
+respaldo-diseno-anterior/
+assets/estilos-prueba.css
+assets/estilos-prueba.js

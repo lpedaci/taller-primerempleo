@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1200, height=900" />
+    <title>Así te lee un ATS</title>
+    <link rel="stylesheet" href="mg.css" />
+    <script src="mg-embed.js"></script>
+    <script src="gsap.min.js"></script>
+    <style>
+      #title {
+        position: absolute;
+        left: 72px;
+        top: 52px;
+        font-size: 68px;
+      }
+      #stage {
+        position: absolute;
+        left: 72px;
+        top: 176px;
+        width: 430px;
+        height: 580px;
+      }
+      .sheet {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        overflow: hidden;
+        opacity: 0;
+        background: var(--paper);
+        color: var(--paper-ink);
+        box-shadow: 0 0 0 2px var(--rule);
+      }
+      .bar {
+        height: 12px;
+        border-radius: 6px;
+        background: #c3c8d2;
+        margin-top: 12px;
+      }
+      /* CV con diseño de dos columnas */
+      #bad {
+        display: grid;
+        grid-template-columns: 158px 1fr;
+      }
+      #bad .side {
+        background: #2e3a59;
+        padding: 30px 22px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+      }
+      #bad .photo {
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+        background: #9aa5bf;
+        margin-bottom: 26px;
+      }
+      #bad .side .bar {
+        background: rgba(255, 255, 255, 0.28);
+      }
+      #bad .lvl {
+        height: 10px;
+        border-radius: 5px;
+        background: #f2c14e;
+        margin: 10px 0 20px;
+      }
+      #bad .main {
+        padding: 30px 24px;
+        font-size: 22px;
+        font-weight: 700;
+      }
+      #bad .main .bar {
+        margin-top: 14px;
+      }
+      #bad .gap {
+        margin-top: 44px;
+      }
+      /* CV de una columna */
+      #good {
+        padding: 34px 34px;
+      }
+      #good .name {
+        font-size: 34px;
+        font-weight: 700;
+      }
+      #good h6 {
+        font-size: 17px;
+        letter-spacing: 0.05em;
+        margin-top: 30px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid #8b93a1;
+      }
+      #scan {
+        position: absolute;
+        left: -14px;
+        right: -14px;
+        top: 0;
+        height: 10px;
+        border-radius: 5px;
+        background: var(--l2);
+      }
+      #panel {
+        position: absolute;
+        left: 566px;
+        top: 176px;
+        width: 562px;
+      }
+      #panel-h {
+        font-size: 30px;
+        color: var(--muted);
+        padding-bottom: 14px;
+        border-bottom: 3px solid var(--rule);
+      }
+      .row {
+        position: relative;
+        height: 130px;
+        padding-top: 20px;
+        border-bottom: 3px solid var(--rule);
+      }
+      .row-l {
+        font-size: 28px;
+        color: var(--muted);
+      }
+      .val {
+        position: absolute;
+        left: 0;
+        top: 60px;
+        right: 76px;
+        font-size: 38px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .val.bad {
+        color: var(--no);
+      }
+      .st {
+        position: absolute;
+        right: 0;
+        top: 38px;
+        width: 60px;
+        height: 60px;
+        font-size: 60px;
+      }
+      .st.bad {
+        color: var(--no);
+      }
+      .st.good {
+        color: var(--yes);
+      }
+      .foot {
+        position: absolute;
+        left: 72px;
+        top: 792px;
+        width: 1056px;
+        font-size: 42px;
+        line-height: 1.1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Íconos: Font Awesome Free (fontawesome.com), licencia CC BY 4.0 -->
+    <div id="root" data-composition-id="ats" data-start="0" data-duration="10.5" data-width="1200" data-height="900">
+      <div id="scene" class="clip" data-start="0" data-duration="10.5" data-track-index="0">
+        <div id="title" class="d">Así te lee un ATS</div>
+
+        <div id="stage">
+          <div class="sheet" id="bad">
+            <div class="side">
+              <div class="photo"></div>
+              <div>Mis skills</div>
+              <div class="bar"></div>
+              <div class="lvl" style="width: 80%"></div>
+              <div class="bar"></div>
+              <div class="lvl" style="width: 55%"></div>
+              <div class="bar"></div>
+              <div class="lvl" style="width: 95%"></div>
+            </div>
+            <div class="main">
+              <div>Mi recorrido</div>
+              <div class="bar" style="width: 90%"></div>
+              <div class="bar" style="width: 70%"></div>
+              <div class="bar" style="width: 82%"></div>
+              <div class="gap">Lo que me define</div>
+              <div class="bar" style="width: 88%"></div>
+              <div class="bar" style="width: 60%"></div>
+            </div>
+          </div>
+          <div class="sheet" id="good">
+            <div class="name">Martina Gómez</div>
+            <div class="bar" style="width: 78%"></div>
+            <h6>PERFIL</h6>
+            <div class="bar" style="width: 96%"></div>
+            <div class="bar" style="width: 84%"></div>
+            <h6>EXPERIENCIA LABORAL</h6>
+            <div class="bar" style="width: 92%"></div>
+            <div class="bar" style="width: 74%"></div>
+            <h6>EDUCACIÓN</h6>
+            <div class="bar" style="width: 80%"></div>
+            <h6>HABILIDADES</h6>
+            <div class="bar" style="width: 88%"></div>
+          </div>
+          <div id="scan"></div>
+        </div>
+
+        <div id="panel">
+          <div id="panel-h">Lo que extrae el sistema</div>
+          <div class="row" id="row-1">
+            <div class="row-l">Nombre</div>
+            <div class="val bad">MG Martina Mi recorr…</div>
+            <div class="val good">Martina Gómez</div>
+            <div class="st bad"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></div>
+            <div class="st good"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></div>
+          </div>
+          <div class="row" id="row-2">
+            <div class="row-l">Experiencia laboral</div>
+            <div class="val bad">(no encontrada)</div>
+            <div class="val good">Practicante de soporte</div>
+            <div class="st bad"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></div>
+            <div class="st good"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></div>
+          </div>
+          <div class="row" id="row-3">
+            <div class="row-l">Educación</div>
+            <div class="val bad">(no encontrada)</div>
+            <div class="val good">Técnica en Informática</div>
+            <div class="st bad"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></div>
+            <div class="st good"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></div>
+          </div>
+          <div class="row" id="row-4">
+            <div class="row-l">Habilidades</div>
+            <div class="val bad">(barras sin texto)</div>
+            <div class="val good">Excel, redes, Windows 11</div>
+            <div class="st bad"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></div>
+            <div class="st good"><svg class="ic" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></div>
+          </div>
+        </div>
+
+        <div class="foot d" id="foot-bad">Dos columnas, íconos y barras: el sistema se pierde.</div>
+        <div class="foot d" id="foot-good">Una columna, títulos comunes y texto real.</div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const pop = { duration: 0.35, ease: "back.out(2.4)" };
+
+      tl.fromTo("#title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.15);
+      tl.fromTo("#bad", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.35);
+      tl.fromTo("#panel-h", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.6);
+      tl.fromTo(".row-l", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" }, 0.7);
+
+      // Primera lectura: el CV de dos columnas
+      tl.fromTo("#scan", { opacity: 0, y: 0 }, { opacity: 1, duration: 0.15 }, 1.3);
+      tl.to("#scan", { y: 570, duration: 1.7, ease: "none" }, 1.35);
+      tl.to("#scan", { opacity: 0, duration: 0.2 }, 3.05);
+      [1, 2, 3, 4].forEach(function (n, i) {
+        const at = 1.7 + i * 0.4;
+        tl.fromTo("#row-" + n + " .val.bad", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, at);
+        tl.fromTo("#row-" + n + " .st.bad", { opacity: 0, scale: 0.4 }, Object.assign({ opacity: 1, scale: 1 }, pop), at + 0.1);
+      });
+      tl.fromTo("#foot-bad", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 3.2);
+
+      // Cambio de hoja
+      tl.to("#panel .bad, #foot-bad", { opacity: 0, duration: 0.3 }, 4.7);
+      tl.to("#bad", { opacity: 0, scale: 0.95, duration: 0.4, ease: "power2.in" }, 4.8);
+      tl.fromTo("#good", { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 5.05);
+
+      // Segunda lectura: el CV de una columna
+      tl.fromTo("#scan", { y: 0 }, { y: 570, duration: 1.7, ease: "none", immediateRender: false }, 5.8);
+      tl.to("#scan", { opacity: 1, duration: 0.15 }, 5.75);
+      tl.to("#scan", { opacity: 0, duration: 0.2 }, 7.5);
+      [1, 2, 3, 4].forEach(function (n, i) {
+        const at = 6.1 + i * 0.4;
+        tl.fromTo("#row-" + n + " .val.good", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, at);
+        tl.fromTo("#row-" + n + " .st.good", { opacity: 0, scale: 0.4 }, Object.assign({ opacity: 1, scale: 1 }, pop), at + 0.1);
+      });
+      tl.fromTo("#foot-good", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.8);
+
+      window.__timelines["ats"] = tl;
+      tl.seek(0);
+      if (window.__mgBridge) window.__mgBridge("ats", tl);
+    </script>
+  </body>
+</html>

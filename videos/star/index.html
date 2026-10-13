@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1200, height=900" />
+    <title>Método STAR</title>
+    <link rel="stylesheet" href="mg.css" />
+    <script src="mg-embed.js"></script>
+    <script src="gsap.min.js"></script>
+    <style>
+      #title {
+        position: absolute;
+        left: 72px;
+        top: 48px;
+        font-size: 68px;
+      }
+      #ask {
+        position: absolute;
+        left: 72px;
+        top: 140px;
+        width: 1056px;
+        font-size: 33px;
+        color: var(--muted);
+      }
+      #rows {
+        position: absolute;
+        left: 72px;
+        top: 216px;
+        width: 1056px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 104px 250px 1fr;
+        align-items: center;
+        gap: 26px;
+        height: 132px;
+      }
+      .tile {
+        width: 104px;
+        height: 104px;
+        border-radius: 22px;
+        display: grid;
+        place-items: center;
+        font-size: 70px;
+        background: var(--l2-soft);
+        color: var(--l2);
+      }
+      .word {
+        font-size: 46px;
+      }
+      .say {
+        font-size: 31px;
+        line-height: 1.25;
+      }
+      #row-a .tile {
+        background: var(--l2);
+        color: var(--on-line);
+      }
+      #time {
+        position: absolute;
+        left: 72px;
+        top: 762px;
+        width: 1056px;
+        height: 26px;
+        display: grid;
+        grid-template-columns: 15fr 15fr 50fr 20fr;
+        gap: 8px;
+      }
+      .seg {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        background: var(--l2);
+        opacity: 0.45;
+      }
+      #seg-a {
+        opacity: 1;
+      }
+      #note {
+        position: absolute;
+        left: 72px;
+        top: 808px;
+        width: 1056px;
+        font-size: 34px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="star" data-start="0" data-duration="9" data-width="1200" data-height="900">
+      <div id="scene" class="clip" data-start="0" data-duration="9" data-track-index="0">
+        <div id="title" class="d">Método STAR</div>
+        <div id="ask">“Contame una vez que resolviste un problema bajo presión.”</div>
+
+        <div id="rows">
+          <div class="row" id="row-s">
+            <div class="tile d">S</div>
+            <div class="word d">Situación</div>
+            <div class="say">Dos días antes de presentar, el prototipo dejó de funcionar.</div>
+          </div>
+          <div class="row" id="row-t">
+            <div class="tile d">T</div>
+            <div class="word d">Tarea</div>
+            <div class="say">Yo era responsable de las conexiones.</div>
+          </div>
+          <div class="row" id="row-a">
+            <div class="tile d">A</div>
+            <div class="word d">Acción</div>
+            <div class="say">Revisé el circuito por partes, rehice una soldadura y armé una lista de control.</div>
+          </div>
+          <div class="row" id="row-r">
+            <div class="tile d">R</div>
+            <div class="word d">Resultado</div>
+            <div class="say">Presentamos a tiempo. Sigo usando esa lista.</div>
+          </div>
+        </div>
+
+        <div id="time">
+          <div class="seg" id="seg-s"></div>
+          <div class="seg" id="seg-t"></div>
+          <div class="seg" id="seg-a"></div>
+          <div class="seg" id="seg-r"></div>
+        </div>
+        <div id="note" class="d">Entre 1:30 y 2 minutos. La acción es la parte más larga.</div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.15);
+      tl.fromTo("#ask", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.45);
+
+      const beats = [
+        ["s", 1.0, 1.25],
+        ["t", 2.45, 1.25],
+        ["a", 3.9, 2.05],
+        ["r", 6.15, 1.1],
+      ];
+      beats.forEach(function (b) {
+        const row = "#row-" + b[0];
+        tl.fromTo(row + " .tile", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.2)" }, b[1]);
+        tl.fromTo(row + " .word", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, b[1] + 0.12);
+        tl.fromTo(row + " .say", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, b[1] + 0.3);
+        tl.fromTo("#seg-" + b[0], { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: b[2], ease: "none" }, b[1] + 0.1);
+      });
+      tl.fromTo("#note", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 7.45);
+
+      window.__timelines["star"] = tl;
+      tl.seek(0);
+      if (window.__mgBridge) window.__mgBridge("star", tl);
+    </script>
+  </body>
+</html>
