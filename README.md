@@ -13,7 +13,7 @@ Está desarrollado con HTML, CSS y JavaScript sin frameworks ni proceso de compi
 - **Accesibilidad:** HTML semántico, enlace para saltar al contenido, estados anunciados a lectores de pantalla, foco visible y respeto por la preferencia de movimiento reducido.
 - **Animaciones explicativas:** tres composiciones HyperFrames (lectura de un ATS, titular de LinkedIn y método STAR) incrustadas en vivo, que heredan el tema del sitio.
 
-Contenido: Lic. Lourdes Pedaci y Lic. Julieta Taraborrelli, 2026.
+Contenido: Lic. Lourdes Pedaci, Lic. Julieta Taraborrelli y Lic. Bettyna González, 2026.
 
 ## Recorrido
 

@@ -258,6 +258,51 @@
     $$(".hero, .mapa").concat([main]).forEach(function (el) { spy.observe(el); });
   }
 
+  /* ---------- Recibo de sueldo: cada marca numerada muestra su explicación ----------
+     Al pasar el mouse, al enfocarla con el teclado o al tocarla. La leyenda es la misma de la lista
+     que está debajo del recibo, y se ubica con posición fija para no quedar recortada. */
+  var guia = $(".callouts--guia");
+  if (guia) {
+    var tip = document.createElement("div");
+    tip.className = "tip"; tip.id = "rc-tip"; tip.setAttribute("role", "tooltip"); tip.hidden = true;
+    document.body.appendChild(tip);
+    var tipPin = null;
+    var showTip = function (pin) {
+      var li = $('li[data-n="' + pin.textContent.trim() + '"]', guia);
+      if (!li) return;
+      tip.innerHTML = li.innerHTML;
+      tip.hidden = false;
+      tipPin = pin;
+      var r = pin.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+      var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
+      var y = r.top - h - 10;
+      if (y < 80) y = r.bottom + 10;
+      tip.style.left = x + "px";
+      tip.style.top = y + "px";
+    };
+    var hideTip = function () { tip.hidden = true; tipPin = null; };
+    $$(".recibo .pin").forEach(function (pin) {
+      pin.tabIndex = 0;
+      pin.setAttribute("aria-describedby", "rc-tip");
+      /* Con mouse se abre al pasar; en pantallas táctiles, con el toque (click) */
+      pin.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") showTip(pin); });
+      pin.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") hideTip(); });
+      pin.addEventListener("focus", function () { showTip(pin); });
+      pin.addEventListener("blur", hideTip);
+      pin.addEventListener("click", function (e) {
+        if (e.pointerType === "mouse") return;
+        if (tipPin === pin) hideTip(); else showTip(pin);
+      });
+    });
+    /* Un toque fuera de las marcas cierra la leyenda */
+    document.addEventListener("click", function (e) { if (tipPin && !e.target.closest(".recibo .pin")) hideTip(); });
+    /* Si la página o el recibo se desplazan, la leyenda acompaña a su marca */
+    var followTip = function () { if (tipPin) showTip(tipPin); };
+    window.addEventListener("scroll", followTip, { passive: true });
+    $$("#recibo .sheet-wrap").forEach(function (w) { w.addEventListener("scroll", followTip, { passive: true }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTip(); });
+  }
+
   /* ---------- Menú de paradas en pantallas chicas ---------- */
   var menuBtn = $("#menu-btn"), rail = $("#rail");
   function setMenu(open) {

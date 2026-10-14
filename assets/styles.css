@@ -1176,6 +1176,39 @@ button.copy.is-copied {
 .recibo .pin {
   background: #24242a;
   color: #f8de73;
+  box-shadow: 0 0 0 2px #fff;
+  cursor: help;
+  transition: transform 0.3s var(--ease);
+}
+.recibo .pin:hover,
+.recibo .pin:focus-visible {
+  transform: scale(1.25);
+}
+/* Leyenda flotante de cada marca del recibo (capa 25: sobre el contenido, debajo del enlace de salto) */
+.tip {
+  position: fixed;
+  z-index: 25;
+  max-width: min(20rem, calc(100vw - 16px));
+  padding: 0.75rem 0.95rem;
+  border-radius: 0.9rem;
+  background: var(--deep);
+  box-shadow: 0 18px 36px -16px rgba(20, 20, 40, 0.55);
+  color: var(--on-deep);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  pointer-events: none;
+}
+.tip strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--t3);
+  font-family: var(--display);
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tip:not([hidden]) {
+    animation: rise 0.25s var(--ease);
+  }
 }
 .callouts.callouts--guia li::before {
   background: var(--deep);
@@ -2559,6 +2592,7 @@ code {
   list-style: none;
 }
 .teachers a,
+.teachers .teacher,
 .foot-top {
   display: inline-flex;
   align-items: center;
