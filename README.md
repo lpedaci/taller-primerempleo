@@ -1,6 +1,6 @@
 # Del aula al primer trabajo
 
-Sitio web estático de una sola página que acompaña un taller de dos horas sobre inserción laboral para estudiantes de 6to año de escuela técnica que buscan una pasantía o su primer empleo, y para quienes quieren cambiar de trabajo. El contenido se organiza como un mapa de recorrido: dos líneas de una hora cada una y diez paradas, cada una con una idea clave, ejemplos y una actividad.
+Sitio web estático de una sola página que acompaña un taller de dos horas sobre inserción laboral para estudiantes de 6to año de escuela técnica que buscan una pasantía o su primer empleo, y para quienes quieren cambiar de trabajo. El contenido se organiza como un mapa de recorrido: dos líneas de una hora cada una y once paradas, cada una con una idea clave, ejemplos y una actividad.
 
 Está desarrollado con HTML, CSS y JavaScript sin frameworks ni proceso de compilación.
 
@@ -30,10 +30,11 @@ Contenido: Lic. Lourdes Pedaci y Lic. Julieta Taraborrelli, 2026.
 6. CV para ATS
 7. LinkedIn
 8. Porfolio y proyectos propios
-9. Entrevistas con personas y con IA
-10. Plan de 30 días
+9. La entrevista laboral
+10. Entrevistas con inteligencia artificial
+11. Plan de 30 días
 
-Al final están las referencias en formato APA 7.
+Además hay un apartado especial sobre el recibo de sueldo (aportes, contribuciones y cómo leer un recibo), fuera del recorrido, y al final las referencias en formato APA 7.
 
 ## Estructura de archivos
 

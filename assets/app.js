@@ -14,6 +14,11 @@
   var state = load();
   state.stations = state.stations || {};
   state.checks = state.checks || {};
+  /* Versión 2: la entrevista se dividió en dos paradas y el plan de 30 días pasó de la 10 a la 11 */
+  if (!state.v) {
+    if (state.stations.p10) { state.stations.p11 = true; delete state.stations.p10; }
+    state.v = 2; save(state);
+  }
   var live = $("#live");
   function announce(msg) { if (live) live.textContent = msg; }
 
@@ -50,6 +55,7 @@
   /* ---------- Paradas recorridas ---------- */
   var stationBoxes = $$("input[data-station]");
   var total = stationBoxes.length;
+  var lastId = stationBoxes[total - 1].getAttribute("data-station");
   var cta = $("#cta-start");
   var nextStop = $("#next-stop"), nextLabel = $("#next-label");
   /* Nombre corto de una parada, tomado del mapa (sin los textos para lector de pantalla) */
@@ -78,7 +84,7 @@
     root.style.setProperty("--done", (n / total).toFixed(3));
     if (nextStop) {
       nextLabel.textContent = firstPending ? "Próxima parada" : "Recorrido completo";
-      nextStop.href = "#" + (firstPending || "p10");
+      nextStop.href = "#" + (firstPending || lastId);
       nextStop.textContent = firstPending ? stopName(firstPending) : "Repasar tu plan";
     }
     if (cta && n > 0) {
@@ -86,7 +92,7 @@
         cta.href = "#" + firstPending;
         $("span", cta).textContent = "Seguir en la parada " + firstPending.slice(1);
       } else {
-        cta.href = "#p10";
+        cta.href = "#" + lastId;
         $("span", cta).textContent = "Repasar tu plan";
       }
     }
@@ -116,7 +122,7 @@
   var reset = $("#reset");
   if (reset) reset.addEventListener("click", function () {
     if (!confirm("¿Borrar las paradas marcadas y la lista del plan?")) return;
-    state = { stations: {}, checks: {} }; save(state);
+    state = { stations: {}, checks: {}, v: 2 }; save(state);
     checks.forEach(function (b) { b.checked = false; });
     refresh(); refreshChecks();
     announce("Avance borrado.");
@@ -181,7 +187,7 @@
   });
 
   /* ---------- Riel: parada actual y avance ---------- */
-  var stations = $$("section.station");
+  var stations = $$("section.station:not(.especial)");
   var railLinks = $$(".rail-list a, .rail-extra a");
   function setCurrent(id) {
     railLinks.forEach(function (a) {
@@ -194,7 +200,7 @@
   /* Título de la barra superior: muestra el apartado que se está leyendo */
   var topNow = $("#top-now"), nowTag = $(".now-tag", topNow), nowTitle = $(".now-title", topNow), nowTimer;
   function setNow(section) {
-    var isStation = section.classList.contains("station");
+    var isStation = section.classList.contains("station") && !section.hasAttribute("data-now");
     var tag = isStation ? "Parada " + section.id.slice(1) : "";
     var title = isStation ? $("h3", section).textContent : section.getAttribute("data-now");
     if (nowTitle.textContent === title) return;
@@ -213,7 +219,7 @@
   /* ---------- Una parada por vez ----------
      Se muestra solo la parada elegida (o Referencias). Se cambia con "Siguiente", con el panel
      de paradas, con el mapa o con cualquier enlace a #pN. Sin JavaScript se ve todo el contenido. */
-  var views = stations.concat($$("#referencias"));
+  var views = stations.concat($$("#recibo, #referencias"));
   var lineHeads = $$(".line-head");
   var main = $("#contenido");
   var currentView = null;
