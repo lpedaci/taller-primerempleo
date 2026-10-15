@@ -219,7 +219,7 @@
   /* ---------- Una parada por vez ----------
      Se muestra solo la parada elegida (o Referencias). Se cambia con "Siguiente", con el panel
      de paradas, con el mapa o con cualquier enlace a #pN. Sin JavaScript se ve todo el contenido. */
-  var views = stations.concat($$("#recibo, #referencias"));
+  var views = stations.concat($$("#recibo, #servidor, #referencias"));
   var lineHeads = $$(".line-head");
   var main = $("#contenido");
   var currentView = null;

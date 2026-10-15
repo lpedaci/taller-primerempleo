@@ -34,7 +34,7 @@ Contenido: Lic. Lourdes Pedaci, Lic. Julieta Taraborrelli y Lic. Bettyna Gonzál
 10. Entrevistas con inteligencia artificial
 11. Plan de 30 días
 
-Además hay un apartado especial sobre el recibo de sueldo (aportes, contribuciones y cómo leer un recibo), fuera del recorrido, y al final las referencias en formato APA 7.
+Fuera del recorrido hay dos apartados especiales: el recibo de sueldo (aportes, contribuciones y cómo leer un recibo) y el servidor de Lourdes, con cursos gratuitos y materiales para seguir aprendiendo. Al final están las referencias en formato APA 7.
 
 ## Estructura de archivos
 
