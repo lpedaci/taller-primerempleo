@@ -2153,6 +2153,142 @@ tbody tr:hover {
   white-space: pre-wrap;
   word-break: break-word;
 }
+/* Registro de logros (parada 9): tabla ancha con grupos de columnas; en pantallas chicas se desplaza de costado */
+.note-list {
+  margin: 0.4rem 0 0.6rem;
+  padding-left: 1.3rem;
+}
+.note-list li {
+  margin-bottom: 0.2rem;
+}
+.note-small {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.impacto-wrap {
+  margin-bottom: 1rem;
+}
+.impacto-wrap:focus-visible {
+  outline-offset: 3px;
+}
+table.impacto {
+  min-width: 1080px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+table.impacto th,
+table.impacto td {
+  padding: 0.6rem 0.75rem;
+  border-left: 1px solid var(--rule);
+}
+table.impacto thead th {
+  vertical-align: bottom;
+}
+table.impacto td {
+  min-width: 9.5rem;
+}
+/* N.º y Fecha casi no tienen texto: van angostas y el resto de las columnas aprovecha ese lugar */
+table.impacto col.c-num {
+  width: 2.5rem;
+}
+table.impacto col.c-fecha {
+  width: 4.25rem;
+}
+table.impacto thead tr:last-child th:nth-child(2),
+table.impacto tbody td:first-of-type {
+  min-width: 4.25rem;
+  width: 4.25rem;
+}
+table.impacto .impacto-grupos th {
+  border-left: 2px solid var(--surface);
+  color: var(--tile-ink);
+  font-family: var(--display);
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
+  vertical-align: middle;
+}
+table.impacto .impacto-grupos .g1 {
+  background: var(--t1);
+}
+table.impacto .impacto-grupos .g2 {
+  background: var(--t2);
+}
+table.impacto .impacto-grupos .g3 {
+  background: var(--t4);
+}
+table.impacto .q {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-transform: none;
+}
+/* Columna N.º fija al desplazar de costado */
+table.impacto thead tr:last-child th:first-child,
+table.impacto tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 2.5rem;
+  padding-inline: 0.4rem;
+  border-left: 0;
+  background: var(--surface-2);
+  text-align: center;
+}
+table.impacto tbody th {
+  background: var(--surface);
+}
+table.impacto tbody tr:hover th {
+  background: var(--surface-2);
+}
+/* En escritorio la tabla entra completa: ancho del recuadro, N.º y Fecha angostas y el resto en partes iguales */
+@media (min-width: 1200px) {
+  table.impacto {
+    min-width: 0;
+    table-layout: fixed;
+    font-size: 0.82rem;
+  }
+  table.impacto th,
+  table.impacto td {
+    min-width: 0;
+    padding: 0.55rem 0.5rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  table.impacto col.c-num {
+    width: 2.1rem;
+  }
+  table.impacto col.c-fecha {
+    width: 3.5rem;
+  }
+  table.impacto thead tr:last-child th:first-child,
+  table.impacto tbody th,
+  table.impacto thead tr:last-child th:nth-child(2),
+  table.impacto tbody td:first-of-type {
+    width: auto;
+    min-width: 0;
+    padding-inline: 0.35rem;
+  }
+  table.impacto thead th {
+    font-size: 0.72rem;
+  }
+  table.impacto .q {
+    font-size: 0.72rem;
+  }
+}
+.impacto-copy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 0.6rem;
+}
 /* Plantillas para copiar: verde menta, el único bloque de ese color en el sitio */
 .template:has(button.copy) {
   border: 1.5px solid var(--t4);

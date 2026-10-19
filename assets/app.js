@@ -136,20 +136,83 @@
     var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
     document.body.removeChild(a); return ok;
   }
-  $$("button.copy").forEach(function (btn) {
-    var label = $("span", btn);
+  /* Confirmación común a todos los botones de copiar: "Copiada" en el botón y aviso a lectores de pantalla */
+  function copyFeedback(btn, ok) {
+    var label = $("span", btn), text = btn.getAttribute("data-label") || label.textContent;
+    btn.setAttribute("data-label", text);
+    label.textContent = ok ? "Copiada" : "No se pudo copiar"; btn.classList.toggle("is-copied", ok);
+    announce(ok ? "Plantilla copiada al portapapeles." : "No se pudo copiar la plantilla.");
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function () { label.textContent = text; btn.classList.remove("is-copied"); }, 1800);
+  }
+  function copyText(btn, t) {
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(function () { copyFeedback(btn, true); }, function () { copyFeedback(btn, fallbackCopy(t)); });
+    else copyFeedback(btn, fallbackCopy(t));
+  }
+  $$("button.copy[data-copy]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var el = document.getElementById(btn.getAttribute("data-copy")); if (!el) return;
-      var t = el.textContent, text = label.textContent;
-      function done(ok) {
-        label.textContent = ok ? "Copiada" : "No se pudo copiar"; btn.classList.toggle("is-copied", ok);
-        announce(ok ? "Plantilla copiada al portapapeles." : "No se pudo copiar la plantilla.");
-        setTimeout(function () { label.textContent = text; btn.classList.remove("is-copied"); }, 1800);
-      }
-      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(function () { done(true); }, function () { done(fallbackCopy(t)); });
-      else done(fallbackCopy(t));
+      copyText(btn, el.textContent);
     });
   });
+
+  /* ---------- Registro de logros: copia como tabla ----------
+     La única fuente es la tabla de la página: de ahí salen los grupos, los encabezados, las preguntas guía
+     y los ejemplos. Se copia en dos formatos a la vez: HTML (una tabla, para Documentos y Word) y texto
+     separado por tabulaciones (para Hojas de cálculo y Excel), así cada dato cae en su columna. */
+  var impacto = $("#impacto");
+  if (impacto) {
+    var clean = function (s) { return s.replace(/\s+/g, " ").trim(); };
+    var heads = $$("thead tr:last-child th", impacto);
+    var colTitles = heads.map(function (th) { return clean(th.firstChild.textContent); });
+    var colQuestions = heads.map(function (th) { var q = $(".q", th); return q ? clean(q.textContent) : ""; });
+    var groupRow = [];
+    $$("thead .impacto-grupos th", impacto).forEach(function (th) {
+      var span = +th.getAttribute("colspan") || 1;
+      groupRow.push({ text: clean(th.textContent), span: span });
+    });
+    var examples = $$("tbody tr", impacto).map(function (tr) {
+      return Array.prototype.map.call(tr.children, function (c) { return clean(c.textContent); });
+    });
+    var TOTAL = 8;
+    var buildRows = function (withExamples) {
+      var out = [];
+      for (var i = 1; i <= TOTAL; i++) {
+        var ex = withExamples && examples[i - 1];
+        out.push(ex || [String(i)].concat(colTitles.slice(1).map(function () { return ""; })));
+      }
+      return out;
+    };
+    var esc = function (s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
+    var toTSV = function (rows) {
+      var g = [];
+      groupRow.forEach(function (gr) { g.push(gr.text); for (var k = 1; k < gr.span; k++) g.push(""); });
+      return [g, colTitles, colQuestions].concat(rows).map(function (r) { return r.join("\t"); }).join("\n");
+    };
+    var toHTML = function (rows) {
+      var cell = "border:1px solid #999;padding:4px 6px;vertical-align:top;font-family:Arial,sans-serif;font-size:11pt;";
+      var head = cell + "font-weight:bold;background:#eeeeee;";
+      var html = '<table style="border-collapse:collapse;">';
+      html += "<tr>" + groupRow.map(function (gr) { return '<th colspan="' + gr.span + '" style="' + head + '">' + esc(gr.text) + "</th>"; }).join("") + "</tr>";
+      html += "<tr>" + colTitles.map(function (t) { return '<th style="' + head + '">' + esc(t) + "</th>"; }).join("") + "</tr>";
+      html += "<tr>" + colQuestions.map(function (t) { return '<td style="' + cell + 'color:#666666;font-style:italic;">' + esc(t) + "</td>"; }).join("") + "</tr>";
+      rows.forEach(function (r) { html += "<tr>" + r.map(function (t) { return '<td style="' + cell + '">' + esc(t) + "</td>"; }).join("") + "</tr>"; });
+      return html + "</table>";
+    };
+    $$("button.copy[data-impacto]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var rows = buildRows(btn.getAttribute("data-impacto") === "ejemplos");
+        var tsv = toTSV(rows), html = toHTML(rows);
+        if (navigator.clipboard && window.isSecureContext && window.ClipboardItem && navigator.clipboard.write) {
+          var item = new ClipboardItem({
+            "text/html": new Blob([html], { type: "text/html" }),
+            "text/plain": new Blob([tsv], { type: "text/plain" })
+          });
+          navigator.clipboard.write([item]).then(function () { copyFeedback(btn, true); }, function () { copyText(btn, tsv); });
+        } else copyText(btn, tsv);
+      });
+    });
+  }
 
   /* ---------- Pestañas de los CV de ejemplo ---------- */
   var tabs = $$('[role="tab"]');
@@ -171,7 +234,7 @@
   });
 
   /* ---------- Tablas apiladas en pantallas chicas ---------- */
-  $$(".table-wrap table").forEach(function (table) {
+  $$(".table-wrap table:not(.impacto)").forEach(function (table) {
     var heads = $$("thead th", table).map(function (th) { return th.textContent.trim(); });
     if (!heads.length) return;
     table.setAttribute("role", "table");
