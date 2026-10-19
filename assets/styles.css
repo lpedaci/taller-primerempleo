@@ -816,31 +816,218 @@ button.copy.is-copied {
 .no-js .mg-frame {
   display: none;
 }
-/* Ejemplos de foto de perfil */
-.fotos {
-  margin: 0 0 1.5rem;
+/* Perfiles de LinkedIn de ejemplo (parada 7): panel destacado con dos tarjetas */
+.perfiles {
+  margin: 0 0 1.75rem;
+  padding: clamp(1rem, 2.4vw, 1.5rem);
+  border: 1.5px solid color-mix(in srgb, var(--lc) 30%, transparent);
+  border-radius: var(--r-lg);
+  background-color: color-mix(in srgb, var(--lc) 12%, var(--surface));
 }
-.fotos-row {
+.perfiles-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+.perfiles-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.perfiles-checks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.35rem;
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--display);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.perfiles-checks .ic {
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: var(--yes);
+  color: var(--on-line);
+}
+.perfiles-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  max-width: 26rem;
+  gap: 1rem;
 }
-.fotos img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+.perfil {
+  overflow: hidden;
   border: 1px solid var(--rule);
   border-radius: var(--r);
-  background: var(--surface-2);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: transform 0.4s var(--ease);
 }
-.fotos figcaption {
-  margin-top: 0.75rem;
+.perfil:hover {
+  transform: translateY(-4px);
+}
+.p-cover {
+  position: relative;
+  height: 6rem;
+  overflow: hidden;
+}
+.pc {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.pc-bg1 {
+  fill: var(--t1);
+}
+.pc-bg2 {
+  fill: #363a8c;
+}
+.pc-t1,
+.pc-t2 {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.pc-t1 {
+  fill: var(--tile-ink);
+}
+.pc-t2 {
+  fill: #f4f3fa;
+}
+.pc-cell {
+  fill: rgba(255, 255, 255, 0.75);
+}
+.pc-head {
+  fill: rgba(31, 31, 36, 0.75);
+}
+.pc-hi {
+  fill: var(--t3);
+}
+.pc-bar {
+  fill: var(--tile-ink);
+  opacity: 0.8;
+}
+.pc-bar:last-child {
+  fill: var(--t3);
+  opacity: 1;
+}
+.pc-line {
+  stroke: rgba(31, 31, 36, 0.4);
+  stroke-width: 2;
+}
+.pc-term {
+  fill: #1c1d3f;
+  stroke: rgba(255, 255, 255, 0.12);
+}
+.pc-d1 {
+  fill: var(--t2);
+}
+.pc-d2 {
+  fill: var(--t3);
+}
+.pc-d3 {
+  fill: var(--t4);
+}
+.pc-mono {
+  fill: #c9c8d6;
+  font-family: var(--mono);
+  font-size: 9.5px;
+}
+.pc-ok {
+  fill: #8fd3a8;
+}
+.pc-net path {
+  fill: none;
+  stroke: var(--t2);
+  stroke-width: 2;
+}
+.pc-net rect {
+  fill: var(--t2);
+}
+.p-in {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #0a66c2;
+}
+.p-body {
+  position: relative;
+  padding: 0 1.25rem 1.25rem;
+}
+.p-foto {
+  display: block;
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-top: -3.75rem;
+  border: 4px solid var(--surface);
+  border-radius: 50%;
+  background: var(--surface-2);
+  box-shadow: 0 0 0 2px var(--ring, var(--rule));
+  object-fit: cover;
+  object-position: center 20%;
+}
+.perfil:first-child .p-foto {
+  --ring: var(--t1);
+}
+.perfil:last-child .p-foto {
+  --ring: #363a8c;
+}
+.p-nombre {
+  margin: 0.75rem 0 0.2rem;
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.p-titular {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.p-lugar {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.p-about-t {
+  margin: 0 0 0.3rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--display);
+  font-weight: 600;
+}
+.p-about {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.perfiles figcaption {
+  margin-top: 1rem;
+  color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.5;
-  color: var(--muted);
+}
+@media (max-width: 759px) {
+  .perfiles-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .station .mg {
   max-width: 43rem;
