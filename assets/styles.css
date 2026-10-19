@@ -2312,6 +2312,71 @@ table.impacto tbody tr:hover th {
   margin: 0;
 }
 
+/* Desplegables: se destacan con el color de su línea, un ícono, un texto que dice qué hay adentro
+   y un leve movimiento de la flecha mientras están cerrados */
+.drawer summary {
+  justify-content: flex-start;
+}
+.drawer summary > .ic {
+  margin-left: auto;
+}
+.drawer-ic {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.85rem;
+  background: var(--tile, var(--t1));
+  color: var(--tile-ink);
+}
+.drawer-txt {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.drawer-hint {
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+.drawer-hint .hint-open,
+.drawer[open] .drawer-hint .hint-closed {
+  display: none;
+}
+.drawer[open] .drawer-hint .hint-open {
+  display: inline;
+}
+details.drawer:not([open]) {
+  border-color: color-mix(in srgb, var(--tile, var(--t1)) 70%, transparent);
+  background: var(--ls, var(--surface-2));
+}
+details.drawer:not([open]):hover {
+  border-color: var(--ink);
+}
+.drawer:not([open]) summary > .ic {
+  background: var(--t3);
+  color: var(--tile-ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .drawer:not([open]) summary > .ic {
+    animation: nudge 2.6s var(--ease) infinite;
+  }
+  .drawer:not([open]) summary:hover > .ic {
+    animation: none;
+  }
+}
+@keyframes nudge {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(4px);
+  }
+}
 details.drawer {
   margin: 0 0 1.5rem;
   border: 1px solid var(--rule);
@@ -2335,7 +2400,7 @@ details.drawer {
 .drawer summary::-webkit-details-marker {
   display: none;
 }
-.drawer summary .ic {
+.drawer summary > .ic {
   width: 2.4rem;
   height: 2.4rem;
   padding: 0.75rem;
@@ -2344,11 +2409,11 @@ details.drawer {
   color: var(--on-deep);
   transition: transform 0.4s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
 }
-.drawer summary:hover .ic {
+.drawer summary:hover > .ic {
   background: var(--t3);
   color: var(--tile-ink);
 }
-.drawer[open] summary .ic {
+.drawer[open] summary > .ic {
   transform: rotate(180deg);
 }
 .drawer-body {
