@@ -331,9 +331,13 @@
     document.body.appendChild(tip);
     var tipPin = null;
     var showTip = function (pin) {
-      var li = $('li[data-n="' + pin.textContent.trim() + '"]', guia);
-      if (!li) return;
-      tip.innerHTML = li.innerHTML;
+      if (pin.hasAttribute("data-tip")) {
+        tip.textContent = pin.getAttribute("data-tip");
+      } else {
+        var li = $('li[data-n="' + pin.textContent.trim() + '"]', guia);
+        if (!li) return;
+        tip.innerHTML = li.innerHTML;
+      }
       tip.hidden = false;
       tipPin = pin;
       var r = pin.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
@@ -344,7 +348,7 @@
       tip.style.top = y + "px";
     };
     var hideTip = function () { tip.hidden = true; tipPin = null; };
-    $$(".recibo .pin").forEach(function (pin) {
+    $$(".recibo .pin, .recibo [data-tip]").forEach(function (pin) {
       pin.tabIndex = 0;
       pin.setAttribute("aria-describedby", "rc-tip");
       /* Con mouse se abre al pasar; en pantallas táctiles, con el toque (click) */
@@ -358,7 +362,7 @@
       });
     });
     /* Un toque fuera de las marcas cierra la leyenda */
-    document.addEventListener("click", function (e) { if (tipPin && !e.target.closest(".recibo .pin")) hideTip(); });
+    document.addEventListener("click", function (e) { if (tipPin && !e.target.closest(".recibo .pin, .recibo [data-tip]")) hideTip(); });
     /* Si la página o el recibo se desplazan, la leyenda acompaña a su marca */
     var followTip = function () { if (tipPin) showTip(tipPin); };
     window.addEventListener("scroll", followTip, { passive: true });

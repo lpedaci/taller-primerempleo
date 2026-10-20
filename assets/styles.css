@@ -816,6 +816,60 @@ button.copy.is-copied {
 .no-js .mg-frame {
   display: none;
 }
+/* Capturas de plataformas (parada 10) */
+.captura {
+  margin: 0 0 1.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  background: var(--surface-2);
+}
+.captura img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.9rem;
+  background: #fff;
+}
+.captura figcaption {
+  padding: 0.9rem 0.5rem 0.2rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.captura figcaption .list {
+  margin-bottom: 0.4rem;
+}
+.captura-zoom {
+  display: block;
+  border-radius: 0.9rem;
+  cursor: zoom-in;
+  transition: transform 0.4s var(--ease);
+}
+.captura-zoom:hover {
+  transform: scale(1.01);
+}
+.captura-src {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.captura--ojo {
+  border-color: color-mix(in srgb, var(--t3) 80%, transparent);
+  background: color-mix(in srgb, var(--t3) 20%, var(--surface));
+}
+.captura figcaption > p {
+  margin: 0 0 0.6rem;
+}
+.captura-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.15rem 0.35rem 0.7rem;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
 /* Perfiles de LinkedIn de ejemplo (parada 7): panel destacado con dos tarjetas */
 .perfiles {
   margin: 0 0 1.75rem;
@@ -1541,6 +1595,130 @@ button.copy.is-copied {
   align-self: end;
   border-left: 1px solid #9aa0a8;
   text-align: center;
+}
+/* Composición del costo laboral (Decreto 407/2026): detalle por rubro y barra apilada al 100 %.
+   El recibo es papel blanco en los dos temas, así que usa siempre los colores de la paleta clara. */
+.rc-comp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px 18px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid #9aa0a8;
+}
+.rc-comp-t {
+  margin: 0 0 6px !important;
+  font-weight: 700;
+}
+.recibo table.rc-detalle {
+  margin: 0;
+}
+.recibo .rc-detalle th,
+.recibo .rc-detalle td {
+  padding: 3px 6px;
+  font-size: 12px;
+}
+.rc-vacio {
+  color: #9aa0a8;
+}
+.rc-pie {
+  display: block;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 10px;
+}
+.rc-pie path {
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  cursor: help;
+  transition: opacity 0.2s ease;
+}
+.rc-pie:hover path {
+  opacity: 0.55;
+}
+.rc-pie path:hover,
+.rc-pie path:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+.rc-seg--neto { background: #2a78d6; fill: #2a78d6; }
+.rc-seg--ss { background: #eb6834; fill: #eb6834; }
+.rc-seg--os { background: #1baf7a; fill: #1baf7a; }
+.rc-seg--sind { background: #eda100; fill: #eda100; }
+.rc-seg--pami { background: #e87ba4; fill: #e87ba4; }
+.rc-seg--art { background: #008300; fill: #008300; }
+.rc-legend {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+}
+.rc-legend li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+}
+.rc-sw {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.rc-lg-p {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.rc-lg-m {
+  min-width: 92px;
+  color: #444;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.rc-nota {
+  grid-column: 1 / -1;
+  margin: 0 !important;
+  color: #444;
+  font-size: 11.5px;
+}
+/* Tarjeta de la fuente del formato */
+.fuente {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0 0 1.75rem;
+  padding: 1.2rem 1.35rem;
+  border: 1.5px solid var(--tile);
+  border-radius: var(--r);
+  background: var(--ls);
+}
+.fuente-ic {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+  background: var(--tile);
+  color: var(--tile-ink);
+}
+.fuente p {
+  margin: 0 0 0.6rem;
+  font-size: 0.97rem;
+}
+.fuente .fuente-t {
+  margin-bottom: 0.35rem;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.fuente-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--display);
+  font-weight: 600;
 }
 .recibo .pin {
   background: #24242a;
@@ -2554,6 +2732,39 @@ details.drawer:not([open]):hover {
     animation: none;
   }
 }
+/* Brillo que recorre el borde de los desplegables cerrados, para que no pasen inadvertidos */
+@property --drawer-ang {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+details.drawer {
+  position: relative;
+}
+@media (prefers-reduced-motion: no-preference) {
+  details.drawer:not([open])::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    z-index: 1;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--drawer-ang), transparent 0 62%, color-mix(in srgb, var(--lc, var(--l1)) 70%, transparent) 76%, var(--t3) 84%, transparent 94%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+    animation: drawer-glow 4.5s linear infinite;
+  }
+  details.drawer:not([open]):hover::before {
+    animation-duration: 2.2s;
+  }
+}
+@keyframes drawer-glow {
+  to {
+    --drawer-ang: 360deg;
+  }
+}
 @keyframes nudge {
   0%,
   60%,
@@ -2565,7 +2776,7 @@ details.drawer:not([open]):hover {
   }
 }
 details.drawer {
-  margin: 0 0 1.5rem;
+  margin: 2rem 0;
   border: 1px solid var(--rule);
   border-radius: var(--r);
   background: var(--surface-2);
@@ -2575,8 +2786,8 @@ details.drawer {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  min-height: 3.5rem;
-  padding: 0.5rem 0.55rem 0.5rem 1.2rem;
+  min-height: 4.25rem;
+  padding: 0.9rem 0.8rem 0.9rem 1.2rem;
   border-radius: var(--r);
   font-family: var(--display);
   font-weight: 600;
