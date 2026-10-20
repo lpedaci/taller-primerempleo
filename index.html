@@ -78,6 +78,7 @@
 <symbol id="i-robot" viewBox="0 0 512 512"><path fill="currentColor" fill-rule="evenodd" d="M256 8a32 32 0 0 1 16 59.7V112h112a64 64 0 0 1 64 64v208a64 64 0 0 1-64 64H128a64 64 0 0 1-64-64V176a64 64 0 0 1 64-64h112V67.7A32 32 0 0 1 256 8zM176 224a40 40 0 1 0 0 80 40 40 0 1 0 0-80zm160 0a40 40 0 1 0 0 80 40 40 0 1 0 0-80zM192 352v32h128v-32zM0 240a24 24 0 0 1 24-24h8v128h-8a24 24 0 0 1-24-24zm512 0v80a24 24 0 0 1-24 24h-8V216h8a24 24 0 0 1 24 24z"/></symbol>
 <symbol id="i-receipt" viewBox="0 0 384 512"><path fill="currentColor" fill-rule="evenodd" d="M48 0h288a48 48 0 0 1 48 48v448l-48-32-48 32-48-32-48 32-48-32-48 32-48-32L0 496V48A48 48 0 0 1 48 0zM96 120v40h192v-40zm0 96v40h192v-40zm0 96v40h120v-40z"/></symbol>
 <symbol id="i-server" viewBox="0 0 512 512"><path fill="currentColor" fill-rule="evenodd" d="M64 32h384a64 64 0 0 1 64 64v64a64 64 0 0 1-64 64H64A64 64 0 0 1 0 160V96a64 64 0 0 1 64-64zm32 80v32h160v-32zm288-16a32 32 0 1 0 0 64 32 32 0 1 0 0-64zM64 288h384a64 64 0 0 1 64 64v64a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64v-64a64 64 0 0 1 64-64zm32 80v32h160v-32zm288-16a32 32 0 1 0 0 64 32 32 0 1 0 0-64z"/></symbol>
+<symbol id="i-cap" viewBox="0 0 640 512"><path fill="currentColor" d="M320 32 0 160l320 128 240-96v152a32 32 0 1 0 32 0V179.2L640 160 320 32zM128 263.4V352c0 53 86 96 192 96s192-43 192-96v-88.6L320 340.6 128 263.4z"/></symbol>
 <symbol id="i-arrow-up" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 109.3 160 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></symbol>
 </svg>
 
@@ -160,16 +161,23 @@
         </ol>
       </div>
     </nav>
-    <a class="especial-card" href="#recibo">
-      <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></span>
-      <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">El recibo de sueldo</span><span class="especial-txt">Aportes, contribuciones y cómo leer tu primer recibo.</span></span>
-      <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
-    </a>
-    <a class="especial-card" href="#servidor">
-      <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-server"/></svg></span>
-      <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">El servidor de Lourdes</span><span class="especial-txt">Repositorio de cursos, herramientas y charlas para seguir aprendiendo después del taller.</span></span>
-      <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
-    </a>
+    <div class="especiales">
+      <a class="especial-card" href="#recibo">
+        <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></span>
+        <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">El recibo de sueldo</span><span class="especial-txt">Aportes, contribuciones y cómo leer tu primer recibo.</span></span>
+        <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+      </a>
+      <a class="especial-card" href="#charla">
+        <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg></span>
+        <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">Charla de carreras</span><span class="especial-txt">Cómo funciona la educación superior, qué títulos existen y cómo elegir qué estudiar.</span></span>
+        <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+      </a>
+      <a class="especial-card" href="#servidor">
+        <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-server"/></svg></span>
+        <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">El servidor de Lourdes</span><span class="especial-txt">Repositorio de cursos, herramientas y charlas para seguir aprendiendo después del taller.</span></span>
+        <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+      </a>
+    </div>
     <ul class="howto">
       <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lightbulb"/></svg><span>Cada parada tiene una idea clave, ejemplos y una actividad corta.</span></li>
       <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span>Las plantillas se copian con un botón. Pegalas en tu procesador de textos y completalas con tus datos reales.</span></li>
@@ -198,6 +206,7 @@
       </ol>
       <ul class="rail-extra">
         <li><a href="#recibo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg> El recibo de sueldo</a></li>
+        <li><a href="#charla"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg> Charla de carreras</a></li>
         <li><a href="#servidor"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-server"/></svg> Repositorio de Cursos</a></li>
         <li><a href="#referencias"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-books"/></svg> Referencias</a></li>
       </ul>
@@ -1327,7 +1336,44 @@ la empresa o el área].</pre>
         <p class="activity-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pencil-simple-line"/></svg> Actividad</p>
         <p>Si tenés un recibo propio, o alguien de tu familia te presta uno, buscá el sueldo bruto, los descuentos y el sueldo neto. Verificá que el bruto menos los descuentos dé el neto, y que el 11 % de jubilación esté calculado sobre la base remunerativa.</p>
       </div>
-      <div class="station-end"><span></span><a class="next" href="#mapa">Volver al mapa <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></a></div>
+      <div class="station-end"><span></span><a class="next" href="#charla">Siguiente: Charla de carreras <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
+    </section>
+
+    <!-- Apartado especial: charla de carreras -->
+    <section class="station especial" id="charla" aria-labelledby="charla-t" data-now="Charla de carreras">
+      <header class="station-head">
+        <span class="dot dot--big especial-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg></span>
+        <div><p class="station-meta"><span class="meta-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg> Apartado especial</span></p><h3 id="charla-t">Charla de carreras: qué estudiar después de la secundaria</h3></div>
+      </header>
+
+      <div class="key"><span class="key-label"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lightbulb"/></svg> Idea clave</span><p>Terminar la secundaria abre muchos caminos: institutos, universidades, carreras cortas y largas. Conocer cómo funciona el nivel superior te ayuda a elegir con información y sin apuro.</p></div>
+
+      <a class="vista" href="https://lpedaci.github.io/taller-ciclosuperior/" target="_blank" rel="noopener noreferrer">
+        <span class="vista-frame" aria-hidden="true">
+          <span class="vista-bar"><i></i><i></i><i></i><span class="vista-url">lpedaci.github.io/taller-ciclosuperior</span></span>
+          <span class="vista-shot"><img src="assets/img/vista-charla.webp" alt="" loading="lazy" decoding="async" width="960" height="1500"></span>
+        </span>
+        <span class="vista-txt">
+          <span class="vista-kicker"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg>Vista previa</span>
+          <span class="vista-name">Charla de carreras 2027</span>
+          <span class="vista-desc">Diez paradas para entender cómo funciona la educación superior, qué títulos existen y cómo elegir qué estudiar cuando termines la secundaria.</span>
+          <span class="vista-cta">Ver la charla<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+        </span><span class="sr-only"> (se abre en una pestaña nueva)</span>
+      </a>
+
+      <h4>Qué vas a encontrar</h4>
+      <ul class="list">
+        <li><strong>Línea 1, Conocer el mapa:</strong> el sistema educativo, la educación superior, los requisitos de ingreso y las inscripciones 2027.</li>
+        <li><strong>Línea 2, Elegir tu camino:</strong> tipos de títulos, planes de estudio, ingeniería, qué pide el mercado, qué camino tomar y una síntesis.</li>
+        <li><strong>Apartados especiales:</strong> la particularidad de la programación y de la psicología.</li>
+      </ul>
+      <p>Se complementa con la parada 2 de este taller: lo que descubras sobre lo que te gusta y lo que sabés hacer te va a servir para elegir qué estudiar.</p>
+
+      <div class="activity">
+        <p class="activity-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pencil-simple-line"/></svg> Actividad</p>
+        <p>Recorré la charla y anotá dos carreras o tecnicaturas que te interesen. Sumalas a tu mapa personal de la parada 2, en «Carrera o formación que pienso seguir».</p>
+      </div>
+      <div class="station-end"><a class="prev" href="#recibo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg> Anterior<span class="sr-only">: El recibo de sueldo</span></a><a class="next" href="#servidor">Siguiente: Repositorio de Cursos <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
     </section>
 
     <!-- Apartado especial: el servidor de Lourdes -->
@@ -1375,7 +1421,7 @@ la empresa o el área].</pre>
         <p class="activity-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pencil-simple-line"/></svg> Actividad</p>
         <p>Entrá al servidor y elegí una categoría relacionada con lo que te gustaría estudiar o trabajar. Guardá un curso para empezar este mes y sumalo a tu plan de 30 días.</p>
       </div>
-      <div class="station-end"><a class="prev" href="#recibo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg> Anterior<span class="sr-only">: El recibo de sueldo</span></a><a class="next" href="#mapa">Volver al mapa <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></a></div>
+      <div class="station-end"><a class="prev" href="#charla"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg> Anterior<span class="sr-only">: Charla de carreras</span></a><a class="next" href="#mapa">Volver al mapa <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></a></div>
     </section>
 
     <section class="refs" id="referencias" aria-labelledby="ref-t" data-now="Referencias">
