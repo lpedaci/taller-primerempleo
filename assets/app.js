@@ -234,7 +234,7 @@
   });
 
   /* ---------- Tablas apiladas en pantallas chicas ---------- */
-  $$(".table-wrap table:not(.impacto)").forEach(function (table) {
+  $$(".table-wrap table:not(.impacto):not(.fin-tabla-t)").forEach(function (table) {
     var heads = $$("thead th", table).map(function (th) { return th.textContent.trim(); });
     if (!heads.length) return;
     table.setAttribute("role", "table");
@@ -251,7 +251,7 @@
 
   /* ---------- Riel: parada actual y avance ---------- */
   var stations = $$("section.station:not(.especial)");
-  var railLinks = $$(".rail-list a, .rail-extra a");
+  var railLinks = $$(".rail-list a, .rail-extra > li > a");
   function setCurrent(id) {
     railLinks.forEach(function (a) {
       var on = a.getAttribute("href") === "#" + id;
@@ -282,35 +282,45 @@
   /* ---------- Una parada por vez ----------
      Se muestra solo la parada elegida (o Referencias). Se cambia con "Siguiente", con el panel
      de paradas, con el mapa o con cualquier enlace a #pN. Sin JavaScript se ve todo el contenido. */
-  var views = stations.concat($$("#recibo, #charla, #servidor, #referencias"));
+  var views = stations.concat($$("#recibo, #finanzas, #charla, #servidor, #referencias"));
   var lineHeads = $$(".line-head");
   var main = $("#contenido");
   var currentView = null;
-  function viewFor(hash) {
-    var id = (hash || "").slice(1);
-    return views.filter(function (v) { return v.id === id; })[0] || null;
+  var railFin = $(".rail-fin");
+  function targetFor(hash) {
+    var id = decodeURIComponent((hash || "").slice(1));
+    return id ? document.getElementById(id) : null;
   }
-  function show(view, jump) {
+  function viewFor(hash) {
+    var el = targetFor(hash);
+    return el ? views.filter(function (v) { return v === el || v.contains(el); })[0] || null : null;
+  }
+  function show(view, jump, target) {
     currentView = view;
     views.forEach(function (v) { v.hidden = v !== view; });
+    if (railFin) railFin.classList.toggle("is-open", view.id === "finanzas");
     lineHeads.forEach(function (h) {
       h.hidden = !["line-1", "line-2"].some(function (c) { return h.classList.contains(c) && view.classList.contains(c); });
     });
     setCurrent(view.id);
     if (!jump) return;
     setNow(view);
-    view.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
-    var title = $("h3, h2", view);
+    (target || view).scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
+    var title = target && target !== view ? $("h4", target) : $("h3, h2", view);
     if (title) { title.tabIndex = -1; title.focus({ preventScroll: true }); }
   }
   window.addEventListener("hashchange", function () {
     var view = viewFor(location.hash);
-    if (view) show(view, true);
+    if (view) show(view, true, targetFor(location.hash));
   });
   /* Sin #destino en la dirección, abre en la primera parada sin recorrer */
   var first = viewFor(location.hash);
   var pending = stations.filter(function (s) { return !state.stations[s.id]; })[0];
-  show(first || pending || stations[0], !!first);
+  show(first || pending || stations[0], !!first, first && targetFor(location.hash));
+  /* Al entrar directo a un subapartado, vuelve a ubicarlo cuando terminan de cargar fuentes e imágenes */
+  if (first && first.id !== location.hash.slice(1)) {
+    window.addEventListener("load", function () { var t = targetFor(location.hash); if (t) t.scrollIntoView({ block: "start" }); });
+  }
 
   if ("IntersectionObserver" in window) {
     var spy = new IntersectionObserver(function (entries) {
@@ -325,49 +335,217 @@
      Al pasar el mouse, al enfocarla con el teclado o al tocarla. La leyenda es la misma de la lista
      que está debajo del recibo, y se ubica con posición fija para no quedar recortada. */
   var guia = $(".callouts--guia");
-  if (guia) {
-    var tip = document.createElement("div");
-    tip.className = "tip"; tip.id = "rc-tip"; tip.setAttribute("role", "tooltip"); tip.hidden = true;
-    document.body.appendChild(tip);
-    var tipPin = null;
-    var showTip = function (pin) {
-      if (pin.hasAttribute("data-tip")) {
-        tip.textContent = pin.getAttribute("data-tip");
-      } else {
-        var li = $('li[data-n="' + pin.textContent.trim() + '"]', guia);
-        if (!li) return;
-        tip.innerHTML = li.innerHTML;
-      }
-      tip.hidden = false;
-      tipPin = pin;
-      var r = pin.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
-      var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
-      var y = r.top - h - 10;
-      if (y < 80) y = r.bottom + 10;
-      tip.style.left = x + "px";
-      tip.style.top = y + "px";
+  var TIP = ".recibo .pin, [data-tip]";
+  var tip = document.createElement("div");
+  tip.className = "tip"; tip.id = "rc-tip"; tip.setAttribute("role", "tooltip"); tip.hidden = true;
+  document.body.appendChild(tip);
+  var tipPin = null;
+  var showTip = function (pin) {
+    if (pin.hasAttribute("data-tip")) {
+      tip.textContent = pin.getAttribute("data-tip");
+    } else {
+      var li = guia && $('li[data-n="' + pin.textContent.trim() + '"]', guia);
+      if (!li) return;
+      tip.innerHTML = li.innerHTML;
+    }
+    tip.hidden = false;
+    tipPin = pin;
+    var r = pin.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
+    var y = r.top - h - 10;
+    if (y < 80) y = r.bottom + 10;
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
+  };
+  var hideTip = function () { tip.hidden = true; tipPin = null; };
+  $$(TIP).forEach(function (pin) {
+    pin.tabIndex = 0;
+    pin.setAttribute("aria-describedby", "rc-tip");
+  });
+  /* Con mouse se abre al pasar; en pantallas táctiles, con el toque (click) */
+  document.addEventListener("pointerover", function (e) {
+    var pin = e.pointerType === "mouse" && e.target.closest(TIP);
+    if (pin && pin !== tipPin) showTip(pin);
+  });
+  document.addEventListener("pointerout", function (e) {
+    var pin = e.pointerType === "mouse" && e.target.closest(TIP);
+    if (pin && !pin.contains(e.relatedTarget)) hideTip();
+  });
+  document.addEventListener("focusin", function (e) { var pin = e.target.closest(TIP); if (pin) showTip(pin); });
+  document.addEventListener("focusout", function (e) { if (e.target.closest(TIP)) hideTip(); });
+  /* Un toque en una marca la abre o la cierra; un toque fuera cierra la leyenda */
+  document.addEventListener("click", function (e) {
+    var pin = e.target.closest(TIP);
+    if (!pin) { if (tipPin) hideTip(); return; }
+    if (e.pointerType === "mouse") return;
+    if (tipPin === pin) hideTip(); else showTip(pin);
+  });
+  /* Si la página o el recibo se desplazan, la leyenda acompaña a su marca */
+  var followTip = function () { if (tipPin) showTip(tipPin); };
+  window.addEventListener("scroll", followTip, { passive: true });
+  $$("#recibo .sheet-wrap").forEach(function (w) { w.addEventListener("scroll", followTip, { passive: true }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTip(); });
+
+  /* ---------- Finanzas personales: calculadoras y gráficos ---------- */
+  if ($("#finanzas")) {
+    var fmt = function (n, dec) {
+      return n.toLocaleString("es-AR", { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
     };
-    var hideTip = function () { tip.hidden = true; tipPin = null; };
-    $$(".recibo .pin, .recibo [data-tip]").forEach(function (pin) {
-      pin.tabIndex = 0;
-      pin.setAttribute("aria-describedby", "rc-tip");
-      /* Con mouse se abre al pasar; en pantallas táctiles, con el toque (click) */
-      pin.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") showTip(pin); });
-      pin.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") hideTip(); });
-      pin.addEventListener("focus", function () { showTip(pin); });
-      pin.addEventListener("blur", hideTip);
-      pin.addEventListener("click", function (e) {
-        if (e.pointerType === "mouse") return;
-        if (tipPin === pin) hideTip(); else showTip(pin);
+    var pesos = function (n, dec) { return "$ " + fmt(n, dec); };
+    var dolares = function (n) { return "u$s " + fmt(Math.round(n)); };
+    /* Lee un campo numérico; si no es válido lo marca y devuelve null */
+    var num = function (id) {
+      var input = $("#" + id), field = input.closest(".fin-field"), err = $("#" + id + "-e");
+      var v = input.value === "" ? NaN : Number(input.value);
+      var ok = isFinite(v) && v >= 0;
+      field.classList.toggle("is-error", !ok);
+      input.setAttribute("aria-invalid", ok ? "false" : "true");
+      if (err) err.hidden = ok;
+      return ok ? v : null;
+    };
+    var onInput = function (ids, fn) {
+      ids.forEach(function (id) { $("#" + id).addEventListener("input", fn); });
+      fn();
+    };
+    var barRow = function (label, pct, value, color, tipText) {
+      return '<div class="fin-bar-row"><span class="fin-bar-l">' + label + '</span><span class="fin-bar-t"><span class="fin-bar" style="--w:' + pct.toFixed(2) + '%;--c:var(' + color + ')" tabindex="0" data-tip="' + tipText + '"></span></span><span class="fin-bar-v">' + value + "</span></div>";
+    };
+
+    /* Inflación: lo que compran $ 100 de hoy dentro de 1 y 5 años */
+    var infTasa = $("#inf-tasa");
+    var infDraw = function () {
+      var r = Number(infTasa.value) / 100;
+      $("#inf-out").textContent = infTasa.value + " %";
+      var rows = [["Hoy", 100], ["En 1 año", 100 / (1 + r)], ["En 5 años", 100 / Math.pow(1 + r, 5)]];
+      $("#inf-bars").innerHTML = rows.map(function (row) {
+        return barRow(row[0], row[1], pesos(row[1], 2), "--s1", row[0] + ", $ 100 de hoy compran lo que cuesta " + pesos(row[1], 2));
+      }).join("");
+      $("#inf-res").innerHTML = r === 0
+        ? "Sin inflación, tus $ 100 conservan su valor."
+        : "Con una inflación del " + infTasa.value + " % anual, en 5 años tus $ 100 guardados compran lo que hoy cuesta <strong>" + pesos(rows[2][1], 2) + "</strong>: perdés el " + fmt(100 - rows[2][1], 0) + " % de tu poder de compra.";
+    };
+    infTasa.addEventListener("input", infDraw);
+    infDraw();
+
+    /* Presupuesto: 50 / 20 / 30 o 70 / 20 / 10 */
+    var reglas = {
+      "50-20-30": [["Esenciales", 50, "--s1"], ["Ahorro e inversión", 20, "--s2"], ["Deseos", 30, "--s3"]],
+      "70-20-10": [["Gastos fijos y variables", 70, "--s1"], ["Ocio", 20, "--s3"], ["Ahorro e inversión", 10, "--s2"]]
+    };
+    var regla = "50-20-30";
+    var presDraw = function () {
+      var ingreso = num("pres-ingreso");
+      if (ingreso === null) return;
+      $("#pres-stack").innerHTML = reglas[regla].map(function (p) {
+        return '<span class="fin-seg" style="--w:' + p[1] + '%;--c:var(' + p[2] + ')" tabindex="0" data-tip="' + p[0] + ": " + p[1] + " %, " + pesos(ingreso * p[1] / 100) + ' por mes">' + p[1] + " %</span>";
+      }).join("");
+      $("#pres-legend").innerHTML = reglas[regla].map(function (p) {
+        return '<li><i style="--c:var(' + p[2] + ')"></i>' + p[0] + ": <b>" + pesos(ingreso * p[1] / 100) + "</b></li>";
+      }).join("");
+    };
+    $$("#fin-presupuesto [data-regla]").forEach(function (btn, i, all) {
+      btn.addEventListener("click", function () {
+        regla = btn.getAttribute("data-regla");
+        all.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+        presDraw();
       });
     });
-    /* Un toque fuera de las marcas cierra la leyenda */
-    document.addEventListener("click", function (e) { if (tipPin && !e.target.closest(".recibo .pin, .recibo [data-tip]")) hideTip(); });
-    /* Si la página o el recibo se desplazan, la leyenda acompaña a su marca */
-    var followTip = function () { if (tipPin) showTip(tipPin); };
-    window.addEventListener("scroll", followTip, { passive: true });
-    $$("#recibo .sheet-wrap").forEach(function (w) { w.addEventListener("scroll", followTip, { passive: true }); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTip(); });
+    onInput(["pres-ingreso"], presDraw);
+
+    /* Gastos hormiga */
+    onInput(["hor-diario"], function () {
+      var d = num("hor-diario");
+      if (d === null) return;
+      $("#hor-mes").textContent = pesos(d * 30);
+      $("#hor-anio").textContent = pesos(d * 365);
+    });
+
+    /* Fondo de emergencia */
+    $("#fon-meses").innerHTML = [1, 2, 3, 4, 5, 6].map(function (m) { return "<span><small>Mes </small>" + m + "</span>"; }).join("");
+    onInput(["fon-gastos"], function () {
+      var g = num("fon-gastos");
+      if (g === null) return;
+      $("#fon-min").textContent = pesos(g * 3);
+      $("#fon-max").textContent = pesos(g * 6);
+    });
+
+    /* Interés compuesto: aporte mensual y capitalización mensual */
+    var intIds = ["int-inicial", "int-mensual", "int-tasa", "int-anios"];
+    onInput(intIds, function () {
+      var v = intIds.map(num);
+      if (v.some(function (x) { return x === null; })) return;
+      var p = v[0], m = v[1], rm = v[2] / 100 / 12, n = Math.min(Math.round(v[3]), 60);
+      var saldo = p, aportado = p, anios = [];
+      for (var mes = 1; mes <= n * 12; mes++) {
+        saldo = saldo * (1 + rm) + m;
+        aportado += m;
+        if (mes % 12 === 0) anios.push([mes / 12, aportado, saldo]);
+      }
+      if (!n) anios = [];
+      var total = anios.length ? anios[anios.length - 1][2] : p;
+      var ap = anios.length ? anios[anios.length - 1][1] : p;
+      $("#int-total").textContent = dolares(total);
+      $("#int-aportado").textContent = dolares(ap);
+      $("#int-ganado").textContent = dolares(total - ap);
+      var max = Math.max.apply(null, anios.map(function (a) { return a[2]; }).concat([1]));
+      /* Tres líneas guía con montos redondos */
+      var paso = Math.pow(10, Math.floor(Math.log10(max / 3)));
+      paso = Math.ceil(max / 3 / paso) * paso;
+      var guias = [1, 2, 3].filter(function (k) { return paso * k <= max; }).map(function (k) {
+        var val = paso * k;
+        var txt = val >= 1e6 ? fmt(val / 1e6, val % 1e6 ? 1 : 0) + " M" : val >= 1e3 ? fmt(val / 1e3) + " mil" : fmt(val);
+        return '<span class="fin-grid" style="bottom:' + (val / max * 100).toFixed(2) + '%"><span>' + txt + "</span></span>";
+      }).join("");
+      $("#int-grafico").innerHTML = guias + anios.map(function (a) {
+        var hAp = a[1] / max * 100, hInt = Math.max(0, a[2] - a[1]) / max * 100;
+        return '<span class="fin-col" tabindex="0" data-tip="Año ' + a[0] + ": aportaste " + dolares(a[1]) + ", intereses " + dolares(a[2] - a[1]) + ", total " + dolares(a[2]) + '"><i style="--h:' + hAp.toFixed(2) + '%;--c:var(--s1)"></i><i style="--h:' + hInt.toFixed(2) + '%;--c:var(--s2)"></i></span>';
+      }).join("");
+      var eje = $("#int-grafico").nextElementSibling;
+      if (!eje || !eje.classList.contains("fin-area-x")) {
+        eje = document.createElement("div"); eje.className = "fin-area-x"; eje.setAttribute("aria-hidden", "true");
+        $("#int-grafico").after(eje);
+      }
+      eje.innerHTML = anios.length ? "<span>Año 1</span><span>Año " + n + "</span>" : "";
+      $("#int-tabla").innerHTML = anios.map(function (a) {
+        return "<tr><th scope=\"row\">" + a[0] + "</th><td>" + dolares(a[1]) + "</td><td>" + dolares(a[2] - a[1]) + "</td><td>" + dolares(a[2]) + "</td></tr>";
+      }).join("");
+    });
+
+    /* ¿u$s 100 hoy o u$s 110 mañana? */
+    var quizR = $(".fin-quiz-r");
+    $$(".fin-op").forEach(function (btn, i, all) {
+      btn.addEventListener("click", function () {
+        all.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+        quizR.textContent = btn.getAttribute("data-r");
+        quizR.hidden = false;
+      });
+    });
+
+    /* Las barras crecen cuando el gráfico entra en pantalla */
+    var charts = $$("#finanzas .fin-chart");
+    if ("IntersectionObserver" in window && !reduceMotion.matches) {
+      var grow = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add("is-in"); grow.unobserve(e.target);
+        });
+      }, { rootMargin: "0px 0px -10% 0px" });
+      charts.forEach(function (ch) { grow.observe(ch); });
+    } else {
+      charts.forEach(function (ch) { ch.classList.add("is-in"); });
+    }
+
+    /* Panel: marca el subapartado que se está leyendo */
+    var subLinks = $$(".rail-sub a");
+    if ("IntersectionObserver" in window && subLinks.length) {
+      var here = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          subLinks.forEach(function (a) { a.classList.toggle("is-here", a.getAttribute("href") === "#" + e.target.id); });
+        });
+      }, { rootMargin: "-25% 0px -65% 0px" });
+      $$("#finanzas .fin-sub").forEach(function (s) { here.observe(s); });
+    }
   }
 
   /* ---------- Menú de paradas en pantallas chicas ---------- */

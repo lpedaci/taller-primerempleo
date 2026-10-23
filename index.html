@@ -79,6 +79,9 @@
 <symbol id="i-receipt" viewBox="0 0 384 512"><path fill="currentColor" fill-rule="evenodd" d="M48 0h288a48 48 0 0 1 48 48v448l-48-32-48 32-48-32-48 32-48-32-48 32-48-32L0 496V48A48 48 0 0 1 48 0zM96 120v40h192v-40zm0 96v40h192v-40zm0 96v40h120v-40z"/></symbol>
 <symbol id="i-server" viewBox="0 0 512 512"><path fill="currentColor" fill-rule="evenodd" d="M64 32h384a64 64 0 0 1 64 64v64a64 64 0 0 1-64 64H64A64 64 0 0 1 0 160V96a64 64 0 0 1 64-64zm32 80v32h160v-32zm288-16a32 32 0 1 0 0 64 32 32 0 1 0 0-64zM64 288h384a64 64 0 0 1 64 64v64a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64v-64a64 64 0 0 1 64-64zm32 80v32h160v-32zm288-16a32 32 0 1 0 0 64 32 32 0 1 0 0-64z"/></symbol>
 <symbol id="i-cap" viewBox="0 0 640 512"><path fill="currentColor" d="M320 32 0 160l320 128 240-96v152a32 32 0 1 0 32 0V179.2L640 160 320 32zM128 263.4V352c0 53 86 96 192 96s192-43 192-96v-88.6L320 340.6 128 263.4z"/></symbol>
+<symbol id="i-cash" viewBox="0 0 512 512"><path fill="currentColor" fill-rule="evenodd" d="M40 96h432a40 40 0 0 1 40 40v240a40 40 0 0 1-40 40H40A40 40 0 0 1 0 376V136a40 40 0 0 1 40-40zm216 80a80 80 0 1 0 0 160 80 80 0 1 0 0-160zM64 160v48a48 48 0 0 0 48-48zm384 0h-48a48 48 0 0 0 48 48zM64 352v-48a48 48 0 0 1 48 48zm384 0h-48a48 48 0 0 1 48-48z"/></symbol>
+<symbol id="i-lock" viewBox="0 0 448 512"><path fill="currentColor" d="M144 144v48h160v-48a80 80 0 1 0-160 0zm-64 48v-48a144 144 0 1 1 288 0v48h16a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V256a64 64 0 0 1 64-64h16z"/></symbol>
+<symbol id="i-chart-up" viewBox="0 0 512 512"><path fill="currentColor" d="M64 64a32 32 0 0 0-64 0v336a80 80 0 0 0 80 80h400a32 32 0 0 0 0-64H80a16 16 0 0 1-16-16V64zm406.6 86.6a32 32 0 0 0-45.3-45.3L320 210.7l-57.4-57.3a32 32 0 0 0-45.3 0l-112 112a32 32 0 0 0 45.3 45.3l89.4-89.4 57.4 57.3a32 32 0 0 0 45.3 0l128-128z"/></symbol>
 <symbol id="i-arrow-up" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 109.3 160 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></symbol>
 </svg>
 
@@ -167,6 +170,11 @@
         <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">El recibo de sueldo</span><span class="especial-txt">Aportes, contribuciones y cómo leer tu primer recibo.</span></span>
         <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
       </a>
+      <a class="especial-card" href="#finanzas">
+        <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cash"/></svg></span>
+        <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">Finanzas personales</span><span class="especial-txt">Mentalidad, deudas, presupuesto e inversión para manejar tu plata con criterio.</span></span>
+        <span class="linea-go" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+      </a>
       <a class="especial-card" href="#charla">
         <span class="stop-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg></span>
         <span class="especial-copy"><span class="badge">Apartado especial</span><span class="especial-title">Charla de carreras</span><span class="especial-txt">Cómo funciona la educación superior, qué títulos existen y cómo elegir qué estudiar.</span></span>
@@ -206,6 +214,17 @@
       </ol>
       <ul class="rail-extra">
         <li><a href="#recibo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg> El recibo de sueldo</a></li>
+        <li class="rail-fin"><a href="#finanzas"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cash"/></svg> Finanzas personales</a>
+          <ul class="rail-sub">
+            <li><a href="#fin-por-que">Por qué hablar de plata</a></li>
+            <li><a href="#fin-mentalidad">Psicología y mentalidad</a></li>
+            <li><a href="#fin-conceptos">Conceptos fundamentales</a></li>
+            <li><a href="#fin-deudas">Salir de deudas</a></li>
+            <li><a href="#fin-administracion">Administración inteligente</a></li>
+            <li><a href="#fin-inversion">Inversión y riqueza</a></li>
+            <li><a href="#fin-ejecucion">Ejecución y seguridad</a></li>
+          </ul>
+        </li>
         <li><a href="#charla"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg> Charla de carreras</a></li>
         <li><a href="#servidor"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-server"/></svg> Repositorio de Cursos</a></li>
         <li><a href="#referencias"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-books"/></svg> Referencias</a></li>
@@ -1336,7 +1355,376 @@ la empresa o el área].</pre>
         <p class="activity-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pencil-simple-line"/></svg> Actividad</p>
         <p>Si tenés un recibo propio, o alguien de tu familia te presta uno, buscá el sueldo bruto, los descuentos y el sueldo neto. Verificá que el bruto menos los descuentos dé el neto, y que el 11 % de jubilación esté calculado sobre la base remunerativa.</p>
       </div>
-      <div class="station-end"><span></span><a class="next" href="#charla">Siguiente: Charla de carreras <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
+      <div class="station-end"><span></span><a class="next" href="#finanzas">Siguiente: Finanzas personales <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
+    </section>
+
+    <!-- Apartado especial: finanzas personales -->
+    <section class="station especial" id="finanzas" aria-labelledby="finanzas-t" data-now="Finanzas personales">
+      <header class="station-head">
+        <span class="dot dot--big especial-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cash"/></svg></span>
+        <div><p class="station-meta"><span class="meta-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cash"/></svg> Apartado especial</span><span class="meta-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chalkboard-teacher"/></svg> Aporte del Lic. Kevin Giampieri</span></p><h3 id="finanzas-t">Finanzas personales</h3></div>
+      </header>
+
+      <div class="key"><span class="key-label"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lightbulb"/></svg> Idea clave</span><p>Las finanzas personales no son magia: son administración y disciplina. Entender cómo funciona la plata te da libertad para decidir qué hacer con lo que ganás.</p></div>
+
+      <div class="note"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><div><strong>Contenido educativo</strong> Este apartado explica conceptos para que puedas tomar mejores decisiones. No es una recomendación de inversión: antes de invertir, informate, compará opciones y verificá que la entidad esté autorizada por la CNV.</div></div>
+
+      <nav class="fin-indice" aria-label="Subapartados de finanzas personales">
+        <p class="fin-indice-t">En este apartado</p>
+        <ol>
+          <li><a href="#fin-por-que"><span>1</span>Por qué hablar de plata</a></li>
+          <li><a href="#fin-mentalidad"><span>2</span>Psicología y mentalidad</a></li>
+          <li><a href="#fin-conceptos"><span>3</span>Conceptos fundamentales</a></li>
+          <li><a href="#fin-deudas"><span>4</span>Salir de deudas</a></li>
+          <li><a href="#fin-administracion"><span>5</span>Administración inteligente</a></li>
+          <li><a href="#fin-inversion"><span>6</span>Inversión y riqueza</a></li>
+          <li><a href="#fin-ejecucion"><span>7</span>Ejecución y seguridad</a></li>
+        </ol>
+      </nav>
+
+      <div class="fin-sub" id="fin-por-que">
+        <span class="fin-sub-n" aria-hidden="true">1</span>
+        <div><h4>Por qué hablar de plata</h4><p>Hablar de dinero con los jóvenes todavía es un tabú.</p></div>
+      </div>
+      <p>En muchas casas se repite que «en la mesa no se habla de plata». El resultado es que la mayoría aprende a manejar su dinero a los golpes, cuando ya tiene deudas o cuando la inflación se comió sus ahorros.</p>
+      <div class="facts">
+        <div class="fact"><span class="fact-num">7 de 10</span><span class="fact-txt">argentinos no tienen conocimientos básicos de finanzas.</span><span class="fact-src">Chequeado</span></div>
+        <div class="fact"><span class="fact-num">57&nbsp;%</span><span class="fact-txt">de los jóvenes latinoamericanos no puede cubrir un imprevisto equivalente a un mes de ingreso.</span><span class="fact-src">CAF</span></div>
+        <div class="fact"><span class="fact-num">25&nbsp;%</span><span class="fact-txt">de los jóvenes fue víctima de una estafa financiera.</span><span class="fact-src">Ámbito</span></div>
+        <div class="fact"><span class="fact-num">8 de 10</span><span class="fact-txt">argentinos piden que la educación financiera se enseñe en la escuela.</span><span class="fact-src">El País (2026)</span></div>
+      </div>
+      <p>Además, en Argentina el 86&nbsp;% de los jóvenes no recibió educación financiera en la escuela, y una de cada tres personas busca información sobre finanzas en las redes sociales. Por eso conviene aprender a distinguir información de publicidad: antes de aceptar un crédito de una billetera digital, por ejemplo, hay que mirar el costo financiero total (CFTEA) y no solo la tasa nominal (TNA).</p>
+
+      <div class="fin-sub" id="fin-mentalidad">
+        <span class="fin-sub-n" aria-hidden="true">2</span>
+        <div><h4>Psicología y mentalidad</h4><p>Por qué tu cerebro puede ser tu peor enemigo o tu mejor aliado.</p></div>
+      </div>
+      <h5>Charlie Munger frente a los «bro» de las redes</h5>
+      <div class="pair">
+        <div><p class="pair-title">Charlie Munger</p><p>Inversor estadounidense que acumuló u$s 2.600 millones con paciencia y disciplina extrema. No vendía cursos de «estilo de vida».</p></div>
+        <div><p class="pair-title">Los «bro» masivos</p><p>Su negocio es vender la imagen de éxito. El lujo que muestran en Instagram suele ser deuda disfrazada para captar atención.</p></div>
+      </div>
+      <h5>La verdadera riqueza no se sube a Instagram</h5>
+      <ul class="list">
+        <li><strong>Bajo perfil:</strong> la riqueza real suele ser invisible. Son activos, no objetos de consumo.</li>
+        <li><strong>Deuda para status:</strong> comprar cosas que no necesitás para impresionar a gente que no conocés.</li>
+        <li><strong>Solidez real:</strong> la paz mental de saber que tu patrimonio trabaja mientras dormís.</li>
+      </ul>
+      <h5>La trampa dopamínica</h5>
+      <p>El marketing moderno explota la gratificación inmediata. Ante una compra rápida («lo quiero ya»), tu cerebro libera dopamina, y ese impulso le gana a la corteza prefrontal, la parte encargada de la lógica. Por eso la deuda de consumo funciona como un secuestro de tu futuro.</p>
+      <h5>El sesgo de descuento hiperbólico</h5>
+      <div class="fin-quiz">
+        <p class="fin-quiz-q">Si te dieran a elegir, ¿qué preferís?</p>
+        <div class="fin-quiz-ops">
+          <button type="button" class="fin-op" aria-pressed="false" data-r="Elegiste la recompensa inmediata, como la mayoría de las personas. Esperar un solo día te habría dado un 10&nbsp;% más: una ganancia enorme por muy poco tiempo. Eso es el sesgo de descuento hiperbólico.">u$s 100 hoy</button>
+          <button type="button" class="fin-op" aria-pressed="false" data-r="Elegiste esperar y ganaste un 10&nbsp;% en un solo día: tu parte racional le ganó al impulso. La mayoría elige los u$s 100 de hoy, aunque esperar le convenga más.">u$s 110 mañana</button>
+        </div>
+        <p class="fin-quiz-r" aria-live="polite" hidden></p>
+      </div>
+      <p>Nuestra mente prefiere la recompensa pequeña e inmediata antes que la grande y postergada. La clave es poner fricción entre el impulso y la compra: <strong>esperá 48 horas antes de comprar algo que no es esencial.</strong> Dominar tu biología es el primer paso para dominar tu economía.</p>
+      <h5>El minimalismo como estrategia</h5>
+      <p>No se trata de vivir en una caja, sino de quitar lo que sobra para potenciar lo que importa. Menos suscripciones y menos cosas que requieren mantenimiento y seguro significan más dinero disponible para invertir.</p>
+      <ul class="list">
+        <li><strong>Claridad mental:</strong> menos decisiones de consumo por día.</li>
+        <li><strong>Menos gastos fijos:</strong> evitás la «inflación de estilo de vida», que es gastar más cada vez que ganás más.</li>
+        <li><strong>Foco en metas:</strong> tu dinero tiene un propósito claro y no se diluye en caprichos.</li>
+      </ul>
+
+      <div class="fin-sub" id="fin-conceptos">
+        <span class="fin-sub-n" aria-hidden="true">3</span>
+        <div><h4>Conceptos fundamentales</h4><p>Las reglas del juego que nadie te enseña.</p></div>
+      </div>
+      <h5>Qué son las finanzas personales</h5>
+      <p>Son la gestión integral de todos tus recursos económicos a lo largo de tu vida. Incluyen cuatro partes:</p>
+      <ol class="fin-flujo">
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg><strong>Ingresos</strong><span>lo que entra</span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg><strong>Gastos</strong><span>lo que sale</span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><strong>Ahorro</strong><span>lo que guardás</span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-up"/></svg><strong>Inversión</strong><span>lo que pone a trabajar tu plata</span></li>
+      </ol>
+      <h5>El costo de oportunidad</h5>
+      <p>Cada peso que gastás en un consumo pasajero es un peso que deja de ganar interés compuesto para siempre. No es «solo un café de $ 5.000»: es lo que ese dinero valdría invertido durante 30 años. Gastar es renunciar a riqueza futura.</p>
+      <figure class="fin-chart ">
+        <figcaption class="fin-chart-t">Los mismos u$s 969 de 2016, diez años después</figcaption>
+        <div class="fin-bars">
+          <div class="fin-bar-row"><span class="fin-bar-l">iPhone comprado en 2016</span><span class="fin-bar-t"><span class="fin-bar" style="--w:0.00%;--c:var(--s1)" tabindex="0" data-tip="Gastar: iPhone comprado en 2016 por u$s 969. Valor en 2026: u$s 0"></span></span><span class="fin-bar-v">u$s 0</span></div>
+          <div class="fin-bar-row"><span class="fin-bar-l">Acciones de Apple compradas en 2016</span><span class="fin-bar-t"><span class="fin-bar" style="--w:100.00%;--c:var(--s1)" tabindex="0" data-tip="Invertir: u$s 969 en acciones de Apple en 2016. Valor en 2026: u$s 11.800"></span></span><span class="fin-bar-v">u$s 11.800</span></div>
+        </div>
+      </figure>
+      <h5>La inflación, el ladrón silencioso</h5>
+      <p>Sobre todo en un país como Argentina, el dinero que se guarda «bajo el colchón» pierde valor. Por eso invertir no es opcional: es una estrategia de defensa. Mové el control para ver qué pasa con $ 100 según la inflación.</p>
+      <div class="fin-tool" id="fin-inflacion">
+        <div class="fin-field">
+          <label for="inf-tasa">Inflación anual: <output id="inf-out" for="inf-tasa">30&nbsp;%</output></label>
+          <input id="inf-tasa" type="range" min="0" max="150" step="5" value="30" aria-describedby="inf-tasa-h">
+          <p class="fin-help" id="inf-tasa-h">Elegí una inflación anual entre 0 y 150&nbsp;%.</p>
+        </div>
+        <figure class="fin-chart">
+          <figcaption class="fin-chart-t">Lo que podés comprar con $ 100 de hoy</figcaption>
+          <div class="fin-bars" id="inf-bars"></div>
+        </figure>
+        <p class="fin-res" id="inf-res" aria-live="polite"></p>
+      </div>
+
+      <div class="fin-sub" id="fin-deudas">
+        <span class="fin-sub-n" aria-hidden="true">4</span>
+        <div><h4>Salir de deudas</h4><p>Estrategias para eliminar las deudas de alto interés.</p></div>
+      </div>
+      <h5>El dinero «mejor invertido»</h5>
+      <p>Si tu tarjeta te cobra un 120&nbsp;% anual, ninguna inversión te va a salvar: pagar esa deuda es como ganar un 120&nbsp;% asegurado. No existe el ahorro si tenés deudas con tasas del 100&nbsp;%. El orden altera el producto:</p>
+      <ol class="fin-orden">
+        <li><span>1</span><strong>Pagar deudas</strong><small>Sacate de encima los intereses altos.</small></li>
+        <li><span>2</span><strong>Ahorrar</strong><small>Armá tu fondo de emergencia.</small></li>
+        <li><span>3</span><strong>Invertir</strong><small>Poné a trabajar lo que te sobra.</small></li>
+      </ol>
+      <h5>Método bola de nieve</h5>
+      <p>Se enfoca en la psicología: ataca primero las deudas de menor monto, sin importar la tasa. El éxito de liquidar una deuda rápido te motiva a seguir con la siguiente.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Paso 1: ordenar las deudas por saldo, de menor a mayor</caption>
+          <thead><tr><th scope="col">Deuda</th><th scope="col">Saldo</th><th scope="col">Cuota mínima</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Tarjeta de ropa</th><td>$ 5.000</td><td>$ 500</td></tr>
+            <tr><th scope="row">Préstamo personal</th><td>$ 25.000</td><td>$ 2.000</td></tr>
+            <tr><th scope="row">Crédito del auto</th><td>$ 100.000</td><td>$ 10.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Paso 2:</strong> pagá el mínimo de todas, pero poné cada peso extra en la de $ 5.000. Cuando la saldás, esos $ 500 (más el extra) se suman a la cuota de la siguiente: $ 2.000 + $ 500 + extra. Con cada deuda saldada, tu capacidad de pago para la siguiente crece como una bola de nieve:</p>
+      <figure class="fin-chart fin-chart--crece">
+        <figcaption class="fin-chart-t">Cuánto podés pagarle por mes a cada deuda (sin contar el extra)</figcaption>
+        <div class="fin-bars">
+          <div class="fin-bar-row"><span class="fin-bar-l">Deuda 1: tarjeta de ropa</span><span class="fin-bar-t"><span class="fin-bar" style="--w:4.00%;--c:var(--s1)" tabindex="0" data-tip="Mientras pagás la deuda 1: $ 500 por mes, más el extra que puedas"></span></span><span class="fin-bar-v">$ 500</span></div>
+          <div class="fin-bar-row"><span class="fin-bar-l">Deuda 2: préstamo personal</span><span class="fin-bar-t"><span class="fin-bar" style="--w:20.00%;--c:var(--s1)" tabindex="0" data-tip="Al saldar la deuda 1: $ 2.000 de la cuota + $ 500 liberados = $ 2.500 por mes"></span></span><span class="fin-bar-v">$ 2.500</span></div>
+          <div class="fin-bar-row"><span class="fin-bar-l">Deuda 3: crédito del auto</span><span class="fin-bar-t"><span class="fin-bar" style="--w:100.00%;--c:var(--s1)" tabindex="0" data-tip="Al saldar la deuda 2: $ 10.000 de la cuota + $ 2.500 liberados = $ 12.500 por mes"></span></span><span class="fin-bar-v">$ 12.500</span></div>
+        </div>
+      </figure>
+      <h5>Método avalancha</h5>
+      <p>Se enfoca en la matemática: ataca primero la deuda con la tasa de interés más alta. Es el método con el que menos intereses pagás al final del camino.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Paso 1: ordenar las deudas por tasa de interés, de mayor a menor</caption>
+          <thead><tr><th scope="col">Deuda</th><th scope="col">Tasa anual</th><th scope="col">Saldo</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Tarjeta Visa</th><td>150&nbsp;%</td><td>$ 40.000</td></tr>
+            <tr><th scope="row">Financiera X</th><td>110&nbsp;%</td><td>$ 15.000</td></tr>
+            <tr><th scope="row">Crédito del banco</th><td>80&nbsp;%</td><td>$ 200.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h5>¿Cuál elegir?</h5>
+      <div class="pair">
+        <div><p class="pair-title">Bola de nieve</p><p>Si necesitás motivación inmediata: ves resultados rápido.</p></div>
+        <div><p class="pair-title">Avalancha</p><p>Si sos más frío y racional y querés ahorrar lo máximo posible en intereses.</p></div>
+      </div>
+
+      <div class="fin-sub" id="fin-administracion">
+        <span class="fin-sub-n" aria-hidden="true">5</span>
+        <div><h4>Administración inteligente</h4><p>Reglas de oro para manejar la plata del día a día.</p></div>
+      </div>
+      <h5>Cómo repartir tu ingreso</h5>
+      <p>La regla <strong>50 / 20 / 30</strong> reparte el ingreso en esenciales (alquiler, comida, luz), ahorro e inversión, y deseos (salidas, ropa, streaming). La variante <strong>70 / 20 / 10</strong> sirve si tus gastos fijos son altos o querés un estilo de vida más holgado, pero con disciplina: 70&nbsp;% gastos fijos y variables, 20&nbsp;% ocio y 10&nbsp;% ahorro e inversión. Probá con tu ingreso:</p>
+      <div class="fin-tool" id="fin-presupuesto">
+        <div class="fin-fields">
+          <div class="fin-field">
+            <label for="pres-ingreso">Ingreso mensual</label>
+            <div class="fin-input"><span class="fin-affix">$</span><input id="pres-ingreso" type="number" inputmode="decimal" min="0" step="any" value="600000" aria-describedby="pres-ingreso-h pres-ingreso-e"></div>
+            <p class="fin-help" id="pres-ingreso-h">Lo que cobrás por mes, en pesos.</p>
+            <p class="fin-err" id="pres-ingreso-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+          <div class="fin-field">
+            <span class="fin-label" id="pres-regla-l">Regla</span>
+            <div class="fin-toggle" role="group" aria-labelledby="pres-regla-l">
+              <button type="button" aria-pressed="true" data-regla="50-20-30">50 / 20 / 30</button>
+              <button type="button" aria-pressed="false" data-regla="70-20-10">70 / 20 / 10</button>
+            </div>
+          </div>
+        </div>
+        <figure class="fin-chart">
+          <figcaption class="fin-chart-t">Así se reparte tu ingreso</figcaption>
+          <div class="fin-stack fin-stack--grande" id="pres-stack"></div>
+          <ul class="fin-legend" id="pres-legend"></ul>
+        </figure>
+      </div>
+      <h5>Los gastos hormiga</h5>
+      <p>El café de paso, los chicles, las suscripciones que no usás. Parecen inofensivos, pero pueden llegar al 15&nbsp;% de tu ingreso anual: pequeños agujeros hunden grandes barcos. Un truco: anotá todo lo que gastás durante un mes. Te vas a sorprender.</p>
+      <div class="fin-tool" id="fin-hormiga">
+        <div class="fin-fields">
+          <div class="fin-field">
+            <label for="hor-diario">Gastos hormiga por día</label>
+            <div class="fin-input"><span class="fin-affix">$</span><input id="hor-diario" type="number" inputmode="decimal" min="0" step="any" value="2500" aria-describedby="hor-diario-h hor-diario-e"></div>
+            <p class="fin-help" id="hor-diario-h">Un promedio de lo que gastás en cosas chicas cada día.</p>
+            <p class="fin-err" id="hor-diario-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+        </div>
+        <div class="fin-results" aria-live="polite">
+          <p><span>Por mes</span><strong id="hor-mes">$ 0</strong></p>
+          <p><span>Por año</span><strong id="hor-anio">$ 0</strong></p>
+        </div>
+      </div>
+      <h5>El fondo de emergencia</h5>
+      <p>Es tu «seguro de paz»: tiene que cubrir entre 3 y 6 meses de tus gastos básicos. No es para comprar un celular nuevo, sino para emergencias reales, como un problema de salud o quedarte sin trabajo.</p>
+      <div class="fin-tool" id="fin-fondo">
+        <div class="fin-fields">
+          <div class="fin-field">
+            <label for="fon-gastos">Gastos básicos por mes</label>
+            <div class="fin-input"><span class="fin-affix">$</span><input id="fon-gastos" type="number" inputmode="decimal" min="0" step="any" value="400000" aria-describedby="fon-gastos-h fon-gastos-e"></div>
+            <p class="fin-help" id="fon-gastos-h">Alquiler, comida, servicios y transporte.</p>
+            <p class="fin-err" id="fon-gastos-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+        </div>
+        <div class="fin-meses" id="fon-meses" aria-hidden="true"></div>
+        <div class="fin-results" aria-live="polite">
+          <p><span>Mínimo (3 meses)</span><strong id="fon-min">$ 0</strong></p>
+          <p><span>Ideal (6 meses)</span><strong id="fon-max">$ 0</strong></p>
+        </div>
+      </div>
+      <p>¿Dónde guardarlo? En un lugar con <strong>liquidez en 24 horas</strong>, porque si pasa algo lo necesitás ya, y de <strong>bajo riesgo</strong>, como una cuenta remunerada o un fondo money market.</p>
+
+      <div class="fin-sub" id="fin-inversion">
+        <span class="fin-sub-n" aria-hidden="true">6</span>
+        <div><h4>Inversión y riqueza</h4><p>Poner tu dinero a trabajar para vos.</p></div>
+      </div>
+      <div class="pair">
+        <div><p class="pair-title">Ahorrar</p><p>Guardar dinero para el futuro. Sirve para conservar su valor.</p></div>
+        <div><p class="pair-title">Invertir</p><p>Poner el dinero en activos que generan más dinero.</p></div>
+      </div>
+      <h5>La octava maravilla: el interés compuesto</h5>
+      <p class="fin-formula" aria-label="C es igual a P por uno más r, elevado a la n">C = P × (1 + r)<sup>n</sup></p>
+      <p>C es tu capital final, P el inicial, r la tasa y n el tiempo. El tiempo es el factor más potente de la ecuación: los intereses empiezan a generar sus propios intereses. Probá la calculadora:</p>
+      <div class="fin-tool" id="fin-interes">
+        <div class="fin-fields fin-fields--4">
+          <div class="fin-field">
+            <label for="int-inicial">Inversión inicial</label>
+            <div class="fin-input"><span class="fin-affix">u$s</span><input id="int-inicial" type="number" inputmode="decimal" min="0" step="any" value="200" aria-describedby="int-inicial-h int-inicial-e"></div>
+            <p class="fin-help" id="int-inicial-h">En dólares.</p>
+            <p class="fin-err" id="int-inicial-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+          <div class="fin-field">
+            <label for="int-mensual">Aporte por mes</label>
+            <div class="fin-input"><span class="fin-affix">u$s</span><input id="int-mensual" type="number" inputmode="decimal" min="0" step="any" value="200" aria-describedby="int-mensual-h int-mensual-e"></div>
+            <p class="fin-help" id="int-mensual-h">Lo que sumás cada mes.</p>
+            <p class="fin-err" id="int-mensual-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+          <div class="fin-field">
+            <label for="int-tasa">Tasa anual</label>
+            <div class="fin-input"><input id="int-tasa" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="int-tasa-h int-tasa-e"><span class="fin-affix">%</span></div>
+            <p class="fin-help" id="int-tasa-h">Rendimiento estimado por año.</p>
+            <p class="fin-err" id="int-tasa-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+          <div class="fin-field">
+            <label for="int-anios">Años</label>
+            <div class="fin-input"><input id="int-anios" type="number" inputmode="decimal" min="0" step="1" value="33" aria-describedby="int-anios-h int-anios-e"></div>
+            <p class="fin-help" id="int-anios-h">Cuánto tiempo la mantenés.</p>
+            <p class="fin-err" id="int-anios-e" hidden>Ingresá un número mayor o igual a 0.</p>
+          </div>
+        </div>
+        <div class="fin-results" aria-live="polite">
+          <p><span>Capital final</span><strong id="int-total">u$s 0</strong></p>
+          <p><span>Total aportado</span><strong id="int-aportado">u$s 0</strong></p>
+          <p><span>Intereses ganados</span><strong id="int-ganado">u$s 0</strong></p>
+        </div>
+        <figure class="fin-chart">
+          <figcaption class="fin-chart-t">Cómo crece tu capital año por año</figcaption>
+          <ul class="fin-legend fin-legend--inline" aria-hidden="true"><li><i style="--c:var(--s1)"></i>Lo que aportaste</li><li><i style="--c:var(--s2)"></i>Intereses ganados</li></ul>
+          <div class="fin-area" id="int-grafico"></div>
+          <details class="fin-tabla"><summary>Ver los valores año por año</summary><div class="table-wrap"><table class="fin-tabla-t"><thead><tr><th scope="col">Año</th><th scope="col">Aportado</th><th scope="col">Intereses</th><th scope="col">Total</th></tr></thead><tbody id="int-tabla"></tbody></table></div></details>
+        </figure>
+        <p class="fin-help">El cálculo suma el aporte cada mes y capitaliza los intereses mensualmente. Es una estimación: los rendimientos reales varían año a año.</p>
+      </div>
+      <h5>SPY: el estándar de oro</h5>
+      <p>Es un ETF, un fondo que cotiza en bolsa, que replica a las 500 empresas más grandes de Estados Unidos, como Apple, Google y Amazon. Su retorno histórico ronda el 10&nbsp;% anual en dólares en promedio durante los últimos 50 años.</p>
+      <figure class="fin-chart">
+        <figcaption class="fin-chart-t">Probabilidad de ganar o perder según cuánto tiempo mantenés la inversión</figcaption>
+        <ul class="fin-legend fin-legend--inline" aria-hidden="true"><li><i style="--c:var(--yes)"></i>Ganancia</li><li><i style="--c:var(--no)"></i>Pérdida</li></ul>
+        <div class="fin-bars">
+          <div class="fin-bar-row"><span class="fin-bar-l">1 año</span><span class="fin-stack fin-stack--fila"><span class="fin-seg" style="--w:73%;--c:var(--yes)" tabindex="0" data-tip="Invirtiendo a 1 año: 73&nbsp;% de probabilidad de ganancia">73&nbsp;%</span><span class="fin-seg" style="--w:27%;--c:var(--no)" tabindex="0" data-tip="Invirtiendo a 1 año: 27&nbsp;% de probabilidad de pérdida">27&nbsp;%</span></span><span class="fin-bar-v">27&nbsp;% pérdida</span></div>
+          <div class="fin-bar-row"><span class="fin-bar-l">5 años</span><span class="fin-stack fin-stack--fila"><span class="fin-seg" style="--w:87%;--c:var(--yes)" tabindex="0" data-tip="Invirtiendo a 5 años: 87&nbsp;% de probabilidad de ganancia">87&nbsp;%</span><span class="fin-seg" style="--w:13%;--c:var(--no)" tabindex="0" data-tip="Invirtiendo a 5 años: 13&nbsp;% de probabilidad de pérdida"></span></span><span class="fin-bar-v">13&nbsp;% pérdida</span></div>
+          <div class="fin-bar-row"><span class="fin-bar-l">15 años</span><span class="fin-stack fin-stack--fila"><span class="fin-seg" style="--w:100%;--c:var(--yes)" tabindex="0" data-tip="Invirtiendo a 15 años: 100&nbsp;% de probabilidad de ganancia">100&nbsp;%</span></span><span class="fin-bar-v">sin pérdida</span></div>
+        </div>
+        <p class="fin-chart-src">Acciones de EE. UU., datos de 1926 a 2019.</p>
+      </figure>
+      <p>Esto derriba otro gran mito de la bolsa: con un plazo largo, el riesgo de perder baja mucho.</p>
+      <h5>Otros índices</h5>
+      <div class="table-wrap">
+        <table>
+          <caption>Índices y sus precios de referencia en pesos al 14/09/2026</caption>
+          <thead><tr><th scope="col">Índice</th><th scope="col">Qué reúne</th><th scope="col">Precio en ARS</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">SPY (S&amp;P 500)</th><td>Las 500 empresas más grandes de EE. UU.</td><td>20.400</td></tr>
+            <tr><th scope="row">QQQ (Nasdaq 100)</th><td>Las 100 empresas no financieras más grandes de sectores como tecnología, comunicaciones y consumo, con fuerte predominio de EE. UU.</td><td>56.625</td></tr>
+            <tr><th scope="row">DIA (Dow Jones)</th><td>30 grandes empresas de EE. UU., representativas de distintos sectores de la economía.</td><td>41.820</td></tr>
+            <tr><th scope="row">ACWI</th><td>Empresas grandes y medianas de mercados desarrollados y emergentes de todo el mundo: el mercado global en una sola inversión.</td><td>9.780</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fin-help">Los precios cambian todos los días: son solo una referencia.</p>
+      <h5>Inversión o apuesta: la esperanza matemática</h5>
+      <div class="compare">
+        <div class="compare-no"><p class="compare-label"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x-circle-fill"/></svg> Esperanza matemática negativa</p><ul class="list"><li>Derivados financieros (opciones y futuros)</li><li>Apuestas deportivas</li><li>Trading de divisas y monedas</li><li>Casinos, bingos y loterías</li><li>Estampillas, cartas coleccionables, NFT, vinos, autos antiguos u otros coleccionables</li></ul></div>
+        <div class="compare-yes"><p class="compare-label"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check-circle-fill"/></svg> Esperanza matemática positiva</p><ul class="list"><li>Acciones de empresas</li><li>Bonos de estados y empresas</li><li>Propiedades</li><li>Fondos de inversión</li><li>ETF y CEDEAR</li><li>Crowdfunding</li></ul></div>
+      </div>
+      <p>En el medio quedan los activos que no generan renta, como las materias primas.</p>
+      <h5>Criptomonedas: el nuevo «oro digital»</h5>
+      <ul class="list">
+        <li><strong>Bitcoin (BTC):</strong> una reserva de valor digital, descentralizada y finita.</li>
+        <li><strong>Ethereum (ETH):</strong> la infraestructura de la nueva economía digital.</li>
+        <li><strong>Riesgo:</strong> tienen alta volatilidad. Invertí solo dinero que no vayas a necesitar en el corto plazo.</li>
+      </ul>
+      <p>Para manejar ese riesgo:</p>
+      <ul class="list">
+        <li><strong>90 / 10:</strong> 90&nbsp;% en activos tradicionales, como el S&amp;P 500, y 10&nbsp;% en cripto.</li>
+        <li><strong>DCA:</strong> comprar un monto fijo todos los meses, sin mirar el precio.</li>
+        <li><strong>Custodia:</strong> «not your keys, not your coins», es decir, si no tenés tus claves, no son tus monedas. Conviene aprender sobre billeteras frías.</li>
+      </ul>
+      <h5>El halving: Bitcoin se vuelve más escaso</h5>
+      <p>Cada 4 años, Bitcoin reduce a la mitad la cantidad de bitcoins nuevos que reciben los mineros. Como existe un máximo de 21 millones de BTC, no se pueden crear de manera infinita.</p>
+      <figure class="fin-chart ">
+        <figcaption class="fin-chart-t">Bitcoins nuevos por bloque</figcaption>
+        <div class="fin-bars">
+          <div class="fin-bar-row"><span class="fin-bar-l">Antes del halving</span><span class="fin-bar-t"><span class="fin-bar" style="--w:100.00%;--c:var(--s2)" tabindex="0" data-tip="Antes del halving se crean 6,25 BTC por bloque"></span></span><span class="fin-bar-v">6,25 BTC</span></div>
+          <div class="fin-bar-row"><span class="fin-bar-l">Después del halving</span><span class="fin-bar-t"><span class="fin-bar" style="--w:50.00%;--c:var(--s2)" tabindex="0" data-tip="Después del halving se crean 3,125 BTC por bloque"></span></span><span class="fin-bar-v">3,125 BTC</span></div>
+        </div>
+      </figure>
+      <p>Menos bitcoins nuevos significa menos oferta nueva y más escasez. Pero el halving no garantiza que suba el precio: también depende de la demanda, la economía global y la regulación.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Las cinco criptomonedas más importantes</caption>
+          <thead><tr><th scope="col">Cripto</th><th scope="col">Para qué sirve</th><th scope="col">Qué aporta</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Bitcoin (BTC)</th><td>Guardar y transferir valor</td><td>Una alternativa digital, descentralizada y escasa</td></tr>
+            <tr><th scope="row">Ethereum (ETH)</th><td>Crear aplicaciones y contratos inteligentes</td><td>Infraestructura para finanzas descentralizadas, NFT y aplicaciones blockchain</td></tr>
+            <tr><th scope="row">Tether (USDT)</th><td>Mantener un valor cercano al dólar</td><td>Facilita pagos y transferencias digitales en dólares</td></tr>
+            <tr><th scope="row">BNB</th><td>Usar servicios dentro del ecosistema BNB</td><td>Reduce costos y permite operar aplicaciones y servicios</td></tr>
+            <tr><th scope="row">XRP</th><td>Transferir dinero rápido entre países</td><td>Busca facilitar pagos internacionales</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>No todas las criptomonedas buscan lo mismo: algunas quieren ser dinero digital y otras, infraestructura, medios de pago o herramientas para transferir valor.</p>
+
+      <div class="fin-sub" id="fin-ejecucion">
+        <span class="fin-sub-n" aria-hidden="true">7</span>
+        <div><h4>Ejecución y seguridad</h4><p>De la teoría a la práctica en el mercado real.</p></div>
+      </div>
+      <h5>El bróker, tu socio</h5>
+      <p>Es el intermediario regulado que te permite comprar acciones, ETF, bonos y fondos comunes de inversión. <strong>Verificá siempre que esté autorizado por la CNV</strong> (Comisión Nacional de Valores).</p>
+      <h5>Pasos para abrir una cuenta</h5>
+      <ol class="steps">
+        <li><strong>Elegir el bróker:</strong> compará comisiones y plataformas.</li>
+        <li><strong>Validar tu identidad:</strong> con DNI y una selfie.</li>
+        <li><strong>Hacer el test de inversor:</strong> define tu perfil de riesgo: conservador, moderado o agresivo.</li>
+        <li><strong>Fondear la cuenta:</strong> transferís dinero desde tu cuenta bancaria.</li>
+      </ol>
+      <h5>La receta de la riqueza</h5>
+      <p class="fin-receta"><span>Mentalidad</span>+<span>Disciplina</span>+<span>Tiempo</span></p>
+      <p>Invertir u$s 200 por mes al 12&nbsp;% anual durante 33 años da alrededor de <strong>u$s 1.000.000</strong>. Podés comprobarlo en la calculadora de interés compuesto, más arriba.</p>
+      <p class="fin-cierre">El mejor momento para plantar un árbol fue hace 20 años. El segundo mejor momento es hoy.</p>
+
+      <div class="activity">
+        <p class="activity-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pencil-simple-line"/></svg> Actividad</p>
+        <p>Durante un mes, anotá todo lo que gastás, incluidos los gastos hormiga. Al final, calculá tus gastos básicos y cuánto necesitarías para tu fondo de emergencia, y pensá qué regla de reparto se ajusta mejor a tu ingreso.</p>
+      </div>
+      <div class="station-end"><a class="prev" href="#recibo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg> Anterior<span class="sr-only">: El recibo de sueldo</span></a><a class="next" href="#charla">Siguiente: Charla de carreras <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
     </section>
 
     <!-- Apartado especial: charla de carreras -->
@@ -1373,7 +1761,7 @@ la empresa o el área].</pre>
         <p class="activity-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pencil-simple-line"/></svg> Actividad</p>
         <p>Recorré la charla y anotá dos carreras o tecnicaturas que te interesen. Sumalas a tu mapa personal de la parada 2, en «Carrera o formación que pienso seguir».</p>
       </div>
-      <div class="station-end"><a class="prev" href="#recibo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg> Anterior<span class="sr-only">: El recibo de sueldo</span></a><a class="next" href="#servidor">Siguiente: Repositorio de Cursos <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
+      <div class="station-end"><a class="prev" href="#finanzas"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg> Anterior<span class="sr-only">: Finanzas personales</span></a><a class="next" href="#servidor">Siguiente: Repositorio de Cursos <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></div>
     </section>
 
     <!-- Apartado especial: el servidor de Lourdes -->
@@ -1401,7 +1789,7 @@ la empresa o el área].</pre>
       <h4>Qué vas a encontrar</h4>
       <ul class="list">
         <li><strong><a href="https://lpedaci.github.io/repo-servidor/threads/cursando/" target="_blank" rel="noopener noreferrer">Cursando y egresando<span class="sr-only"> (se abre en una pestaña nueva)</span></a>:</strong> Cómo elegir carrera, armar tu CV y tu porfolio, y dar los primeros pasos en el mundo laboral.</li>
-        <li><strong><a href="https://lpedaci.github.io/repo-servidor/threads/cursos/" target="_blank" rel="noopener noreferrer">Cursos<span class="sr-only"> (se abre en una pestaña nueva)</span></a>:</strong> Más de 150 cursos gratuitos o casi, filtrables por tema, proveedor, idioma y certificado.</li>
+        <li><strong><a href="https://lpedaci.github.io/repo-servidor/threads/cursos/" target="_blank" rel="noopener noreferrer">Cursos<span class="sr-only"> (se abre en una pestaña nueva)</span></a>:</strong> Más de 190 cursos gratuitos o casi, filtrables por tema, proveedor, idioma y certificado, con una nueva categoría de inteligencia artificial.</li>
         <li><strong><a href="https://lpedaci.github.io/repo-servidor/threads/tecnologia/" target="_blank" rel="noopener noreferrer">Tecnología<span class="sr-only"> (se abre en una pestaña nueva)</span></a>:</strong> Bibliotecas, manuales, cheatsheets y herramientas para programar y diseñar para la web.</li>
         <li><strong><a href="https://lpedaci.github.io/repo-servidor/threads/variaditos/" target="_blank" rel="noopener noreferrer">Variaditos<span class="sr-only"> (se abre en una pestaña nueva)</span></a>:</strong> Guías para la cursada: documentos académicos, presentaciones, mapas conceptuales, mails formales y más.</li>
       </ul>
@@ -1409,6 +1797,7 @@ la empresa o el área].</pre>
       <h4>Cursos por categoría</h4>
       <p>Elegí una categoría y el explorador de cursos se abre ya filtrado.</p>
       <ul class="chips">
+        <li><a href="https://lpedaci.github.io/repo-servidor/cursos/?cat=inteligencia-artificial" target="_blank" rel="noopener noreferrer">Inteligencia artificial<span class="sr-only"> (se abre en una pestaña nueva)</span></a></li>
         <li><a href="https://lpedaci.github.io/repo-servidor/cursos/?cat=programacion" target="_blank" rel="noopener noreferrer">Programación<span class="sr-only"> (se abre en una pestaña nueva)</span></a></li>
         <li><a href="https://lpedaci.github.io/repo-servidor/cursos/?cat=gestion-y-soft-skills" target="_blank" rel="noopener noreferrer">Gestión y soft skills<span class="sr-only"> (se abre en una pestaña nueva)</span></a></li>
         <li><a href="https://lpedaci.github.io/repo-servidor/cursos/?cat=diseno-ux-ui" target="_blank" rel="noopener noreferrer">Diseño, UX y UI<span class="sr-only"> (se abre en una pestaña nueva)</span></a></li>

@@ -49,6 +49,10 @@
   --t4: #b8d8c9;
   --t5: #f1bcd0;
   --t6: #a9c8f0;
+  --t7: #9fd99a;
+  --s1: #2a78d6;
+  --s2: #1baf7a;
+  --s3: #eda100;
   --tile-ink: #1f1f24;
   --tile-chip: rgba(255, 255, 255, 0.6);
   /* Bloques carbón */
@@ -94,6 +98,10 @@
     --t4: #93bba9;
     --t5: #dca2b9;
     --t6: #86a9d6;
+    --t7: #7fbd7a;
+    --s1: #3987e5;
+    --s2: #199e70;
+    --s3: #c98500;
     --deep: #2c2c34;
     --shadow: 0 0 0 1px #2c2c34;
     --check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' stroke='%2317171b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -123,6 +131,10 @@
   --t4: #93bba9;
   --t5: #dca2b9;
   --t6: #86a9d6;
+  --t7: #7fbd7a;
+  --s1: #3987e5;
+  --s2: #199e70;
+  --s3: #c98500;
   --deep: #2c2c34;
   --shadow: 0 0 0 1px #2c2c34;
   --check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' stroke='%2317171b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -1286,15 +1298,29 @@ button.copy.is-copied {
   --tile: var(--t6);
   background: var(--t6);
 }
+/* Finanzas personales: verde billete */
+.especial#finanzas {
+  --ls: color-mix(in srgb, var(--t7) 22%, var(--surface));
+  --tile: var(--t7);
+}
+.especial-card[href="#finanzas"] {
+  --tile: var(--t7);
+  background: var(--t7);
+}
 .especial-ic .ic {
   display: block;
 }
 /* Apartados especiales del mapa: una fila de tarjetas (una columna en pantallas chicas) */
 .especiales {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin: 2.5rem 0;
+}
+@media (max-width: 1279px) {
+  .especiales {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .especial-card {
   --tile: var(--t4);
@@ -2008,6 +2034,31 @@ button.copy.is-copied {
 .rail-extra a[href="#charla"].is-current {
   background: var(--t6);
   color: var(--tile-ink);
+}
+.rail-extra a[href="#finanzas"].is-current {
+  background: var(--t7);
+  color: var(--tile-ink);
+}
+/* Subapartados de finanzas: solo se ven mientras se está en el apartado */
+.rail-sub {
+  display: none;
+  margin: 0.2rem 0 0.4rem 1.6rem;
+  padding: 0 0 0 0.7rem;
+  border-left: 2px solid var(--t7);
+  list-style: none;
+  font-size: 0.88rem;
+}
+.rail-fin.is-open .rail-sub {
+  display: grid;
+}
+.rail-sub a {
+  min-height: 2.1rem;
+  padding-inline: 0.7rem;
+  line-height: 1.25;
+}
+.rail-sub a.is-here {
+  background: color-mix(in srgb, var(--t7) 35%, transparent);
+  color: var(--ink);
 }
 .menu-btn {
   display: none;
@@ -3630,4 +3681,687 @@ code {
   .station-head {
     margin: 0 0 1rem;
   }
+}
+
+/* ---------- Finanzas personales ---------- */
+.fin-indice {
+  margin: 0 0 2.5rem;
+  padding: 1.1rem 1.25rem 1.25rem;
+  border-radius: var(--r);
+  background: var(--ls);
+}
+.fin-indice-t {
+  margin: 0 0 0.7rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.fin-indice ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fin-indice a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.95rem 0.3rem 0.35rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 0.93rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.fin-indice a:hover {
+  background: var(--t7);
+  color: var(--tile-ink);
+}
+.fin-indice a span {
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: var(--t7);
+  color: var(--tile-ink);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.fin-sub {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3.5rem 0 1.25rem;
+  padding-top: 2rem;
+  border-top: 1.5px solid var(--rule);
+}
+.fin-sub-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 1rem;
+  background: var(--t7);
+  color: var(--tile-ink);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.fin-sub h4 {
+  margin: 0;
+}
+.fin-sub p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+}
+.station .fin-sub + p,
+.station .fin-sub + .pair,
+.station .fin-sub + h5 {
+  margin-top: 0;
+}
+
+/* Gráficos de barras */
+.fin-chart {
+  margin: 1.25rem 0 1.75rem;
+  padding: 1.1rem 1.25rem 1.2rem;
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r);
+  background: var(--surface);
+}
+.fin-chart-t {
+  margin: 0 0 0.9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.fin-chart-src {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.fin-bars {
+  display: grid;
+  gap: 0.7rem;
+}
+.fin-bar-row {
+  display: grid;
+  grid-template-columns: minmax(7rem, 15rem) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.93rem;
+}
+.fin-bar-l {
+  line-height: 1.25;
+}
+.fin-bar-t,
+.fin-stack--fila {
+  display: flex;
+  height: 1.6rem;
+  border-radius: 0.35rem;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.fin-bar {
+  width: var(--w);
+  border-radius: 0.35rem;
+  background: var(--c);
+  cursor: help;
+  transition: width 0.9s var(--ease), opacity 0.2s ease;
+}
+.fin-bar-v {
+  min-width: 5.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.fin-seg {
+  display: grid;
+  place-items: center;
+  width: var(--w);
+  background: var(--c);
+  color: var(--tile-ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: help;
+  transition: width 0.9s var(--ease), opacity 0.2s ease;
+}
+.fin-seg + .fin-seg {
+  border-left: 2px solid var(--surface);
+}
+.fin-bars:hover .fin-bar,
+.fin-bars:hover .fin-seg,
+.fin-stack:hover .fin-seg {
+  opacity: 0.6;
+}
+.fin-bars .fin-bar:hover,
+.fin-bars .fin-seg:hover,
+.fin-stack .fin-seg:hover,
+.fin-bar:focus-visible,
+.fin-seg:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.fin-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+.fin-legend--inline {
+  margin: -0.3rem 0 0.9rem;
+}
+.fin-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.fin-legend i {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.2rem;
+  background: var(--c);
+}
+.fin-legend b {
+  font-variant-numeric: tabular-nums;
+}
+/* Las barras crecen al aparecer en pantalla */
+@media (prefers-reduced-motion: no-preference) {
+  .js .fin-chart:not(.is-in) .fin-bar,
+  .js .fin-chart:not(.is-in) .fin-seg {
+    width: 0;
+  }
+  .js .fin-chart--crece.is-in .fin-bar-row:nth-child(2) .fin-bar {
+    transition-delay: 0.35s;
+  }
+  .js .fin-chart--crece.is-in .fin-bar-row:nth-child(3) .fin-bar {
+    transition-delay: 0.7s;
+  }
+}
+
+/* Calculadoras */
+.fin-tool {
+  margin: 1.25rem 0 1.75rem;
+  padding: 1.25rem;
+  border-radius: var(--r);
+  background: var(--ls);
+}
+.fin-tool .fin-chart {
+  margin: 1rem 0 0;
+}
+.fin-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+}
+.fin-fields--4 {
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+}
+.fin-field label,
+.fin-label {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.fin-input {
+  display: flex;
+  align-items: center;
+  min-height: 2.9rem;
+  border: 1.5px solid var(--rule);
+  border-radius: 0.8rem;
+  background: var(--surface);
+  overflow: hidden;
+}
+.fin-input:focus-within {
+  border-color: var(--ink);
+}
+.fin-input input {
+  flex: 1;
+  min-width: 0;
+  height: 2.8rem;
+  padding: 0 0.8rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.fin-input input:focus {
+  outline: none;
+}
+.fin-affix {
+  padding-inline: 0.8rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.fin-input .fin-affix:first-child {
+  padding-right: 0;
+}
+.fin-input input + .fin-affix {
+  padding-left: 0;
+}
+.fin-field.is-error .fin-input {
+  border-color: var(--no);
+}
+.fin-help {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.fin-err {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--no);
+}
+.fin-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--yes);
+}
+.fin-field output {
+  font-variant-numeric: tabular-nums;
+}
+.fin-toggle {
+  display: inline-flex;
+  padding: 0.25rem;
+  border: 1.5px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.fin-toggle button {
+  min-height: 2.4rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fin-toggle button[aria-pressed="true"] {
+  background: var(--t7);
+  color: var(--tile-ink);
+}
+.fin-res {
+  margin: 0.9rem 0 0;
+}
+.fin-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+}
+.fin-results p {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  background: var(--surface);
+}
+.fin-results span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.fin-results strong {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.fin-results p:first-child {
+  background: var(--t7);
+  color: var(--tile-ink);
+}
+.fin-results p:first-child span {
+  color: inherit;
+  opacity: 0.8;
+}
+.fin-stack--grande {
+  display: flex;
+  height: 3rem;
+  border-radius: 0.6rem;
+  overflow: hidden;
+}
+
+/* Interés compuesto: columnas apiladas por año */
+.fin-area {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 15rem;
+  margin: 0 0 0 3.6rem;
+  border-bottom: 1.5px solid var(--rule);
+}
+.fin-grid {
+  position: absolute;
+  left: -3.6rem;
+  right: 0;
+  height: 0;
+  border-top: 1px dashed var(--rule);
+  pointer-events: none;
+}
+.fin-grid span {
+  position: absolute;
+  left: 0;
+  top: -0.6rem;
+  width: 3.2rem;
+  font-size: 0.75rem;
+  text-align: right;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.fin-col {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%;
+  cursor: help;
+}
+.fin-col i {
+  display: block;
+  height: var(--h);
+  background: var(--c);
+  transition: height 0.6s var(--ease);
+}
+.fin-col i + i {
+  border-radius: 3px 3px 0 0;
+}
+.fin-area:hover .fin-col {
+  opacity: 0.55;
+}
+.fin-area .fin-col:hover,
+.fin-col:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+.fin-col:focus-visible i {
+  box-shadow: 0 0 0 2px var(--ink);
+}
+.fin-area-x {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.35rem 0 0 3.6rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.fin-tabla {
+  margin: 1rem 0 0;
+}
+.fin-tabla summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.93rem;
+}
+.fin-tabla .table-wrap {
+  max-height: 18rem;
+  margin-top: 0.6rem;
+  overflow: auto;
+}
+.fin-tabla td,
+.fin-tabla th {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fondo de emergencia: seis meses */
+.fin-meses {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 1rem 0 0;
+}
+.fin-meses span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  place-items: center;
+  min-height: 2.6rem;
+  border-radius: 0.6rem;
+  background: var(--s2);
+  color: var(--tile-ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.fin-meses span:nth-child(n + 4) {
+  background: color-mix(in srgb, var(--s2) 40%, var(--surface));
+  color: var(--ink);
+}
+
+/* Elegí: u$s 100 hoy o u$s 110 mañana */
+.fin-quiz {
+  margin: 0.75rem 0 1.25rem;
+  padding: 1.25rem;
+  border-radius: var(--r);
+  background: var(--deep);
+  color: var(--on-deep);
+}
+.fin-quiz-q {
+  margin: 0 0 0.8rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.fin-quiz-ops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.fin-op {
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  border: 1.5px solid var(--deep-soft);
+  border-radius: 999px;
+  background: var(--deep-soft);
+  color: var(--on-deep);
+  font: inherit;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.3s var(--ease);
+}
+.fin-op:hover {
+  transform: translateY(-2px);
+}
+.fin-op[aria-pressed="true"] {
+  border-color: var(--t7);
+  background: var(--t7);
+  color: var(--tile-ink);
+}
+.fin-quiz-r {
+  margin: 0.9rem 0 0;
+  line-height: 1.5;
+}
+
+/* Ingresos, gastos, ahorro e inversión */
+.fin-flujo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+.fin-flujo li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--ls);
+}
+.fin-flujo .ic {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+.fin-flujo strong {
+  font-family: var(--display);
+  font-size: 1.1rem;
+}
+.fin-flujo span {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+@media (max-width: 719px) {
+  .fin-flujo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Pagar deudas, ahorrar, invertir */
+.fin-orden {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin: 0.5rem 0 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+.fin-orden li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border-radius: 1rem;
+  background: var(--ls);
+}
+.fin-orden strong {
+  font-family: var(--display);
+  font-size: 1.1rem;
+}
+.fin-orden small {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+/* Flecha centrada en el espacio entre un paso y el siguiente */
+.fin-orden li + li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -1.6rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-top: 2.5px solid var(--muted);
+  border-right: 2.5px solid var(--muted);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.fin-orden span {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.35rem;
+  border-radius: 50%;
+  background: var(--t7);
+  color: var(--tile-ink);
+  font-family: var(--display);
+  font-weight: 600;
+}
+@media (max-width: 719px) {
+  .fin-orden {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+  .fin-orden li + li::before {
+    top: -0.9rem;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(135deg);
+  }
+}
+
+.fin-formula {
+  margin: 0.5rem 0 1rem;
+  padding: 0.9rem 1.2rem;
+  border-radius: 1rem;
+  background: var(--deep);
+  color: var(--on-deep);
+  font-family: var(--mono);
+  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  text-align: center;
+}
+.fin-receta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0.5rem 0 1rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+.fin-receta span {
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: var(--t7);
+  color: var(--tile-ink);
+}
+.fin-cierre {
+  margin: 1.5rem 0;
+  padding: 1.4rem 1.5rem;
+  border-left: 4px solid var(--t7);
+  border-radius: 0 var(--r) var(--r) 0;
+  background: var(--ls);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+  line-height: 1.35;
+}
+
+@media (max-width: 559px) {
+  .fin-bar-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.3rem 0.75rem;
+  }
+  .fin-bar-l {
+    grid-column: 1 / -1;
+  }
+  .fin-bar-t,
+  .fin-stack--fila {
+    grid-column: 1;
+  }
+  .fin-area {
+    height: 12rem;
+  }
+  .fin-meses small {
+    display: none;
+  }
+}
+.fin-sub h4::before {
+  display: none;
+}
+.fin-seg[style*="--s1"] {
+  color: #fff;
+}
+.fin-seg[style*="--yes"],
+.fin-seg[style*="--no"] {
+  color: var(--surface);
+}
+.fin-meses small {
+  font-size: inherit;
 }
