@@ -417,9 +417,6 @@ button.copy.is-copied {
 .now-tag:empty {
   display: none;
 }
-.now-tag:empty + .now-title {
-  padding-left: 0.7rem;
-}
 .now-title {
   overflow: hidden;
   text-overflow: ellipsis;
