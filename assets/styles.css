@@ -394,6 +394,13 @@ button.copy.is-copied {
   background: var(--deep-soft);
   transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
 }
+/* Sin etiqueta de parada, el título queda centrado en la píldora */
+.top-now-in:not(:has(.now-tag:not(:empty))) {
+  padding-left: 1.1rem;
+}
+.now-tag:empty {
+  display: none;
+}
 .top-now.is-out .top-now-in {
   opacity: 0;
   transform: translateY(-0.5rem);
