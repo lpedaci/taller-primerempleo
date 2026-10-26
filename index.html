@@ -28,10 +28,13 @@
 <link rel="preload" href="assets/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/presentacion.css">
 <script>
 (function (d) {
   d.className = "js";
   try { var t = localStorage.getItem("primer-empleo-tema"); if (t === "dark" || t === "light") d.setAttribute("data-theme", t); } catch (e) {}
+  /* Con ?presentar la página abre directo como presentación */
+  if (/[?&]presentar(?:=|&|$)/.test(location.search)) d.className += " is-pres";
 })(document.documentElement);
 </script>
 </head>
@@ -82,6 +85,11 @@
 <symbol id="i-cash" viewBox="0 0 512 512"><path fill="currentColor" fill-rule="evenodd" d="M40 96h432a40 40 0 0 1 40 40v240a40 40 0 0 1-40 40H40A40 40 0 0 1 0 376V136a40 40 0 0 1 40-40zm216 80a80 80 0 1 0 0 160 80 80 0 1 0 0-160zM64 160v48a48 48 0 0 0 48-48zm384 0h-48a48 48 0 0 0 48 48zM64 352v-48a48 48 0 0 1 48 48zm384 0h-48a48 48 0 0 1 48-48z"/></symbol>
 <symbol id="i-lock" viewBox="0 0 448 512"><path fill="currentColor" d="M144 144v48h160v-48a80 80 0 1 0-160 0zm-64 48v-48a144 144 0 1 1 288 0v48h16a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V256a64 64 0 0 1 64-64h16z"/></symbol>
 <symbol id="i-chart-up" viewBox="0 0 512 512"><path fill="currentColor" d="M64 64a32 32 0 0 0-64 0v336a80 80 0 0 0 80 80h400a32 32 0 0 0 0-64H80a16 16 0 0 1-16-16V64zm406.6 86.6a32 32 0 0 0-45.3-45.3L320 210.7l-57.4-57.3a32 32 0 0 0-45.3 0l-112 112a32 32 0 0 0 45.3 45.3l89.4-89.4 57.4 57.3a32 32 0 0 0 45.3 0l128-128z"/></symbol>
+<symbol id="i-presentation" viewBox="0 0 256 256"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><rect x="28" y="40" width="200" height="136" rx="14"/><path d="M128 176v44M92 220h72"/><path d="M110 88l40 20-40 20z" fill="currentColor"/></g></symbol>
+<symbol id="i-squares-four" viewBox="0 0 256 256"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><rect x="40" y="40" width="72" height="72" rx="10"/><rect x="144" y="40" width="72" height="72" rx="10"/><rect x="40" y="144" width="72" height="72" rx="10"/><rect x="144" y="144" width="72" height="72" rx="10"/></g></symbol>
+<symbol id="i-corners-out" viewBox="0 0 256 256"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M168 48h40v40M88 208H48v-40M208 168v40h-40M48 88V48h40"/></g></symbol>
+<symbol id="i-corners-in" viewBox="0 0 256 256"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M208 96h-48V48M48 160h48v48M160 208v-48h48M96 48v48H48"/></g></symbol>
+<symbol id="i-x" viewBox="0 0 256 256"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M200 56 56 200M200 200 56 56"/></g></symbol>
 <symbol id="i-arrow-up" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 109.3 160 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></symbol>
 </svg>
 
@@ -91,6 +99,7 @@
       <a class="brand" href="#top" aria-label="Del aula al primer trabajo: ir al inicio"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-path-bold"/></svg></a>
       <p class="top-now" id="top-now" aria-hidden="true"><span class="top-now-in"><span class="now-tag"></span><span class="now-title">Del aula al primer trabajo</span></span></p>
       <p class="top-count"><span class="meter" aria-hidden="true"><i></i></span><span><span class="done-count">0</span> de 11 <small>paradas</small></span></p>
+      <button type="button" class="top-btn pres-btn" id="pres-btn" aria-label="Ver como presentación"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-presentation"/></svg><span>Presentar</span></button>
       <button type="button" class="top-btn top-btn--icon theme-btn" id="theme-btn" aria-label="Cambiar a tema oscuro"><span class="i-moon"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg></span><span class="i-sun"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg></span></button>
       <button type="button" class="top-btn menu-btn" id="menu-btn" aria-controls="rail" aria-expanded="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><span>Paradas</span></button>
     </div>
@@ -262,6 +271,12 @@
 
       <h4>Qué buscan las empresas</h4>
       <p>El informe mundial más reciente sobre el futuro del trabajo indica que siete de cada diez empleadores consideran el pensamiento analítico como la habilidad central, y en segundo lugar ubican la resiliencia, la flexibilidad y la agilidad (World Economic Forum, 2025). Ninguna de las dos es una herramienta: son formas de trabajar.</p>
+
+      <!-- Solo en el modo presentación: el dato del párrafo anterior, en cifras -->
+      <div class="facts pres-only" aria-hidden="true">
+        <div class="fact"><span class="fact-num">7 de 10</span><span class="fact-txt">empleadores considera el pensamiento analítico como la habilidad central.</span><span class="fact-src">World Economic Forum (2025)</span></div>
+        <div class="fact"><span class="fact-num">2.º</span><span class="fact-txt">lugar para la resiliencia, la flexibilidad y la agilidad.</span><span class="fact-src">World Economic Forum (2025)</span></div>
+      </div>
 
       <h4>Tres ideas para llevarte</h4>
       <ol class="steps">
@@ -1860,5 +1875,6 @@ la empresa o el área].</pre>
 </footer>
 
 <script src="assets/app.js" defer></script>
+<script src="assets/presentacion.js" defer></script>
 </body>
 </html>

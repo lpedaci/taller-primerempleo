@@ -36,6 +36,8 @@ Contenido: Lic. Lourdes Pedaci, Lic. Julieta Taraborrelli y Lic. Bettyna Gonzál
 
 Fuera del recorrido hay cuatro apartados especiales: el recibo de sueldo (aportes, contribuciones y cómo leer un recibo); finanzas personales, un aporte del Lic. Kevin Giampieri con mentalidad, salida de deudas, presupuesto e inversión, y calculadoras interactivas; la charla de carreras, sobre qué estudiar después de la secundaria; y el servidor de Lourdes, con cursos gratuitos y materiales para seguir aprendiendo. Al final están las referencias en formato APA 7.
 
+El botón «Presentar» de la barra superior abre el sitio como presentación para proyectar: cada parada se ve como en la web dentro de un lienzo 16:9 y lo que no entra sigue en la diapositiva siguiente; los apartados especiales solo se mencionan, con flechas del teclado para avanzar, un índice (tecla O), pantalla completa (tecla F) y Esc para volver a la web. También se puede abrir directo con `?presentar` en la dirección.
+
 ## Estructura de archivos
 
 ```
