@@ -626,14 +626,16 @@ html.is-pres {
 }
 .is-pres .pres-cvs .sheet-wrap {
   grid-row: 21;
-  max-height: 600px;
-  overflow: auto;
-  scrollbar-width: thin;
+  overflow: visible;
+}
+/* La frase que presenta los ejemplos no va en la diapositiva: los CV ocupan ese lugar */
+.is-pres .pres-cvs > h4 + p {
+  display: none !important;
 }
 .is-pres .pres-cvs #cv1 > * { grid-column: 1; }
 .is-pres .pres-cvs #cv2 > * { grid-column: 2; }
 .is-pres .pres-cvs #cv3 > * { grid-column: 3; }
 .is-pres .pres-cvs .sheet {
-  zoom: 0.74;
+  zoom: var(--cv-zoom, 0.74);
   max-width: none;
 }

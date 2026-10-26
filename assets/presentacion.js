@@ -351,8 +351,22 @@
       });
       return (bottom - top) / scale / availOf(frame);
     };
-    /* Los tres CV se comparan a tamaño fijo: cada uno se desplaza por dentro */
-    if (frame.classList.contains("pres-cvs")) return;
+    /* Los tres CV se comparan del mismo tamaño: se achican juntos hasta que entran enteros */
+    frame.style.removeProperty("--cv-zoom");
+    if (frame.classList.contains("pres-cvs")) {
+      /* Los paneles no tienen caja propia: se mide desde el título hasta el pie del CV más largo */
+      var cvFill = function () {
+        var top = parts[0].el.getBoundingClientRect().top, bottom = top;
+        $$(".sheet-wrap", frame).forEach(function (w) { bottom = Math.max(bottom, w.getBoundingClientRect().bottom); });
+        return (bottom - top) / scale / availOf(frame);
+      };
+      var z = 0.74;
+      while (cvFill() > 0.985 && z > 0.4) {
+        z -= 0.01;
+        frame.style.setProperty("--cv-zoom", z.toFixed(2));
+      }
+      return;
+    }
     var f = 1;
     while (measure() > 0.985 && f > 0.72) {
       f -= 0.04;
