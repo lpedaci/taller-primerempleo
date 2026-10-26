@@ -93,7 +93,7 @@
      Un título nunca queda solo al final: pasa a la diapositiva siguiente con su contenido.
      Una lista o una tabla que no entra entera se reparte por renglones. */
   function clearShown() {
-    $$(".pres-cur").forEach(function (f) { f.classList.remove("pres-cur", "pres-center", "pres-feature", "pres-duo", "pres-cvs"); });
+    $$(".pres-cur").forEach(function (f) { f.classList.remove("pres-cur", "pres-center", "pres-feature", "pres-duo", "pres-cvs", "pres-cvs-2"); });
     $$(".pres-on").forEach(function (el) { el.classList.remove("pres-on", "pres-anim"); });
     $$("[data-pres-split]").forEach(function (el) { el.removeAttribute("data-pres-split"); });
     $$(".pres-row").forEach(function (el) { el.classList.remove("pres-row"); });
@@ -171,9 +171,11 @@
           } else if (used > avail * 0.35 && hi < 0) flush(true);
           page.push({ el: el, h: 0 }); return;
         }
-        if (el.matches(".cvpanel") && page.length) {
+        /* De a tres CV por diapositiva: los que siguen pasan a la siguiente */
+        if (el.matches(".cvpanel") && (page.length || g.items[i - 1].matches(".cvpanel"))) {
           page.push({ el: el, h: 0 });
-          if (!(g.items[i + 1] && g.items[i + 1].matches(".cvpanel"))) { used = avail; flush(); }
+          var inPage = page.filter(function (pt) { return pt.el.matches(".cvpanel"); }).length;
+          if (inPage === 3 || !(g.items[i + 1] && g.items[i + 1].matches(".cvpanel"))) { used = avail; flush(); }
           return;
         }
         var next = hs[i + 1];
@@ -334,7 +336,7 @@
   }
 
   /* ---------- Navegación ---------- */
-  var index = 0, active = false;
+  var index = 0, active = false, cvZoom = 0;
   /* Un bloque solo que igual no entra (por ejemplo, una figura grande) se achica lo justo */
   function shrink(frame, parts) {
     root.style.removeProperty("--pres-fs");
@@ -351,12 +353,12 @@
       });
       return (bottom - top) / scale / availOf(frame);
     };
-    /* Los tres CV se comparan del mismo tamaño: se achican juntos hasta que entran enteros */
+    /* Los CV se comparan del mismo tamaño: se achican juntos hasta que entran enteros */
     frame.style.removeProperty("--cv-zoom");
     if (frame.classList.contains("pres-cvs")) {
       /* Los paneles no tienen caja propia: se mide desde el título hasta el pie del CV más largo */
       var cvFill = function () {
-        var top = parts[0].el.getBoundingClientRect().top, bottom = top;
+        var top = frame.getBoundingClientRect().top + parseFloat(getComputedStyle(frame).paddingTop) * scale, bottom = top;
         $$(".sheet-wrap", frame).forEach(function (w) { bottom = Math.max(bottom, w.getBoundingClientRect().bottom); });
         return (bottom - top) / scale / availOf(frame);
       };
@@ -367,6 +369,9 @@
         z -= 0.01;
         frame.style.setProperty("--cv-zoom", z.toFixed(2));
       }
+      /* Todas las diapositivas de ejemplos usan el mismo tamaño: el más chico que haya hecho falta */
+      cvZoom = cvZoom ? Math.min(cvZoom, z) : z;
+      frame.style.setProperty("--cv-zoom", cvZoom.toFixed(2));
       return;
     }
     var f = 1;
@@ -403,7 +408,11 @@
       if (!instant && !reduceMotion.matches) { void p.el.offsetWidth; p.el.classList.add("pres-anim"); }
     });
     $$(".reveal", frame).forEach(function (el) { el.classList.add("is-in"); });
-    frame.classList.toggle("pres-cvs", s.parts.some(function (p) { return p.el.matches(".tabs"); }));
+    /* Ejemplos de CV: cada panel ocupa su columna; si son dos, quedan centrados */
+    var cvs = s.parts.filter(function (p) { return p.el.matches(".cvpanel"); });
+    frame.classList.toggle("pres-cvs", cvs.length > 0);
+    frame.classList.toggle("pres-cvs-2", cvs.length === 2);
+    cvs.forEach(function (p, k) { p.el.style.setProperty("--col", cvs.length === 2 ? k + 2 : k + 1); });
     frame.classList.toggle("pres-duo", s.parts.some(function (p) { return p.el.matches(".sheet-wrap"); }) && s.parts.some(function (p) { return p.el.matches("ol.callouts"); }));
     index = i;
     shrink(frame, s.parts);

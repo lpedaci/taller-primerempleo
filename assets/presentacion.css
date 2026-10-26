@@ -637,9 +637,13 @@ html.is-pres {
 .is-pres .pres-cvs > h4 + p {
   display: none !important;
 }
-.is-pres .pres-cvs #cv1 > * { grid-column: 1; }
-.is-pres .pres-cvs #cv2 > * { grid-column: 2; }
-.is-pres .pres-cvs #cv3 > * { grid-column: 3; }
+.is-pres .pres-cvs > .cvpanel > * {
+  grid-column: var(--col);
+}
+/* Dos CV: mismas columnas que con tres, centradas */
+.is-pres .pres-cur.pres-cvs-2 {
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.5fr);
+}
 .is-pres .pres-cvs .sheet {
   zoom: var(--cv-zoom, 0.74);
   max-width: none;

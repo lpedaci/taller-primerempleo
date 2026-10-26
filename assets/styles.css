@@ -2986,6 +2986,20 @@ mark {
 .sheet mark {
   background: #ffe680;
 }
+/* CV con foto: la foto a la izquierda del nombre y los datos de contacto */
+.sheet .cv-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 4px;
+}
+.sheet .cv-photo {
+  flex: none;
+  width: 84px;
+  height: 105px;
+  object-fit: cover;
+  border-radius: 4px;
+}
 .sheet .cv-name {
   margin: 0;
   font-size: 24px;
