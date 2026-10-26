@@ -616,13 +616,13 @@ html.is-pres {
 .is-pres .pres-cvs > .cvpanel {
   display: contents !important;
 }
+/* Cada aviso va arriba de su CV */
 .is-pres .pres-cvs .aviso {
   grid-row: 20;
-  grid-column: 1 / -1 !important;
   margin: 0 0 0.9rem;
-  padding: 0.75rem 0.95rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 .is-pres .pres-cvs .sheet-wrap {
   grid-row: 21;
