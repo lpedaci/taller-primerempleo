@@ -2944,11 +2944,14 @@ details.drawer {
   background: var(--deep);
   color: var(--on-deep);
 }
+/* Aviso de trabajo: azul, como un anuncio publicado, para distinguirlo del CV */
 .aviso {
   margin: 0 0 1rem;
-  padding: 1.1rem 1.25rem;
+  padding: 1.1rem 1.25rem 1.1rem 1.4rem;
+  border-left: 5px solid var(--t6);
   border-radius: var(--r);
-  background: var(--ls);
+  background: color-mix(in srgb, var(--t6) 28%, var(--surface));
+  color: var(--ink);
   font-size: 1rem;
 }
 .aviso p {
