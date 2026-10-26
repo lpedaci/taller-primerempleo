@@ -624,9 +624,14 @@ html.is-pres {
   font-size: 0.82rem;
   line-height: 1.45;
 }
+.is-pres .pres-cvs > h4 {
+  margin-top: 0;
+}
 .is-pres .pres-cvs .sheet-wrap {
   grid-row: 21;
   overflow: visible;
+  margin: 0;
+  padding-bottom: 0.25rem;
 }
 /* La frase que presenta los ejemplos no va en la diapositiva: los CV ocupan ese lugar */
 .is-pres .pres-cvs > h4 + p {

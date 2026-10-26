@@ -360,7 +360,9 @@
         $$(".sheet-wrap", frame).forEach(function (w) { bottom = Math.max(bottom, w.getBoundingClientRect().bottom); });
         return (bottom - top) / scale / availOf(frame);
       };
-      var z = 0.74;
+      /* Empiezan un poco más grandes y se achican hasta entrar */
+      var z = 0.8;
+      frame.style.setProperty("--cv-zoom", z.toFixed(2));
       while (cvFill() > 0.985 && z > 0.4) {
         z -= 0.01;
         frame.style.setProperty("--cv-zoom", z.toFixed(2));
