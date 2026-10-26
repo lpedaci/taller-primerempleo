@@ -948,9 +948,11 @@ button.copy.is-copied {
 .perfil:hover {
   transform: translateY(-4px);
 }
+/* El banner mantiene la proporción del dibujo: en una tarjeta ancha crece en alto y no se recorta */
 .p-cover {
   position: relative;
-  height: 6rem;
+  aspect-ratio: 420 / 96;
+  min-height: 6rem;
   overflow: hidden;
 }
 .pc {
