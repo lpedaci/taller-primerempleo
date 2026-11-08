@@ -56,7 +56,7 @@
     --esc-textura: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none' stroke='%23ffffff' stroke-opacity='.022' stroke-width='1'%3E%3Cpath d='M0 .5h28M.5 0v28'/%3E%3C/svg%3E");
   }
 }
-/* Cada sala toma, en suave, el color del nivel de Chipi que hace ganar */
+/* Cada sala toma, en suave, el color del nivel que hace ganar */
 [data-sala] { --sala-c: color-mix(in srgb, var(--nivel-c) 22%, var(--surface)); }
 [data-tema="recibo"] {
   --tile: var(--t4);
@@ -215,103 +215,110 @@
   gap: 0.3rem;
 }
 
-/* ---------- Chipi: la tarjeta que sube de nivel ---------- */
-.chipi {
+/* ---------- Fuerte: la caja fuerte que enciende una luz por candado ---------- */
+/* Fuerte: caja fuerte de tela, naranja como el tono 2 del taller, con detalles de acero.
+   No usa verde: en el sistema el verde es el color de afirmación y el de Finanzas. */
+.fuerte {
   display: block;
   overflow: visible;
-  --ch-borde: #1f1f24;
-  --ch-fondo: #eceef3;
-  --ch-cara: #1f1f24;
-  --ch-texto: #5b5a6b;
-  --ch-banda: rgba(255, 255, 255, 0.55);
-  --ch-mano: #ffffff;
+  --cf-luz: #ffc387;
+  --cf-base: #f08c3e;
+  --cf-sombra: #b85a1c;
+  --cf-metal-luz: #ffffff;
+  --cf-metal: #d6d8e2;
+  --cf-metal-sombra: #8d90a3;
+  --cf-visor: #18181d;
+  --cf-ojo: #fbfaf5;
 }
-/* Niveles: Inicial, Plus, Premium, Gold, Black y Titanium (los colores de las tarjetas de banco) */
-.chipi[data-nivel="0"] { --ch-fondo: #f4f4f6; --ch-texto: #6b6a7a; --ch-banda: rgba(31, 31, 36, 0.05); }
-.chipi[data-nivel="1"] { --ch-fondo: #1d3f8f; --ch-cara: #ffffff; --ch-texto: #c9d6f2; --ch-banda: rgba(255, 255, 255, 0.12); }
-.chipi[data-nivel="2"] { --ch-fondo: #6e1a33; --ch-cara: #ffffff; --ch-texto: #f0c4cf; --ch-banda: rgba(255, 255, 255, 0.1); }
-.chipi[data-nivel="3"] { --ch-fondo: #c9a24a; --ch-texto: #4f3700; --ch-banda: rgba(255, 255, 255, 0.35); }
-.chipi[data-nivel="4"] { --ch-fondo: #18181d; --ch-cara: #f4f3fa; --ch-texto: #b9b9c4; --ch-banda: rgba(255, 255, 255, 0.07); }
-.chipi[data-nivel="5"] { --ch-fondo: #8d949d; --ch-texto: #23272d; --ch-banda: rgba(255, 255, 255, 0.5); }
-/* Color de cada nivel: lo usan la escalera, el aviso de subida y las salas */
+/* Color de cada sala y nivel: los tonos del taller, sin los verdes (afirmación y Finanzas) */
 [data-nivel="0"] { --nivel-c: #e3e4ea; }
-[data-nivel="1"], [data-sala="1"] { --nivel-c: #1d3f8f; }
-[data-nivel="2"], [data-sala="2"] { --nivel-c: #6e1a33; }
-[data-nivel="3"], [data-sala="3"] { --nivel-c: #c9a24a; }
-[data-nivel="4"], [data-sala="4"] { --nivel-c: #18181d; }
-[data-nivel="5"], [data-sala="5"] { --nivel-c: #8d949d; }
+[data-nivel="1"], [data-sala="1"] { --nivel-c: var(--t3); }
+[data-nivel="2"], [data-sala="2"] { --nivel-c: var(--t5); }
+[data-nivel="3"], [data-sala="3"] { --nivel-c: var(--t6); }
+[data-nivel="4"], [data-sala="4"] { --nivel-c: var(--t1); }
+[data-nivel="5"], [data-sala="5"] { --nivel-c: var(--t2); }
+.ch__st-luz { stop-color: var(--cf-luz); }
+.ch__st-base { stop-color: var(--cf-base); }
+.ch__st-sombra { stop-color: var(--cf-sombra); }
+.ch__st-metal-luz { stop-color: var(--cf-metal-luz); }
+.ch__st-metal { stop-color: var(--cf-metal); }
+.ch__st-metal-sombra { stop-color: var(--cf-metal-sombra); }
 .ch__sombra {
-  fill: rgba(30, 28, 60, 0.14);
+  fill: rgba(20, 20, 30, 0.18);
 }
-.ch__cuerpo {
-  fill: var(--ch-fondo);
-  transition: fill 0.6s var(--ease);
-}
-.ch__cuerpo-borde {
+/* Textura de tejido: puntos en V muy suaves */
+.ch__punto {
   fill: none;
-  stroke: var(--ch-borde);
-  stroke-width: 4;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1.1;
 }
-.ch__banda {
-  fill: var(--ch-banda);
-}
-.ch__chip {
-  fill: #f2cd5c;
-  stroke: var(--ch-borde);
-  stroke-width: 2.5;
-}
-.chipi[data-nivel="3"] .ch__chip {
-  fill: #fff2c2;
-}
-.ch__chip-l {
+.ch__puerta {
   fill: none;
-  stroke: var(--ch-borde);
-  stroke-width: 1.6;
-  opacity: 0.6;
+  stroke: rgba(0, 0, 0, 0.18);
+  stroke-width: 2;
 }
-.ch__ondas {
+.ch__visor {
+  fill: var(--cf-visor);
+}
+.ch__brillo {
   fill: none;
-  stroke: var(--ch-texto);
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.ch__ojo,
+.ch__estrella {
+  fill: var(--cf-ojo);
+}
+.ch__muesca {
+  fill: var(--cf-visor);
+}
+/* Cejas: trazos crema dentro del visor */
+.ch__cejas {
+  transform: translate(calc(var(--gx, 0) * 1.5px), calc(var(--gy, 0) * 1px));
+  transition: transform 0.45s var(--ease);
+}
+.ch__ceja {
+  fill: none;
+  stroke: var(--cf-ojo);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.4s var(--ease);
+}
+.ch__pupilas {
+  transition: transform 0.4s var(--ease);
+}
+/* Perilla de la combinación, al costado como una oreja */
+.ch__dial-g {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.6s var(--ease);
+}
+.ch__dial {
+  fill: var(--cf-metal-sombra);
+}
+/* Panel oscuro donde viven las luces, para que se lean sobre el naranja */
+.ch__panel {
+  fill: var(--cf-visor);
+}
+.ch__dial-marca {
+  stroke: var(--cf-metal-luz);
   stroke-width: 2.6;
   stroke-linecap: round;
 }
-.ch__texto {
-  fill: var(--ch-texto);
-  font-family: var(--mono);
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+/* Cinco luces: una por candado abierto */
+.ch__luz {
+  fill: rgba(255, 255, 255, 0.12);
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1;
+  transition: fill 0.5s var(--ease);
 }
-.ch__linea {
-  fill: none;
-  stroke: var(--ch-borde);
-  stroke-width: 5;
-  stroke-linecap: round;
-}
-.ch__pie {
-  fill: var(--ch-borde);
-}
-.ch__mano {
-  fill: var(--ch-mano);
-  stroke: var(--ch-borde);
-  stroke-width: 3;
-}
-.ch__cara {
-  fill: var(--ch-cara);
-}
-.ch__brillo {
-  fill: var(--ch-fondo);
-}
-.ch__trazo {
-  fill: none;
-  stroke: var(--ch-cara);
-  stroke-width: 3.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.ch__cachete {
-  fill: #f08aa6;
-  opacity: 0.55;
+.ch__luz.is-on {
+  fill: #f6c94e;
+  stroke: #fff1c7;
+  stroke-width: 1.4;
 }
 .ch__destellos path {
   fill: none;
@@ -319,67 +326,65 @@
   stroke-width: 4;
   stroke-linecap: round;
 }
-/* Expresiones */
+/* Expresiones: las cuenta el visor */
 .ch__ojos--felices,
-.ch__cejas,
-.ch__boca,
-.ch__brazo,
 .ch__destellos {
   display: none;
 }
-.chipi .ch__boca--sonrisa,
-.chipi .ch__brazo--baja {
-  display: inline;
-}
-.chipi--nivel .ch__brazo--baja {
+.fuerte[data-expr="feliz"] .ch__ojos--abiertos {
   display: none;
 }
-.chipi--nivel .ch__brazo--saluda {
+.fuerte[data-expr="feliz"] .ch__ojos--felices,
+.fuerte[data-expr="feliz"] .ch__destellos {
   display: inline;
 }
-.chipi[data-expr="feliz"] .ch__ojos--abiertos,
-.chipi[data-expr="feliz"] .ch__boca--sonrisa,
-.chipi[data-expr="feliz"] .ch__brazo--baja {
-  display: none;
+.fuerte[data-expr="feliz"] .ch__dial-g {
+  transform: rotate(120deg);
 }
-.chipi[data-expr="feliz"] .ch__ojos--felices,
-.chipi[data-expr="feliz"] .ch__boca--abierta,
-.chipi[data-expr="feliz"] .ch__brazo--saluda,
-.chipi[data-expr="feliz"] .ch__destellos {
-  display: inline;
+/* Feliz: cejas bien arriba */
+.fuerte[data-expr="feliz"] .ch__ceja {
+  transform: translateY(-3px);
 }
-.chipi[data-expr="preocupado"] .ch__boca--sonrisa {
-  display: none;
+/* Preocupado: las puntas de adentro suben */
+.fuerte[data-expr="preocupado"] .ch__ceja--izq {
+  transform: translateY(-1px) rotate(-16deg);
 }
-.chipi[data-expr="preocupado"] .ch__cejas,
-.chipi[data-expr="preocupado"] .ch__boca--duda {
-  display: inline;
+.fuerte[data-expr="preocupado"] .ch__ceja--der {
+  transform: translateY(-1px) rotate(16deg);
 }
-.chipi[data-expr="pensando"] .ch__boca--sonrisa,
-.chipi[data-expr="pensando"] .ch__brazo--baja {
-  display: none;
+/* Pensando: una ceja arriba y la otra baja */
+.fuerte[data-expr="pensando"] .ch__ceja--izq {
+  transform: translateY(1.5px) rotate(4deg);
 }
-.chipi[data-expr="pensando"] .ch__boca--piensa,
-.chipi[data-expr="pensando"] .ch__brazo--piensa {
-  display: inline;
+.fuerte[data-expr="pensando"] .ch__ceja--der {
+  transform: translateY(-3.5px) rotate(-8deg);
 }
-.chipi[data-expr="pensando"] .ch__ojos--abiertos {
-  transform: translate(3px, -3px);
+.ch__reflejo {
+  fill: var(--cf-ojo);
+}
+.fuerte[data-expr="preocupado"] .ch__pupilas {
+  transform: translate(0, 2.5px);
+}
+.fuerte[data-expr="pensando"] .ch__pupilas {
+  transform: translate(3.5px, -4.5px);
+}
+.fuerte[data-expr="pensando"] .ch__dial-g {
+  transform: rotate(-40deg);
 }
 
-/* Tarjeta de nivel: Chipi + nombre del nivel + escalera de niveles */
+/* Tarjeta de nivel: personaje + nombre del nivel + escalera de niveles */
 .nivel {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 1rem;
   align-items: center;
 }
-.nivel__chipi .chipi {
+.nivel__fuerte .fuerte {
   width: 100%;
   height: auto;
 }
-/* Sobre fondo carbón, el contorno de Chipi pasa a claro para que se vea en todos los niveles */
-.nivel .chipi {
+/* Sobre fondo carbón, ajustes del personaje */
+.nivel .fuerte {
   --ch-borde: #e9e8f2;
   --ch-mano: #e9e8f2;
 }
@@ -434,30 +439,55 @@
 }
 
 /* ---------- Panel principal ---------- */
-/* Portada: bloque carbón como los del taller, con Chipi y su nivel a la derecha */
+/* Portada: bento como el inicio del taller. El texto va en una tarjeta clara y Fuerte en un
+   afiche carbón, con el avance arriba y el mensaje flotando como una notificación */
 .portada {
   display: grid;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: center;
+  gap: 1rem;
   margin-bottom: 1.25rem;
-  padding: clamp(1.5rem, 4.5vw, 3.25rem);
-  border-radius: var(--r-lg);
-  background: var(--deep);
-  color: var(--on-deep);
 }
 @media (min-width: 900px) {
   .portada {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   }
+}
+.portada__txt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4.5vw, 3.5rem);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+/* La perilla de la combinación como trazo de fondo, igual que el garabato del inicio */
+.portada__txt::after {
+  content: "";
+  position: absolute;
+  right: -5.5rem;
+  bottom: -5.5rem;
+  width: 18rem;
+  aspect-ratio: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23d9b25a' stroke-opacity='.35' stroke-linecap='round'%3E%3Ccircle cx='100' cy='100' r='78' stroke-width='18'/%3E%3Cpath stroke-width='6' d='M100 6v10M100 184v10M6 100h10M184 100h10M33.5 33.5l7 7M159.5 159.5l7 7M33.5 166.5l7-7M159.5 40.5l7-7'/%3E%3C/svg%3E") center / contain no-repeat;
+  pointer-events: none;
+}
+.portada__txt > * {
+  position: relative;
+  z-index: 1;
 }
 .portada__kicker {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0 0 1.1rem;
-  padding: 0.3rem 0.85rem 0.3rem 0.35rem;
+  margin: 0 0 1.25rem;
+  padding: 0.3rem 0.9rem 0.3rem 0.35rem;
   border-radius: 999px;
-  background: var(--deep-soft);
+  background: var(--deep);
+  color: var(--on-deep);
   font-family: var(--display);
   font-weight: 600;
   font-size: 0.9rem;
@@ -472,16 +502,30 @@
 }
 .portada__t {
   margin: 0 0 1rem;
-  font-size: clamp(2.5rem, 5.5vw, 4.1rem);
-  letter-spacing: -0.035em;
+  font-size: clamp(2.5rem, 5.4vw, 4.4rem);
+  letter-spacing: -0.03em;
   line-height: 0.98;
 }
+.portada__t em {
+  font-style: normal;
+  background: linear-gradient(transparent 60%, var(--t3) 60%, var(--t3) 92%, transparent 92%);
+}
+:root[data-theme="dark"] .portada__t em {
+  background: none;
+  color: var(--juego);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .portada__t em {
+    background: none;
+    color: var(--juego);
+  }
+}
 .portada__lead {
-  max-width: 46ch;
-  margin-bottom: 1.4rem;
-  color: color-mix(in srgb, var(--on-deep) 82%, transparent);
-  font-size: 1.08rem;
-  line-height: 1.6;
+  max-width: 44ch;
+  margin: 0 0 1.4rem;
+  color: var(--muted);
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+  line-height: 1.55;
 }
 .reglas {
   display: flex;
@@ -497,8 +541,9 @@
   gap: 0.45rem;
   min-height: 2.4rem;
   padding: 0.3rem 0.9rem 0.3rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--on-deep) 18%, transparent);
+  border: 1px solid var(--rule);
   border-radius: 999px;
+  background: var(--surface);
   font-family: var(--display);
   font-size: 0.9rem;
   font-weight: 500;
@@ -506,44 +551,148 @@
 .reglas .ic {
   width: 1.15rem;
   height: 1.15rem;
-  color: var(--juego-metal);
+  color: var(--juego);
 }
 .btn-juego--claro {
   border-color: #ffffff;
   background: #ffffff;
   color: #1f1f24;
 }
-.btn-juego--fantasma {
-  border-color: color-mix(in srgb, var(--on-deep) 30%, transparent);
-  background: transparent;
+
+/* Afiche de Fuerte */
+.vitrina {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 26rem;
+  overflow: hidden;
+  padding: clamp(1.25rem, 2.5vw, 1.9rem);
+  border-radius: var(--r-lg);
+  background: var(--deep);
   color: var(--on-deep);
 }
-.btn-juego--fantasma:hover {
-  border-color: var(--on-deep);
+/* Disco verde detrás del personaje */
+.vitrina::before {
+  content: "";
+  position: absolute;
+  right: -18%;
+  bottom: -38%;
+  z-index: -1;
+  width: 95%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--t2) 22%, var(--deep));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
-.portada__chipi {
-  display: grid;
-  gap: 1rem;
-  justify-items: start;
-}
-.globo {
-  position: relative;
-  max-width: 36ch;
-  margin: 0;
-  padding: 0.8rem 1.05rem;
-  border-radius: 1.2rem 1.2rem 1.2rem 0.3rem;
-  background: #ffffff;
-  color: #1f1f24;
+.vitrina__k {
+  display: inline-block;
+  margin: 0 0 0.55rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.7rem;
+  background: var(--juego-metal);
+  color: var(--on-juego-metal);
   font-family: var(--display);
-  font-weight: 500;
-  line-height: 1.4;
+  font-weight: 600;
+  font-size: 0.88rem;
 }
-.nivel--portada {
+.vitrina__n {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.6rem;
+  margin: 0;
+  font-family: var(--display);
+}
+.vitrina__num {
+  font-weight: 600;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.vitrina__num small {
+  font-size: 0.45em;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.65;
+}
+.vitrina__sub {
+  font-size: 0.98rem;
+  opacity: 0.8;
+}
+/* Mensaje de Fuerte: tarjeta de notificación */
+.vitrina__msg {
+  position: relative;
+  z-index: 2;
+  max-width: 15rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 1.1rem;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 20px 36px -18px rgba(0, 0, 0, 0.6);
+}
+.vitrina__msg-de {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.25rem;
+  color: var(--muted);
+  font-family: var(--display);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.vitrina__msg-txt {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+.vitrina__msg-luz {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #f6c94e;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #f6c94e 30%, transparent);
+}
+/* Fuerte grande, asomado desde abajo a la derecha del afiche */
+.vitrina__escena {
+  position: absolute;
+  right: -2%;
+  bottom: -7%;
+  z-index: 1;
+  width: min(70%, 23rem);
+  pointer-events: none;
+}
+.fuerte--vitrina {
   width: 100%;
-  grid-template-columns: minmax(8.5rem, 12.5rem) minmax(0, 1fr);
-  padding: 1.1rem 1.25rem;
-  border-radius: 1.5rem;
-  background: var(--deep-soft);
+  height: auto;
+}
+@media (min-width: 560px) and (max-width: 899px) {
+  .vitrina {
+    min-height: 22rem;
+  }
+  .vitrina__escena {
+    width: min(52%, 19rem);
+  }
+}
+/* En el celular, Fuerte va debajo del mensaje, sin taparlo */
+@media (max-width: 559px) {
+  .vitrina {
+    min-height: 0;
+    padding-bottom: 0;
+  }
+  .vitrina__escena {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    align-self: flex-end;
+    width: min(78%, 17rem);
+    margin: -1.5rem -0.5rem -2.25rem 0;
+  }
 }
 
 /* Tablero (bento): encabezado arriba; salas y código de la puerta a la misma altura */
@@ -622,17 +771,17 @@
   gap: 0.2rem;
   min-height: 13.5rem;
   padding: 0.9rem 0.9rem 0.85rem;
-  border: 1.5px solid color-mix(in srgb, var(--nivel-c) 40%, var(--surface));
+  border: 1.5px solid color-mix(in srgb, var(--nivel-c) 70%, var(--surface));
   border-radius: 1.5rem;
-  background: color-mix(in srgb, var(--nivel-c) 14%, var(--surface));
+  background: color-mix(in srgb, var(--nivel-c) 36%, var(--surface));
   color: var(--ink);
 }
 .sala-tile.is-resuelta {
-  background: color-mix(in srgb, var(--nivel-c) 26%, var(--surface));
+  background: color-mix(in srgb, var(--nivel-c) 62%, var(--surface));
 }
 .sala-tile.is-bloqueada {
   border-style: dashed;
-  background: color-mix(in srgb, var(--nivel-c) 6%, var(--surface));
+  background: color-mix(in srgb, var(--nivel-c) 12%, var(--surface));
 }
 .sala-tile__top {
   display: flex;
@@ -684,7 +833,7 @@
   font-size: 1.2rem;
   line-height: 1.15;
 }
-/* Premio: la tarjeta que gana Chipi al resolver la sala */
+/* Premio: el nivel que se gana al resolver la sala */
 .sala-tile__premio {
   display: inline-flex;
   align-items: center;
@@ -1704,12 +1853,12 @@
   font-size: 0.95rem;
   line-height: 1.5;
 }
-.candado__chipi {
+.candado__fuerte {
   display: block;
   width: clamp(6.5rem, 14vw, 9rem);
   margin-top: -0.25rem;
 }
-.candado__chipi .chipi {
+.candado__fuerte .fuerte {
   width: 100%;
   height: auto;
 }
@@ -1978,21 +2127,21 @@
   color: var(--muted);
   font-size: 0.82rem;
 }
-.logro__chipi {
+.logro__fuerte {
   position: relative;
   display: grid;
   place-items: center;
   width: clamp(6.5rem, 14vw, 8.5rem);
   aspect-ratio: 1;
 }
-.logro__chipi::before {
+.logro__fuerte::before {
   content: "";
   position: absolute;
   inset: 8%;
   border-radius: 50%;
   background: var(--p-amarillo);
 }
-.logro__chipi .chipi {
+.logro__fuerte .fuerte {
   position: relative;
   width: 92%;
   height: auto;
@@ -2372,7 +2521,7 @@
   align-items: center;
   margin-bottom: 1rem;
 }
-.chipi--pronto {
+.fuerte--pronto {
   width: clamp(6rem, 14vw, 8.5rem);
   height: auto;
 }
@@ -2391,25 +2540,25 @@
     transform-origin: center;
     animation: ch-parpadeo 5s infinite;
   }
-  .chipi[data-expr="pensando"] .ch__ojos--abiertos {
+  .fuerte[data-expr="pensando"] .ch__ojos--abiertos {
     animation: none;
   }
-  .chipi--nivel .ch__brazo--saluda {
+  .fuerte--nivel .ch__brazo--saluda {
     transform-box: fill-box;
     transform-origin: 0% 100%;
     animation: ch-saludo 2.6s ease-in-out infinite;
   }
-  .chipi.is-reaccion[data-expr="feliz"] .ch__g {
+  .fuerte.is-reaccion[data-expr="feliz"] .ch__g {
     animation: ch-salto 0.7s var(--ease);
   }
-  .chipi.is-reaccion[data-expr="preocupado"] .ch__g {
+  .fuerte.is-reaccion[data-expr="preocupado"] .ch__g {
     animation: ch-no 0.5s var(--ease);
   }
-  .chipi.is-reaccion[data-expr="pensando"] .ch__g {
+  .fuerte.is-reaccion[data-expr="pensando"] .ch__g {
     animation: ch-ladea 0.6s var(--ease);
   }
-  .nivel.is-sube .nivel__chipi,
-  .logro__chipi .chipi {
+  .nivel.is-sube .nivel__fuerte,
+  .logro__fuerte .fuerte {
     animation: ch-sube 0.9s var(--ease) both;
   }
   .candado.is-abriendo .candado__ic {
@@ -2608,7 +2757,7 @@
 .esc-foot__links {
   display: grid;
   align-content: start;
-  gap: 0.35rem;
+  gap: 0.75rem;
 }
 .esc-foot__links a {
   display: inline-flex;
@@ -2642,18 +2791,6 @@
 .tablero__lado,
 .portada > * {
   min-width: 0;
-}
-@media (max-width: 559px) {
-  .nivel--portada {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: start;
-  }
-  .nivel--portada .nivel__chipi {
-    width: min(100%, 13rem);
-  }
-  .nivel--portada .nivel__txt {
-    width: 100%;
-  }
 }
 
 /* =========================================================
@@ -3357,7 +3494,7 @@
   border-radius: 50%;
   background: var(--juego-metal);
 }
-.chipi--puerta {
+.fuerte--puerta {
   position: absolute;
   right: 8%;
   bottom: 1rem;
@@ -3467,7 +3604,7 @@
 .sello--oro .sello__ic { background: #c9a24a; }
 .sello--plata .sello__ic { background: #b7bdc6; }
 .sello--bronce .sello__ic { background: #c08457; }
-.chipi--saliste {
+.fuerte--saliste {
   width: 100%;
   height: auto;
   --ch-borde: #e9e8f2;
@@ -3621,7 +3758,7 @@
   .ad__fila:nth-child(3) .ad__barra { animation-delay: 0.12s; }
   .ad__fila:nth-child(4) .ad__barra { animation-delay: 0.18s; }
   .ad__fila:nth-child(5) .ad__barra { animation-delay: 0.24s; }
-  .chipi--saliste .ch__g {
+  .fuerte--saliste .ch__g {
     animation: ch-salto 1.4s var(--ease) 0.3s 2;
   }
 }
@@ -3636,7 +3773,7 @@
 .sello > span:last-child {
   display: grid;
 }
-.saliste__chipi {
+.saliste__fuerte {
   width: min(100%, 13rem);
 }
 
@@ -3701,7 +3838,7 @@
     border-right: 1px solid var(--rule);
   }
 }
-.chipi--pj {
+.fuerte--pj {
   width: 4.75rem;
   height: auto;
 }
@@ -3887,7 +4024,7 @@
   gap: 1.25rem;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .pj__nivel.is-sube .chipi {
+  .pj__nivel.is-sube .fuerte {
     animation: ch-sube 0.9s var(--ease) both;
   }
 }
@@ -3928,7 +4065,7 @@
   .logro__head {
     gap: 0.5rem;
   }
-  .logro__chipi {
+  .logro__fuerte {
     width: 5.5rem;
   }
 }
@@ -3980,4 +4117,101 @@
     grid-column: 1 / -1;
     min-height: 0;
   }
+}
+
+
+/* Premio de cada sala: cuál de las cinco luces de Fuerte enciende */
+.sala-tile__premio {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.luces {
+  display: flex;
+  gap: 0.3rem;
+}
+.luces i {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+.luces i.is-esta {
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+.luces i.is-on {
+  background: #f6c94e;
+  box-shadow: inset 0 0 0 2px #8a6410;
+}
+/* El aviso de nivel usa una luz, igual que el personaje */
+.sube__punto {
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 0;
+  border-radius: 50%;
+  background: #f2c14e;
+}
+
+/* Mirada de Fuerte: los ojos se mueven juntos dentro del visor (los mueve escape.js) */
+.ch__mirada {
+  transform: translate(calc(var(--gx, 0) * 4px), calc(var(--gy, 0) * 3px));
+  transition: transform 0.45s var(--ease);
+}
+.fuerte[data-expr="normal"] .ch__pupilas {
+  transform: translate(calc(var(--gx, 0) * 4.5px), calc(var(--gy, 0) * 4px));
+}
+/* En tema oscuro el tono de cada sala baja para que el texto conserve el contraste */
+:root[data-theme="dark"] .sala-tile {
+  background: color-mix(in srgb, var(--nivel-c) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--nivel-c) 55%, var(--surface));
+}
+:root[data-theme="dark"] .sala-tile.is-resuelta {
+  background: color-mix(in srgb, var(--nivel-c) 17%, var(--surface));
+}
+:root[data-theme="dark"] .sala-tile.is-bloqueada {
+  background: color-mix(in srgb, var(--nivel-c) 6%, var(--surface));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sala-tile {
+    background: color-mix(in srgb, var(--nivel-c) 10%, var(--surface));
+    border-color: color-mix(in srgb, var(--nivel-c) 55%, var(--surface));
+  }
+  :root:not([data-theme="light"]) .sala-tile.is-resuelta {
+    background: color-mix(in srgb, var(--nivel-c) 17%, var(--surface));
+  }
+  :root:not([data-theme="light"]) .sala-tile.is-bloqueada {
+    background: color-mix(in srgb, var(--nivel-c) 6%, var(--surface));
+  }
+}
+
+/* Fuerte mini: firma los mensajes del personaje */
+.fuerte-mini {
+  flex: 0 0 auto;
+  width: 1.9rem;
+  height: auto;
+}
+.fm__cuerpo { fill: #f08c3e; }
+.fm__visor,
+.fm__pupila { fill: #18181d; }
+.fm__ojo { fill: #fbfaf5; }
+.vitrina__msg-de {
+  gap: 0.5rem;
+  color: var(--ink);
+}
+
+
+/* Cohibido: el cursor lo descubrió mirando. Mira a la derecha y sube las cejas */
+.fuerte--vitrina {
+  pointer-events: auto;
+}
+.fuerte.is-cohibido .ch__ceja--izq {
+  transform: translateY(-2px) rotate(-10deg);
+}
+.fuerte.is-cohibido .ch__ceja--der {
+  transform: translateY(-2px) rotate(10deg);
+}
+.fuerte.is-cohibido .ch__mirada,
+.fuerte.is-cohibido .ch__pupilas,
+.fuerte.is-cohibido .ch__cejas {
+  transition-duration: 0.22s;
 }

@@ -53,44 +53,124 @@
   }
   function miles(digits) { return digits.replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
 
-  /* ---------- Chipi: la tarjeta de la cuenta sueldo ----------
-     Cambia de color según el nivel (una sala resuelta = un nivel) y tiene cuatro expresiones:
-     normal, feliz, preocupado y pensando. Es decorativa: el texto siempre está aparte. */
+  /* ---------- Fuerte: la caja fuerte de tu primer sueldo ----------
+     Une las dos ideas del juego: cerraduras (escape room) y guardar la plata (finanzas).
+     Estilo de muñeco blando: cuerpo redondeado con textura de tejido, visor oscuro con ojos
+     blancos, la perilla de la combinación al costado como una oreja y bisagras del otro lado.
+     En la puerta tiene 5 luces, una por candado: el progreso se lee por cantidad y no solo por
+     color. Cuatro expresiones: normal, feliz (ojos de estrella), preocupado y pensando.
+     Es decorativo: el texto siempre está aparte. */
   var uid = 0;
-  function chipi(expr, nivel, cls) {
-    var id = "chipi-clip-" + (++uid);
-    var nombre = NIVELES[nivel] || NIVELES[0];
-    return '<svg class="chipi' + (cls ? " " + cls : "") + '" data-expr="' + (expr || "normal") + '" data-nivel="' + nivel + '" viewBox="0 0 160 140" aria-hidden="true" focusable="false">' +
-      '<defs><clipPath id="' + id + '"><rect x="14" y="20" width="132" height="86" rx="14"/></clipPath></defs>' +
-      '<ellipse class="ch__sombra" cx="80" cy="133" rx="42" ry="5"/>' +
+  function fuerte(expr, nivel, cls) {
+    var id = "fu" + (++uid), luces = "";
+    for (var i = 0; i < 5; i++) luces += '<circle class="ch__luz' + (i < nivel ? " is-on" : "") + '" cx="' + (56 + i * 12) + '" cy="111" r="4"/>';
+    var estrella = function (x) {
+      return "M" + x + " 57l3.4 8.6 8.6 3.4-8.6 3.4-3.4 8.6-3.4-8.6-8.6-3.4 8.6-3.4z";
+    };
+    return '<svg class="fuerte' + (cls ? " " + cls : "") + '" data-expr="' + (expr || "normal") + '" data-nivel="' + nivel + '" viewBox="0 0 164 150" aria-hidden="true" focusable="false">' +
+      '<defs>' +
+        '<radialGradient id="' + id + 'c" cx="34%" cy="26%" r="82%"><stop class="ch__st-luz" offset="0"/><stop class="ch__st-base" offset=".55"/><stop class="ch__st-sombra" offset="1"/></radialGradient>' +
+        '<radialGradient id="' + id + 'm" cx="35%" cy="30%" r="75%"><stop class="ch__st-metal-luz" offset="0"/><stop class="ch__st-metal" offset=".6"/><stop class="ch__st-metal-sombra" offset="1"/></radialGradient>' +
+        '<pattern id="' + id + 't" width="6" height="5" patternUnits="userSpaceOnUse"><path class="ch__punto" d="M0 1l3 3 3-3"/></pattern>' +
+      '</defs>' +
+      '<ellipse class="ch__sombra" cx="80" cy="143" rx="50" ry="5"/>' +
       '<g class="ch__g">' +
-        '<g class="ch__destellos"><path d="M136 12l6-9M146 25l10-3M126 6l1-9"/></g>' +
-        '<path class="ch__linea" d="M62 104v18M98 104v18"/>' +
-        '<ellipse class="ch__pie" cx="56" cy="124" rx="9.5" ry="5"/><ellipse class="ch__pie" cx="104" cy="124" rx="9.5" ry="5"/>' +
-        '<path class="ch__linea" d="M16 66c-9 3-13 10-13 19"/><circle class="ch__mano" cx="3" cy="88" r="5.5"/>' +
-        '<g class="ch__brazo ch__brazo--saluda"><path class="ch__linea" d="M144 60c9-4 13-11 13-20"/><circle class="ch__mano" cx="157" cy="37" r="5.5"/></g>' +
-        '<g class="ch__brazo ch__brazo--baja"><path class="ch__linea" d="M144 66c9 3 13 10 13 19"/><circle class="ch__mano" cx="157" cy="88" r="5.5"/></g>' +
-        '<g class="ch__brazo ch__brazo--piensa"><path class="ch__linea" d="M144 68c12 6 9 22-6 25"/><circle class="ch__mano" cx="137" cy="93" r="5.5"/></g>' +
-        '<rect class="ch__cuerpo" x="14" y="20" width="132" height="86" rx="14"/>' +
-        '<path class="ch__banda" clip-path="url(#' + id + ')" d="M72 20h22L48 106H26z"/>' +
-        '<rect class="ch__cuerpo-borde" x="14" y="20" width="132" height="86" rx="14"/>' +
-        '<rect class="ch__chip" x="30" y="40" width="27" height="21" rx="5"/><path class="ch__chip-l" d="M30 50.5h27M43.5 40v21"/>' +
-        '<path class="ch__ondas" d="M65 44c3 4 3 9 0 13M71 40c5 6 5 15 0 21"/>' +
-        '<text class="ch__texto" x="30" y="93">' + esc(nombre.toUpperCase()) + '</text>' +
-        '<ellipse class="ch__cachete" cx="95" cy="67" rx="5.5" ry="3.2"/><ellipse class="ch__cachete" cx="135" cy="67" rx="5.5" ry="3.2"/>' +
-        '<g class="ch__ojos ch__ojos--abiertos"><ellipse class="ch__cara" cx="104" cy="56" rx="4.6" ry="6"/><ellipse class="ch__cara" cx="126" cy="56" rx="4.6" ry="6"/><circle class="ch__brillo" cx="105.6" cy="53.6" r="1.6"/><circle class="ch__brillo" cx="127.6" cy="53.6" r="1.6"/></g>' +
-        '<g class="ch__ojos ch__ojos--felices"><path class="ch__trazo" d="M98.5 58c2.5-6 8.5-6 11 0M120.5 58c2.5-6 8.5-6 11 0"/></g>' +
-        '<g class="ch__cejas"><path class="ch__trazo" d="M97 47.5l10-3M133 47.5l-10-3"/></g>' +
-        '<path class="ch__boca ch__boca--sonrisa ch__trazo" d="M108.5 66c3.5 4 9.5 4 13 0"/>' +
-        '<path class="ch__boca ch__boca--abierta ch__cara" d="M107 64h16c0 6-3.6 9.5-8 9.5S107 70 107 64z"/>' +
-        '<path class="ch__boca ch__boca--duda ch__trazo" d="M109 70c3-3 9-3 12 0"/>' +
-        '<path class="ch__boca ch__boca--piensa ch__trazo" d="M110.5 68h9"/>' +
+        '<g class="ch__destellos"><path d="M148 12l5-8M156 26l8-3M136 6l1-8"/></g>' +
+        '<rect class="ch__bisagra" x="11" y="42" width="15" height="20" rx="7" fill="url(#' + id + 'm)"/>' +
+        '<rect class="ch__bisagra" x="11" y="92" width="15" height="20" rx="7" fill="url(#' + id + 'm)"/>' +
+        '<rect class="ch__cuerpo" x="20" y="16" width="120" height="122" rx="46" fill="url(#' + id + 'c)"/>' +
+        '<rect class="ch__tejido" x="20" y="16" width="120" height="122" rx="46" fill="url(#' + id + 't)"/>' +
+        '<rect class="ch__puerta" x="29" y="25" width="102" height="104" rx="38"/>' +
+        '<rect class="ch__visor" x="36" y="44" width="88" height="50" rx="25"/>' +
+        '<path class="ch__brillo" d="M45 60c2-6 7-9.5 13-10.5"/>' +
+        '<g class="ch__ojos ch__ojos--abiertos"><g class="ch__mirada"><circle class="ch__ojo" cx="63" cy="69" r="11"/><circle class="ch__ojo" cx="97" cy="69" r="11"/>' +
+          '<g class="ch__pupilas"><circle class="ch__muesca" cx="63" cy="70" r="5.6"/><circle class="ch__muesca" cx="97" cy="70" r="5.6"/>' +
+            '<circle class="ch__reflejo" cx="61" cy="67.6" r="1.7"/><circle class="ch__reflejo" cx="95" cy="67.6" r="1.7"/></g></g>' +
+          '</g>' +
+        '<g class="ch__cejas"><path class="ch__ceja ch__ceja--izq" d="M55.5 53.5q7.5-4.2 15 -0.6"/><path class="ch__ceja ch__ceja--der" d="M89.5 52.9q7.5-3.6 15 0.6"/></g>' +
+        '<g class="ch__ojos ch__ojos--felices"><path class="ch__estrella" d="' + estrella(63) + estrella(97) + '"/></g>' +
+        '<rect class="ch__panel" x="47" y="104" width="66" height="14" rx="7"/>' + luces +
+        '<g class="ch__dial-g"><circle class="ch__dial-aro" cx="141" cy="78" r="16" fill="url(#' + id + 'm)"/>' +
+          '<circle class="ch__dial" cx="141" cy="78" r="9.5"/><path class="ch__dial-marca" d="M141 70.5v5"/></g>' +
       '</g></svg>';
   }
+  /* Mirada: cuando Fuerte está tranquilo (expresión normal) a veces sigue el cursor, a veces
+     mira de frente y a veces de costado. Si el cursor se le posa encima, se da cuenta de que lo
+     descubrieron mirando: corre la vista a la derecha y sube las cejas, cohibido.
+     Si se pidió reducir el movimiento, mira de frente. */
+  var mirada = { modo: "frente", gx: 0, gy: 0, px: null, py: null, raf: 0, sobre: null, soltar: 0, timer: 0 };
+  function aplicarMirada() {
+    mirada.raf = 0;
+    app.querySelectorAll('.fuerte[data-expr="normal"]').forEach(function (svg) {
+      var gx = mirada.gx, gy = mirada.gy;
+      if (svg === mirada.sobre) { gx = 1; gy = 0.35; }
+      else if (mirada.modo === "cursor" && mirada.px != null) {
+        var r = svg.getBoundingClientRect();
+        if (!r.width) return;
+        var dx = mirada.px - (r.left + r.width / 2), dy = mirada.py - (r.top + r.height * 0.45);
+        var d = Math.max(Math.sqrt(dx * dx + dy * dy), 1), f = Math.min(d / 260, 1);
+        gx = dx / d * f; gy = dy / d * f;
+      }
+      svg.style.setProperty("--gx", gx.toFixed(2));
+      svg.style.setProperty("--gy", gy.toFixed(2));
+    });
+  }
+  function pedirMirada() { if (!mirada.raf) mirada.raf = window.requestAnimationFrame(aplicarMirada); }
+  function cambiarMirada() {
+    var conCursor = mirada.px != null;
+    var opciones = conCursor ? ["cursor", "cursor", "frente", "costado"] : ["frente", "costado", "costado"];
+    mirada.modo = opciones[Math.floor(Math.random() * opciones.length)];
+    if (mirada.modo === "frente") { mirada.gx = 0; mirada.gy = 0.15; }
+    else if (mirada.modo === "costado") { mirada.gx = Math.random() < 0.5 ? -1 : 1; mirada.gy = 0.1; }
+    pedirMirada();
+    programarMirada((mirada.modo === "cursor" ? 4000 : 2200) + Math.random() * 2500);
+  }
+  function programarMirada(ms) {
+    window.clearTimeout(mirada.timer);
+    mirada.timer = window.setTimeout(cambiarMirada, ms);
+  }
+  if (!reduceMotion.matches) {
+    window.addEventListener("pointermove", function (e) {
+      if (e.pointerType && e.pointerType !== "mouse") return;
+      mirada.px = e.clientX; mirada.py = e.clientY;
+      var t = e.target && e.target.closest ? e.target.closest('.fuerte[data-expr="normal"]') : null;
+      if (t) {
+        window.clearTimeout(mirada.soltar);
+        mirada.soltar = 0;
+        if (t !== mirada.sobre) {
+          if (mirada.sobre) mirada.sobre.classList.remove("is-cohibido");
+          mirada.sobre = t;
+          t.classList.add("is-cohibido");
+          pedirMirada();
+        }
+      } else if (mirada.sobre && !mirada.soltar) {
+        /* Se queda un ratito cohibido antes de volver a mirar */
+        /* Al irse el cursor, enseguida vuelve a seguirlo y al rato mira para otro lado */
+        mirada.soltar = window.setTimeout(function () {
+          if (mirada.sobre) mirada.sobre.classList.remove("is-cohibido");
+          mirada.sobre = null; mirada.soltar = 0;
+          mirada.modo = "cursor";
+          pedirMirada();
+          programarMirada(1800 + Math.random() * 1200);
+        }, 450);
+      }
+      if (mirada.modo === "cursor") pedirMirada();
+    }, { passive: true });
+    programarMirada(1500);
+  }
+  /* Fuerte mini: la cara sola, para firmar sus mensajes */
+  function fuerteMini() {
+    return '<svg class="fuerte-mini" viewBox="0 0 28 26" aria-hidden="true" focusable="false">' +
+      '<rect class="fm__cuerpo" x="1" y="1" width="26" height="24" rx="9"/>' +
+      '<rect class="fm__visor" x="4.5" y="7" width="19" height="11" rx="5.5"/>' +
+      '<circle class="fm__ojo" cx="10.5" cy="12.5" r="2.6"/><circle class="fm__ojo" cx="17.5" cy="12.5" r="2.6"/>' +
+      '<circle class="fm__pupila" cx="10.5" cy="12.8" r="1.25"/><circle class="fm__pupila" cx="17.5" cy="12.8" r="1.25"/></svg>';
+  }
   function cambiarExpresion(expr) {
-    var s = app.querySelector(".candado .chipi");
+    var s = app.querySelector(".candado .fuerte");
     if (!s) return;
     s.setAttribute("data-expr", expr);
+    if (expr !== "normal") { s.style.setProperty("--gx", "0"); s.style.setProperty("--gy", "0"); } else pedirMirada();
     s.classList.remove("is-reaccion"); void s.getBoundingClientRect(); s.classList.add("is-reaccion");
   }
 
@@ -178,6 +258,7 @@
     else if (p === "saliste" && S.post) renderSaliste();
     else renderPanel();
     conectarEquipo();
+    pedirMirada();
     if (S.pre) correrTiempo();
     guardar();
     if (!primerRender) {
@@ -204,16 +285,16 @@
     var cod = D.salas.filter(function (s) { return S.salas[s.id] && S.salas[s.id].resuelta; }).map(function (s) { return s.fragmento; });
     return cod.length ? "Letras del código: " + cod.join(", ") + ". Faltan " + (TOTAL - cod.length) + "." : "Todavía no tenés letras del código.";
   }
-  /* Tarjeta de nivel: Chipi con su nivel y cuánto falta para el próximo */
+  /* Tarjeta de nivel: el personaje con su nivel y cuánto falta para el próximo */
   function nivelHTML(expr, cls) {
     var n = nivelActual(), sig = NIVELES[n + 1];
     var escalera = NIVELES.map(function (nom, i) {
       return '<li class="escalera__p' + (i <= n ? " is-alcanzado" : "") + (i === n ? " is-actual" : "") + '" data-nivel="' + i + '"><span class="sr-only">' + esc(nom) + (i === n ? ", nivel actual" : "") + '</span></li>';
     }).join("");
     return '<div class="nivel' + (cls ? " " + cls : "") + '" data-nivel="' + n + '">' +
-      '<div class="nivel__chipi">' + chipi(expr, n, "chipi--nivel") + '</div>' +
+      '<div class="nivel__fuerte">' + fuerte(expr, n, "fuerte--nivel") + '</div>' +
       '<div class="nivel__txt"><p class="nivel__k">' + esc(T.nivel) + '</p><p class="nivel__v">' + esc(NIVELES[n]) + '</p>' +
-      '<ol class="escalera" aria-label="Niveles de Chipi">' + escalera + '</ol>' +
+      '<ol class="escalera" aria-label="Niveles de ' + esc(P.nombre) + '">' + escalera + '</ol>' +
       '<p class="nivel__sig">' + esc(sig ? T.proximo_nivel.replace("{n}", sig) : T.nivel_max) + '</p></div>' +
     '</div>';
   }
@@ -292,10 +373,17 @@
         '<span class="sala-tile__estado">' + (resuelta ? ic("j-check") : "") + esc(estado) + '</span></div>' +
       '<p class="sala-tile__n">Sala ' + s.id + ' | ' + esc(s.nombre) + '</p>' +
       '<h3 class="sala-tile__t">' + esc(s.titulo) + '</h3>' +
-      '<p class="sala-tile__premio"><span class="mini-tarjeta" aria-hidden="true"></span><span>' + (resuelta ? "Chipi subió a " : "Chipi sube a ") + '<strong>' + esc(NIVELES[Math.min(s.id, NIVELES.length - 1)]) + '</strong></span></p>' +
+      '<p class="sala-tile__premio">' + lucesSala(s.id, resuelta) +
+        '<span><span aria-hidden="true">' + esc(T.luz_de) + ' </span><span class="sr-only">' + esc((resuelta ? T.luz_encendida : T.luz_enciende).replace("{p}", P.nombre)) + ' </span><strong>' + esc(NIVELES[Math.min(s.id, NIVELES.length - 1)]) + '</strong></span></p>' +
       '<div class="sala-tile__pie"><span class="sala-tile__letra" aria-hidden="true">' + (resuelta ? esc(s.fragmento) : "?") + '</span>' +
         '<button type="button" class="redondo" data-ir-sala="' + s.id + '"' + (libre ? "" : " disabled") + ' aria-label="' + esc(T.entrar + " " + s.id + ": " + s.titulo + (libre ? "" : ", " + T.estado_bloqueada)) + '">' + ic(libre ? "j-flecha" : "j-candado") + '</button></div>' +
     '</li>';
+  }
+  /* Las cinco luces de Fuerte; se marca la que enciende esta sala */
+  function lucesSala(id, resuelta) {
+    var l = "";
+    for (var i = 1; i <= TOTAL; i++) l += '<i class="' + (i === id ? "is-esta" + (resuelta ? " is-on" : "") : "") + '"></i>';
+    return '<span class="luces" aria-hidden="true">' + l + '</span>';
   }
   function codigoCard() {
     var anillos = D.salas.map(function (s) {
@@ -318,33 +406,45 @@
       '<li class="stat stat--pistas"><span class="stat__ic">' + ic("j-pista") + '</span><span class="stat__txt"><span class="stat__v">' + pistasUsadas() + '</span><span class="stat__k">' + esc(T.pistas_usadas) + '</span></span></li>' +
     '</ul>';
   }
+  /* ---------- Hero: bento como el inicio del taller ----------
+     Tarjeta clara con el texto y afiche carbón con Fuerte, el avance y su mensaje. */
+  function portadaTxt(reglas, acciones) {
+    var t = D.titulo, k = t.lastIndexOf(" ");
+    var titulo = k > 0 ? esc(t.slice(0, k)) + " <em>" + esc(t.slice(k + 1)) + "</em>" : esc(t);
+    return '<div class="portada__txt">' +
+      '<p class="portada__kicker">' + ic("j-candado") + esc(D.kicker) + '</p>' +
+      '<h1 class="portada__t" id="intro-t" tabindex="-1" data-foco>' + titulo + '</h1>' +
+      '<p class="portada__lead">' + esc(D.historia[0]) + ' ' + esc(D.historia[1]) + '</p>' +
+      '<ul class="reglas">' + reglas + '</ul>' + acciones +
+    '</div>';
+  }
+  function portadaHTML(reglas, acciones) {
+    var n = nivelActual(), r = resueltas();
+    return '<section class="portada" aria-labelledby="intro-t">' + portadaTxt(reglas, acciones) +
+      '<div class="vitrina">' +
+        '<div class="vitrina__avance"><p class="vitrina__k">' + esc(T.tu_avance) + '</p>' +
+          '<p class="vitrina__n"><span class="vitrina__num" aria-hidden="true">' + r + '<small>/' + TOTAL + '</small></span>' +
+          '<span class="sr-only">' + r + ' de ' + TOTAL + '</span><span class="vitrina__sub">' + esc(T.luces_encendidas) + '</span></p></div>' +
+        '<div class="vitrina__msg"><p class="vitrina__msg-de">' + fuerteMini() + esc(P.nombre) + '</p>' +
+          '<p class="vitrina__msg-txt">' + esc(P.mensaje) + '</p></div>' +
+        '<div class="vitrina__escena" aria-hidden="true">' + fuerte("normal", n, "fuerte--vitrina") + '</div>' +
+      '</div></section>';
+  }
+
   function renderPanel() {
     if (ES_SIMPLE) { renderSimpleIntro(); return; }
-    var iconos = ["j-lista", "j-reloj", "j-llave", "j-check"];
+    var iconos = ["j-lista", "j-reloj", "j-llave"];
     var reglas = D.datos_juego.map(function (d, i) {
       return '<li>' + ic(iconos[i] || "j-check") + '<span>' + esc(d.titulo) + '<span class="sr-only">: ' + esc(d.texto) + '</span></span></li>';
     }).join("");
     var empezo = !!S.pre, siguiente;
-    if (S.fin) siguiente = '<button type="button" class="btn-juego btn-juego--claro" data-ir="saliste"><span>Ver mi resultado</span>' + ic("j-flecha") + '</button>';
-    else if (resueltas() === TOTAL) siguiente = '<button type="button" class="btn-juego btn-juego--claro" data-ir-puerta><span>' + esc(T.a_la_puerta) + '</span>' + ic("j-flecha") + '</button>';
-    else siguiente = '<button type="button" class="btn-juego btn-juego--claro" data-ir-sala="' + S.sala + '"><span>Seguir en la sala ' + S.sala + '</span>' + ic("j-flecha") + '</button>';
+    if (S.fin) siguiente = '<button type="button" class="btn-juego" data-ir="saliste"><span>Ver mi resultado</span>' + ic("j-flecha") + '</button>';
+    else if (resueltas() === TOTAL) siguiente = '<button type="button" class="btn-juego" data-ir-puerta><span>' + esc(T.a_la_puerta) + '</span>' + ic("j-flecha") + '</button>';
+    else siguiente = '<button type="button" class="btn-juego" data-ir-sala="' + S.sala + '"><span>Seguir en la sala ' + S.sala + '</span>' + ic("j-flecha") + '</button>';
     var acciones = empezo
-      ? '<div class="acciones">' + siguiente + '<button type="button" class="btn-juego btn-juego--fantasma" data-reiniciar>' + esc(T.reiniciar) + '</button></div>'
-      : '<div class="acciones"><a class="btn-juego btn-juego--claro" href="#autoeval-pre"><span>' + esc(T.empezar) + '</span>' + ic("j-flecha") + '</a></div>';
-    app.innerHTML =
-      '<section class="portada" aria-labelledby="intro-t">' +
-        '<div class="portada__txt">' +
-          '<p class="portada__kicker">' + ic("j-candado") + esc(D.kicker) + '</p>' +
-          '<h1 class="portada__t" id="intro-t" tabindex="-1" data-foco>' + esc(D.titulo) + '</h1>' +
-          '<p class="portada__lead">' + esc(D.historia[0]) + ' ' + esc(D.historia[1]) + '</p>' +
-          '<ul class="reglas">' + reglas + '</ul>' +
-          acciones +
-        '</div>' +
-        '<div class="portada__chipi">' +
-          '<p class="globo">' + esc(P.saludo) + '</p>' +
-          nivelHTML("normal", "nivel--portada") +
-        '</div>' +
-      '</section>' +
+      ? '<div class="acciones">' + siguiente + '<button type="button" class="btn-juego btn-juego--sec" data-reiniciar>' + esc(T.reiniciar) + '</button></div>'
+      : '<div class="acciones"><a class="btn-juego" href="#autoeval-pre"><span>' + esc(T.empezar) + '</span>' + ic("j-flecha") + '</a></div>';
+    app.innerHTML = portadaHTML(reglas, acciones) +
       '<section class="tablero" aria-labelledby="salas-t">' +
         '<div class="tablero__head"><h2 class="tablero__t" id="salas-t">' + esc(T.salas_t) + '</h2><p class="tablero__n">' + resueltas() + ' de ' + TOTAL + ' resueltas</p></div>' +
         '<ol class="salas-tiles">' + D.salas.map(salaTile).join("") + '</ol>' +
@@ -415,7 +515,7 @@
       '<p class="equipo__tile equipo__tile--letras"><span class="equipo__ic">' + ic("j-ficha") + '</span><span class="equipo__k">' + esc(T.letras) + '</span><span class="fichas" aria-hidden="true">' + fichasHTML() + '</span><span class="sr-only">' + srCodigo() + '</span></p>' +
     '</div>';
   }
-  /* Barra de progreso del juego: nivel de Chipi, pasos de las salas y equipo */
+  /* Barra de progreso del juego: nivel del personaje, pasos de las salas y equipo */
   function pasosHTML(actual) {
     return D.salas.map(function (s) {
       var st = S.salas[s.id], resuelta = !!(st && st.resuelta), libre = !!S.pre && salaDesbloqueada(s.id);
@@ -433,7 +533,7 @@
   function recorrido(actual, sube) {
     var n = nivelActual(), hechas = resueltas();
     var nivel = ES_SIMPLE ? "" :
-      '<div class="pj__nivel' + (sube ? " is-sube" : "") + '" data-nivel="' + n + '">' + chipi(sube ? "feliz" : "normal", n, "chipi--pj") +
+      '<div class="pj__nivel' + (sube ? " is-sube" : "") + '" data-nivel="' + n + '">' + fuerte(sube ? "feliz" : "normal", n, "fuerte--pj") +
       '<p class="pj__nivel-txt"><small>' + esc(T.nivel) + '</small><b>' + esc(NIVELES[n]) + '</b></p></div>';
     return '<aside class="pj" aria-label="' + esc(T.recorrido) + '">' + nivel +
       '<nav class="pj__pasos" aria-label="' + (ES_SIMPLE ? "Preguntas" : "Salas del escape room") + '">' +
@@ -556,8 +656,9 @@
   }
 
   /* ---------- Sala ---------- */
-  function cabeceraSala() {
-    return '<div class="sala__barra"><button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir="intro">' + ic("j-volver") + '<span>' + esc(ES_SIMPLE ? "Inicio" : T.panel) + '</span></button></div>';
+  /* Encabezado compacto: volver y número de sala en una misma línea */
+  function cabeceraSala(chip) {
+    return '<div class="sala__barra"><button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir="intro">' + ic("j-volver") + '<span>' + esc(ES_SIMPLE ? "Inicio" : T.panel) + '</span></button>' + (chip || "") + '</div>';
   }
   function renderSala(id) {
     var d = datosSala(id) || datosSala(1), st = estadoSala(d.id);
@@ -581,8 +682,7 @@
       '<div class="juego' + (ES_SIMPLE ? " juego--simple" : "") + '" data-sala="' + d.id + '">' +
         recorrido(d.id) +
         '<section class="sala" aria-labelledby="sala-t">' +
-          '<header class="sala__head">' + cabeceraSala() +
-            '<p class="sala__n">' + ic(d.icono || "j-candado") + (ES_SIMPLE ? esc(preguntaDe(d.id)) : 'Sala ' + d.id + ' | ' + esc(d.nombre)) + '</p>' +
+          '<header class="sala__head">' + cabeceraSala('<p class="sala__n">' + ic(d.icono || "j-candado") + (ES_SIMPLE ? esc(preguntaDe(d.id)) : 'Sala ' + d.id + ' | ' + esc(d.nombre)) + '</p>') +
             '<h1 class="sala__t" id="sala-t" tabindex="-1"' + (st.resuelta ? "" : " data-foco") + '>' + esc(d.titulo) + '</h1>' +
             (ES_SIMPLE ? "" : '<p class="sala__escena-txt">' + esc(d.escena) + '</p>') +
           '</header>' +
@@ -695,7 +795,7 @@
           etiqueta +
           '<p class="candado__ayuda" id="candado-ayuda">' + esc(apagado ? T.candado_apagado : c.ayuda) + '</p>' +
         '</div>' +
-        (ES_SIMPLE ? "" : '<span class="candado__chipi">' + chipi(apagado ? "pensando" : "normal", nivelActual(), "chipi--candado") + '</span>') +
+        (ES_SIMPLE ? "" : '<span class="candado__fuerte">' + fuerte(apagado ? "pensando" : "normal", nivelActual(), "fuerte--candado") + '</span>') +
       '</div>' +
       '<form class="candado__form" id="candado-form" novalidate>' +
         campoCandado(c, apagado) +
@@ -739,7 +839,7 @@
           '<h2 class="logro__t" id="logro-t" tabindex="-1"' + (st.resuelta ? " data-foco" : "") + '>' + esc(T.logro_titulo) + '</h2>' +
           '<p class="logro__sub">' + esc(T.logro_sub) + '</p>' +
           '<p class="sube" data-nivel="' + n + '"><span class="sube__punto" aria-hidden="true"></span>' + esc(T.subiste.replace("{n}", NIVELES[n])) + '</p></div>' +
-          '<span class="logro__chipi">' + chipi("feliz", n, "chipi--logro") + '</span>' +
+          '<span class="logro__fuerte">' + fuerte("feliz", n, "fuerte--logro") + '</span>' +
         '</div>' +
         '<ul class="logro__stats">' +
           '<li><span class="mini-ic mini-ic--ok">' + ic("j-check") + '</span><span class="logro__v">' + st.intentos + '</span><span class="logro__k">' + plural(st.intentos, "intento", "intentos") + '</span></li>' +
@@ -991,7 +1091,7 @@
           '</form>');
     app.innerHTML =
       '<section class="puerta" aria-labelledby="puerta-t">' +
-        '<div class="puerta__arte" aria-hidden="true"><div class="puerta__hoja' + (S.puerta ? " is-abierta" : "") + '"><span class="puerta__pomo"></span></div>' + chipi(S.puerta ? "feliz" : "normal", nivelActual(), "chipi--puerta") + '</div>' +
+        '<div class="puerta__arte" aria-hidden="true"><div class="puerta__hoja' + (S.puerta ? " is-abierta" : "") + '"><span class="puerta__pomo"></span></div>' + fuerte(S.puerta ? "feliz" : "normal", nivelActual(), "fuerte--puerta") + '</div>' +
         '<div class="tarjeta puerta__card">' +
           '<div class="sala__barra"><button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir="intro">' + ic("j-volver") + '<span>' + esc(T.panel) + '</span></button></div>' +
           '<p class="kicker kicker--juego">' + ic("j-puerta") + esc(T.codigo_t) + '</p>' +
@@ -1088,7 +1188,7 @@
             '<li><small>' + esc(X.salas) + '</small><b>' + resueltas() + '/' + TOTAL + '</b></li>' +
             (S.tiempo_visible ? '<li><small>' + esc(X.tiempo) + '</small><b>' + formatoTiempo(S.tiempo_ms) + '</b></li>' : "") +
           '</ul></div>' +
-          '<div class="saliste__chipi">' + chipi("feliz", NIVELES.length - 1, "chipi--saliste") + '</div>' +
+          '<div class="saliste__fuerte">' + fuerte("feliz", NIVELES.length - 1, "fuerte--saliste") + '</div>' +
         '</div>';
     app.innerHTML =
       '<section class="saliste" aria-labelledby="saliste-t">' + cabeza +

@@ -10,21 +10,21 @@ window.ESC_DATA = {
     "Para salir tenés que abrir 5 candados, uno por sala. Cada candado que abrís te da una letra del código de la puerta final."
   ],
   datos_juego: [
-    { titulo: "5 salas en orden", texto: "Podés volver a las que ya resolviste." },
+    { titulo: "5 salas", texto: "Se abren en orden y podés volver a las que ya resolviste." },
     { titulo: "Sin límite de tiempo", texto: "No hay cuenta regresiva ni forma de perder." },
-    { titulo: "Pistas a cambio de llaves", texto: "Empezás con 3 y ganás una por cada reflexión." },
-    { titulo: "Se guarda en este dispositivo", texto: "No se envía a ningún lado." }
+    { titulo: "Pistas a cambio de llaves", texto: "Empezás con 3 y ganás una por cada reflexión." }
   ],
 
-  /* Personaje: Chipi, una tarjeta que sube de nivel con cada candado que abrís */
+  /* Personaje: Fuerte, la caja fuerte de tu primer sueldo. Tiene 5 luces, una por candado */
   personaje: {
-    nombre: "Chipi",
-    saludo: "¡Hola! Soy Chipi, la tarjeta de tu cuenta sueldo. Cada candado que abras me sube de nivel.",
+    nombre: "Fuerte",
+    saludo: "¡Hola! Soy Fuerte, la caja fuerte de tu primer sueldo. Cada candado que abras enciende una de mis luces.",
     error: "Uy, casi. Fijate lo que dice abajo.",
     pista: "Te paso una ayuda.",
-    festejo: "¡Subí de nivel!"
+    festejo: "¡Se encendió otra luz!",
+    mensaje: "Cada candado que abras enciende una de mis luces."
   },
-  /* Niveles de Chipi: uno por cada sala resuelta (0 a 5). Son hábitos, no categorías de tarjeta:
+  /* Niveles de Fuerte: uno por cada sala resuelta (0 a 5). Son hábitos, no categorías de tarjeta:
      la Sala 3 enseña a desconfiar de la tarjeta, así que el premio no es "subir de tarjeta". */
   niveles: ["Inicio", "Claridad", "Orden", "Prudencia", "Previsión", "Seguridad"],
 
@@ -76,7 +76,7 @@ window.ESC_DATA = {
 
   saliste: {
     titulo: "¡Saliste!",
-    sub: "Abriste la puerta final y Chipi llegó al nivel Seguridad.",
+    sub: "Abriste la puerta final y Fuerte encendió sus cinco luces.",
     sub_simple: "Terminaste el cuestionario.",
     sello: "Tu sello",
     pistas_usadas: "Pistas usadas",
@@ -152,6 +152,11 @@ window.ESC_DATA = {
     proximo_nivel: "Abrí un candado más para subir a {n}.",
     nivel_max: "Llegaste al nivel más alto.",
     subiste: "Nuevo nivel: {n}",
+    tu_avance: "Tu avance",
+    luces_encendidas: "luces encendidas",
+    luz_de: "Luz de",
+    luz_enciende: "Al abrir este candado, {p} enciende la luz de",
+    luz_encendida: "Candado abierto: {p} encendió la luz de",
     entrar: "Entrar a la sala",
     sala_de: "Sala {n} de {t}",
     equipo: "Tu equipo",

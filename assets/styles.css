@@ -2710,6 +2710,233 @@ tbody tr:hover {
     display: none;
   }
 }
+/* Banner del escape room: cierra Finanzas personales, con Fuerte asomado a la derecha */
+.juego-banner {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(8rem, 22%, 12rem);
+  align-items: center;
+  gap: 1rem;
+  margin: 1.75rem 0;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--juego) 22%, transparent);
+  border-radius: var(--r-lg);
+  background: var(--juego-soft);
+  color: var(--ink);
+  text-decoration: none;
+}
+/* Disco naranja detrás de Fuerte */
+.juego-banner::before {
+  content: "";
+  position: absolute;
+  right: -3rem;
+  bottom: -5rem;
+  z-index: -1;
+  width: 16rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--t2) 35%, transparent);
+}
+.juego-banner__txt {
+  display: grid;
+  justify-items: start;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.juego-banner__k {
+  color: var(--juego);
+  font-family: var(--display);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.juego-banner__t {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.juego-banner__p {
+  max-width: 48ch;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.juego-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  min-height: 2.9rem;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  background: var(--deep);
+  color: var(--on-deep);
+  font-family: var(--display);
+  font-weight: 600;
+}
+.juego-banner__cta .ic {
+  width: 1.1rem;
+  height: 1.1rem;
+  transition: transform 0.3s var(--ease);
+}
+.juego-banner:hover .juego-banner__cta .ic {
+  transform: translateX(3px);
+}
+.juego-banner__fuerte {
+  align-self: end;
+  justify-self: end;
+  width: 100%;
+  margin-bottom: clamp(-2.5rem, -4vw, -1.5rem);
+}
+.juego-banner__fuerte svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Fuerte en el banner: flota, mira a los costados, pestañea, levanta las cejas,
+   sonríe con los ojos y va encendiendo sus cinco luces. Todo en un ciclo de 9 s */
+.bf__luz {
+  fill: #3a3a44;
+}
+/* Acero más oscuro y con borde, para que se lea sobre el fondo dorado claro */
+.bf__metal {
+  fill: #b4b8c8;
+  stroke: #5f6276;
+  stroke-width: 0.7;
+}
+.bf__feliz {
+  opacity: 0;
+}
+.bf__parpado,
+.bf__pupilas,
+.bf__cejas {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bf__g {
+    animation: bf-flotar 3s ease-in-out infinite;
+  }
+  .bf__pupilas {
+    animation: bf-mirar 9s var(--ease) infinite;
+  }
+  .bf__cejas {
+    animation: bf-cejas 9s var(--ease) infinite;
+  }
+  .bf__parpado {
+    animation: bf-parpadeo 9s infinite;
+  }
+  .bf__ojos {
+    animation: bf-ojos 9s infinite;
+  }
+  .bf__feliz {
+    animation: bf-feliz 9s infinite;
+  }
+  .bf__luz--1 {
+    animation: bf-luz1 9s infinite;
+  }
+  .bf__luz--2 {
+    animation: bf-luz2 9s infinite;
+  }
+  .bf__luz--3 {
+    animation: bf-luz3 9s infinite;
+  }
+  .bf__luz--4 {
+    animation: bf-luz4 9s infinite;
+  }
+  .bf__luz--5 {
+    animation: bf-luz5 9s infinite;
+  }
+  .juego-banner__fuerte svg {
+    transition: transform 0.4s var(--ease);
+  }
+  .juego-banner:hover .juego-banner__fuerte svg {
+    transform: rotate(-6deg) translateY(-4px);
+  }
+}
+@keyframes bf-flotar {
+  50% { transform: translateY(-0.6px); }
+}
+@keyframes bf-mirar {
+  0%, 8% { transform: translate(0, 0); }
+  13%, 27% { transform: translate(-1.1px, 0); }
+  33%, 47% { transform: translate(1.1px, 0.2px); }
+  53%, 64% { transform: translate(0.5px, -0.9px); }
+  70%, 100% { transform: translate(0, 0); }
+}
+@keyframes bf-cejas {
+  0%, 52% { transform: translateY(0); }
+  56%, 66% { transform: translateY(-0.9px); }
+  70%, 76% { transform: translateY(0); }
+  80%, 90% { transform: translateY(-0.6px); }
+  94%, 100% { transform: translateY(0); }
+}
+@keyframes bf-parpadeo {
+  0%, 30%, 32.5%, 100% { transform: scaleY(1); }
+  31.2% { transform: scaleY(0.1); }
+}
+@keyframes bf-ojos {
+  0%, 77% { opacity: 1; }
+  79%, 90% { opacity: 0; }
+  92%, 100% { opacity: 1; }
+}
+@keyframes bf-feliz {
+  0%, 77% { opacity: 0; }
+  79%, 90% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+@keyframes bf-luz1 {
+  0%, 6% { fill: #3a3a44; }
+  8%, 94% { fill: #f6c94e; }
+  97%, 100% { fill: #3a3a44; }
+}
+@keyframes bf-luz2 {
+  0%, 18% { fill: #3a3a44; }
+  20%, 94% { fill: #f6c94e; }
+  97%, 100% { fill: #3a3a44; }
+}
+@keyframes bf-luz3 {
+  0%, 30% { fill: #3a3a44; }
+  32%, 94% { fill: #f6c94e; }
+  97%, 100% { fill: #3a3a44; }
+}
+@keyframes bf-luz4 {
+  0%, 42% { fill: #3a3a44; }
+  44%, 94% { fill: #f6c94e; }
+  97%, 100% { fill: #3a3a44; }
+}
+@keyframes bf-luz5 {
+  0%, 54% { fill: #3a3a44; }
+  56%, 94% { fill: #f6c94e; }
+  97%, 100% { fill: #3a3a44; }
+}
+/* En el celular, el texto usa todo el ancho y Fuerte queda arriba a la derecha */
+@media (max-width: 559px) {
+  .juego-banner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .juego-banner::before {
+    top: -5rem;
+    right: -5rem;
+    bottom: auto;
+    width: 11rem;
+  }
+  .juego-banner__fuerte {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 4.2rem;
+    margin: 0;
+  }
+  .juego-banner__k,
+  .juego-banner__t {
+    padding-right: 4.75rem;
+  }
+  .juego-banner__cta {
+    white-space: nowrap;
+  }
+}
 .rail-juego a .ic {
   margin-right: 0.35rem;
   color: var(--juego);
