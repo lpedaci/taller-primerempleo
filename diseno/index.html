@@ -62,7 +62,8 @@
 .ds-indice a::before { counter-increment: ds; content: counter(ds); display: grid; place-items: center; flex: 0 0 auto; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--juego-metal); color: var(--on-juego-metal); font-size: 0.85rem; }
 .ds-indice a:hover { background: var(--surface-2); }
 .ds-sec { margin-top: clamp(3rem, 7vw, 5rem); }
-.ds-sec > h2 { margin: 0 0 0.5rem; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.02em; }
+.ds-sec > h2 { margin: 0 0 1.5rem; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.02em; }
+.ds-sec > h2 + p { margin-top: -0.75rem; }
 .ds-sec > p { max-width: none; margin: 0 0 1.75rem; color: var(--muted); line-height: 1.6; }
 .ds-sub { margin: 2.75rem 0 1rem; font-size: 1.2rem; }
 .ds-grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
@@ -212,6 +213,82 @@ body {
   .ds-hero-ins { width: 2.4rem; }
   .ds-tablero__fuerte { max-width: 9.5rem; }
   .ds-indice ol { grid-template-columns: minmax(0, 1fr); }
+}
+/* En el celular, la tabla del análisis pasa a filas apiladas */
+@media (max-width: 639px) {
+  .ds-tabla thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .ds-tabla, .ds-tabla tbody, .ds-tabla tr, .ds-tabla th, .ds-tabla td { display: block; width: 100%; }
+  .ds-tabla tr { padding: 0.9rem 1rem; border-bottom: 1px solid var(--rule); }
+  .ds-tabla tr:last-child { border-bottom: 0; }
+  .ds-tabla th, .ds-tabla td { padding: 0; border: 0; }
+  .ds-tabla tbody th { margin-bottom: 0.35rem; font-size: 1.02rem; }
+  .ds-tabla td + td { margin-top: 0.55rem; }
+}
+/* El tablero del hero ocupa toda la altura de la tarjeta de texto: Fuerte y las medallas
+   bajan al pie y no queda espacio vacío en pantallas medianas */
+@media (min-width: 1024px) {
+  .ds-tablero {
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    align-content: stretch;
+  }
+  .ds-tablero__tipo { align-self: stretch; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0.6rem; }
+  .ds-tablero__aa { font-size: clamp(3.4rem, 6vw, 5rem); }
+  .ds-tablero__fuerte { align-self: center; max-width: 17rem; }
+}
+/* Botón flotante para volver arriba: aparece después de bajar un poco */
+.ds-arriba {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--on-deep);
+  box-shadow: 0 12px 28px -12px rgba(31, 31, 36, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.75rem);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.ds-arriba.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.ds-arriba .ic {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.ds-arriba:hover {
+  transform: translateY(-3px);
+}
+.ds-arriba:active {
+  transform: scale(0.96);
+}
+:root[data-theme="dark"] .ds-arriba {
+  background: var(--on-deep);
+  color: var(--deep);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ds-arriba {
+    background: var(--on-deep);
+    color: var(--deep);
+  }
+}
+@media (max-width: 559px) {
+  .ds-arriba {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-arriba { transition: none; transform: none; }
 }
 </style>
 </head>
@@ -485,12 +562,6 @@ body {
           </tbody>
         </table>
       </div>
-      <h3 class="ds-sub">Recomendaciones abiertas</h3>
-      <ul class="ds-lista">
-        <li>Validar con la docente los contenidos que no vienen del aporte de finanzas: CFT y pago mínimo (Sala 3) y señales de estafa (Sala 5).</li>
-        <li>Probar el escape room con estudiantes y ajustar la dificultad de las versiones avanzadas según los errores más registrados.</li>
-        <li>Sumar una diapositiva con QR al escape room en el modo presentación.</li>
-      </ul>
     </section>
 
     <!-- 6. Proceso -->
@@ -545,6 +616,8 @@ body {
     </div>
   </div>
 </footer>
+
+<button type="button" class="ds-arriba" id="ds-arriba" aria-label="Volver arriba" tabindex="-1"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg></button>
 <script>
 (function () {
   var root = document.documentElement, btn = document.getElementById("theme-btn");
@@ -571,6 +644,22 @@ body {
       });
     });
   }
+  /* Volver arriba: se muestra cuando el encabezado ya no se ve */
+  var arriba = document.getElementById("ds-arriba"), hero = document.querySelector(".ds-hero");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (e) {
+      var ver = !e[0].isIntersecting;
+      arriba.classList.toggle("is-visible", ver);
+      arriba.tabIndex = ver ? 0 : -1;
+      arriba.setAttribute("aria-hidden", ver ? "false" : "true");
+    }).observe(hero);
+  } else { arriba.classList.add("is-visible"); arriba.tabIndex = 0; }
+  arriba.addEventListener("click", function () {
+    var suave = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: suave ? "smooth" : "auto" });
+    var t = document.getElementById("ds-t");
+    if (t) { t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); }
+  });
   btn.addEventListener("click", function () {
     var next = actual() === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", next);
