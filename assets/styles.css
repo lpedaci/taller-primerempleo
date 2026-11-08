@@ -42,6 +42,16 @@
   --no: #b4380f;
   --no-soft: #fcebe3;
   --mark: #ffe680;
+  /* Descargo: notas de alcance o descargo (contenido educativo, no es recomendación); reutilizable en cualquier apartado */
+  --descargo: #1f5f73;
+  --descargo-soft: #e2eef1;
+  --descargo-line: #a9cbd6;
+  --on-descargo: #ffffff;
+  /* Juego: capa de gamificación (llaves, candados, sellos); latón sobre carbón, reutilizable en próximos juegos */
+  --juego: #7a5410;
+  --juego-soft: #f5edda;
+  --juego-metal: #d9b25a;
+  --on-juego-metal: #1f1f24;
   /* Mosaicos: siempre llevan texto oscuro encima, en los dos temas */
   --t1: #b9bbf6;
   --t2: #f7ab6a;
@@ -92,6 +102,14 @@
     --no: #ff9d7d;
     --no-soft: #3d2018;
     --mark: #6b5700;
+    --descargo: #8fcbe0;
+    --descargo-soft: #16252b;
+    --descargo-line: #2d4c57;
+    --on-descargo: #17171b;
+    --juego: #e6c274;
+    --juego-soft: #2a2416;
+    --juego-metal: #d9b25a;
+    --on-juego-metal: #1f1f24;
     --t1: #a4a7f2;
     --t2: #f2a35f;
     --t3: #f1d661;
@@ -125,6 +143,14 @@
   --no: #ff9d7d;
   --no-soft: #3d2018;
   --mark: #6b5700;
+  --descargo: #8fcbe0;
+  --descargo-soft: #16252b;
+  --descargo-line: #2d4c57;
+  --on-descargo: #17171b;
+  --juego: #e6c274;
+  --juego-soft: #2a2416;
+  --juego-metal: #d9b25a;
+  --on-juego-metal: #1f1f24;
   --t1: #a4a7f2;
   --t2: #f2a35f;
   --t3: #f1d661;
@@ -2574,6 +2600,121 @@ tbody tr:hover {
   font-size: 1.08rem;
 }
 
+/* Nota de descargo: color propio, igual en todos los apartados */
+.note--descargo {
+  border: 1px solid var(--descargo-line);
+  background: var(--descargo-soft);
+  color: var(--ink);
+}
+.note--descargo > .ic {
+  background: var(--descargo);
+  color: var(--on-descargo);
+}
+.note--descargo strong:first-child {
+  color: var(--descargo);
+}
+
+/* Distintivo de juego: marca todo lo que es gamificación, en cualquier apartado */
+.juego-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.3rem 0.85rem 0.3rem 0.35rem;
+  border-radius: 999px;
+  background: var(--deep);
+  color: var(--on-deep);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+.juego-chip .ic {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: var(--juego-metal);
+  color: var(--on-juego-metal);
+}
+
+/* Entrada al escape room desde el sitio: franja compacta con la identidad del juego */
+.juego-franja {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin: 0 0 1.75rem;
+  padding: 0.9rem 1rem 0.9rem 0.9rem;
+  border-radius: var(--r);
+  background: var(--deep);
+  color: var(--on-deep);
+  text-decoration: none;
+  transition: transform 0.3s var(--ease);
+}
+.juego-franja:hover {
+  transform: translateY(-2px);
+}
+.juego-franja:active {
+  transform: scale(0.99);
+}
+.juego-franja__ic {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background: var(--juego-metal);
+  color: var(--on-juego-metal);
+}
+.juego-franja__ic .ic {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.juego-franja__txt {
+  display: grid;
+  gap: 0.1rem;
+  line-height: 1.35;
+}
+.juego-franja__k {
+  color: var(--juego-metal);
+  font-family: var(--display);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.juego-franja strong {
+  font-family: var(--display);
+  font-size: 1.15rem;
+}
+.juego-franja__txt > span:last-child {
+  color: color-mix(in srgb, var(--on-deep) 75%, transparent);
+  font-size: 0.92rem;
+}
+.juego-franja__go {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--deep-soft);
+  transition: transform 0.3s var(--ease);
+}
+.juego-franja:hover .juego-franja__go {
+  transform: translateX(3px);
+}
+@media (max-width: 479px) {
+  .juego-franja {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .juego-franja__go {
+    display: none;
+  }
+}
+.rail-juego a .ic {
+  margin-right: 0.35rem;
+  color: var(--juego);
+}
+
 .template {
   margin: 0 0 1.5rem;
   overflow: hidden;
@@ -3706,57 +3847,6 @@ code {
   }
 }
 
-/* ---------- Finanzas personales ---------- */
-.fin-indice {
-  margin: 0 0 2.5rem;
-  padding: 1.1rem 1.25rem 1.25rem;
-  border-radius: var(--r);
-  background: var(--ls);
-}
-.fin-indice-t {
-  margin: 0 0 0.7rem;
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-.fin-indice ol {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.fin-indice a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.5rem;
-  padding: 0.3rem 0.95rem 0.3rem 0.35rem;
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--ink);
-  font-weight: 500;
-  font-size: 0.93rem;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-.fin-indice a:hover {
-  background: var(--t7);
-  color: var(--tile-ink);
-}
-.fin-indice a span {
-  display: grid;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 50%;
-  background: var(--t7);
-  color: var(--tile-ink);
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 0.85rem;
-}
 .fin-sub {
   display: flex;
   align-items: center;
