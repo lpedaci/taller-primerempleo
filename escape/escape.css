@@ -276,17 +276,9 @@
 .ch__sombra {
   fill: rgba(20, 20, 30, 0.18);
 }
-/* Textura de tejido: puntos en V muy suaves */
-.ch__punto {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.1);
-  stroke-width: 0.5;
-}
-/* Cepillado del metal: una línea clara y una oscura, muy finas */
-.ch__punto--osc {
-  stroke: rgba(90, 36, 4, 0.12);
-}
-.ch__reflejo-metal {
+.ch__reflejo-metal,
+.ch__brillo-metal,
+.ch__bisel {
   pointer-events: none;
 }
 .ch__puerta {

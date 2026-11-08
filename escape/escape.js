@@ -58,15 +58,20 @@
 
   /* ---------- Fuerte: la caja fuerte de tu primer sueldo ----------
      Une las dos ideas del juego: cerraduras (escape room) y guardar la plata (finanzas).
-     Estilo de muñeco blando: cuerpo redondeado con textura de tejido, visor oscuro con ojos
+     Estilo de muñeco blando: cuerpo redondeado de metal pulido, visor oscuro con ojos
      blancos, la perilla de la combinación al costado como una oreja y bisagras del otro lado.
      En la puerta tiene 5 luces, una por candado: el progreso se lee por cantidad y no solo por
      color. Cuatro expresiones: normal, feliz (ojos de estrella), preocupado y pensando.
      Es decorativo: el texto siempre está aparte. */
   var uid = 0;
-  /* Metal anodizado naranja: bandas de luz y sombra como una chapa pulida, más un reflejo en diagonal */
+  /* Metal anodizado naranja: bandas de luz y sombra como una chapa pulida, más un reflejo en diagonal nítido */
   var METAL_NARANJA = '<stop offset="0" stop-color="#ffd9b3"/><stop offset=".16" stop-color="#f8a35a"/><stop offset=".42" stop-color="#df762b"/><stop offset=".52" stop-color="#f6a463"/><stop offset=".6" stop-color="#e5823a"/><stop offset=".85" stop-color="#b85a1c"/><stop offset="1" stop-color="#8f420f"/>';
-  var METAL_BRILLO = '<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".38"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".68" stop-color="#fff" stop-opacity=".14"/><stop offset=".74" stop-color="#fff" stop-opacity="0"/>';
+  var METAL_BRILLO = '<stop offset=".22" stop-color="#fff" stop-opacity="0"/><stop offset=".29" stop-color="#fff" stop-opacity=".5"/><stop offset=".36" stop-color="#fff" stop-opacity=".5"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".64" stop-color="#fff" stop-opacity="0"/><stop offset=".67" stop-color="#fff" stop-opacity=".22"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/>';
+  /* Bisel y punto de luz: el borde se ilumina arriba a la izquierda y se oscurece abajo a la derecha,
+     como una chapa con volumen. Reemplaza a las líneas de cepillado, que se leían como tela. */
+  function METAL_BISEL(id) {
+    return '<radialGradient id="' + id + 'h" cx=".28" cy=".18" r=".42"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="' + id + 'e" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".58" stop-color="#5a2404" stop-opacity="0"/><stop offset="1" stop-color="#5a2404" stop-opacity=".6"/></linearGradient>';
+  }
   function fuerte(expr, nivel, cls) {
     var id = "fu" + (++uid), luces = "";
     for (var i = 0; i < 5; i++) luces += '<circle class="ch__luz' + (i < nivel ? " is-on" : "") + '" cx="' + (56 + i * 12) + '" cy="111" r="4"/>';
@@ -78,7 +83,7 @@
         '<linearGradient id="' + id + 'c" x1="0" y1="0" x2=".35" y2="1">' + METAL_NARANJA + '</linearGradient>' +
         '<linearGradient id="' + id + 'b" x1="0" y1="0" x2="1" y2="1">' + METAL_BRILLO + '</linearGradient>' +
         '<radialGradient id="' + id + 'm" cx="35%" cy="30%" r="75%"><stop class="ch__st-metal-luz" offset="0"/><stop class="ch__st-metal" offset=".6"/><stop class="ch__st-metal-sombra" offset="1"/></radialGradient>' +
-        '<pattern id="' + id + 't" width="4" height="2.4" patternUnits="userSpaceOnUse"><path class="ch__punto" d="M0 .6h4"/><path class="ch__punto ch__punto--osc" d="M0 1.8h4"/></pattern>' +
+        METAL_BISEL(id) +
       '</defs>' +
       '<ellipse class="ch__sombra" cx="80" cy="143" rx="50" ry="5"/>' +
       '<g class="ch__g">' +
@@ -86,7 +91,8 @@
         '<rect class="ch__bisagra" x="11" y="42" width="15" height="20" rx="7" fill="url(#' + id + 'm)"/>' +
         '<rect class="ch__bisagra" x="11" y="92" width="15" height="20" rx="7" fill="url(#' + id + 'm)"/>' +
         '<rect class="ch__cuerpo" x="20" y="16" width="120" height="122" rx="46" fill="url(#' + id + 'c)"/>' +
-        '<rect class="ch__tejido" x="20" y="16" width="120" height="122" rx="46" fill="url(#' + id + 't)"/>' +
+        '<rect class="ch__brillo-metal" x="20" y="16" width="120" height="122" rx="46" fill="url(#' + id + 'h)"/>' +
+        '<rect class="ch__bisel" x="21.6" y="17.6" width="116.8" height="118.8" rx="44.4" fill="none" stroke="url(#' + id + 'e)" stroke-width="3.2"/>' +
         '<rect class="ch__reflejo-metal" x="20" y="16" width="120" height="122" rx="46" fill="url(#' + id + 'b)"/>' +
         '<rect class="ch__puerta" x="29" y="25" width="102" height="104" rx="38"/>' +
         '<rect class="ch__visor" x="36" y="44" width="88" height="50" rx="25"/>' +
@@ -171,9 +177,10 @@
     var id = "fm" + (++uid);
     return '<svg class="fuerte-mini" viewBox="0 0 28 26" aria-hidden="true" focusable="false">' +
       '<defs><linearGradient id="' + id + 'c" x1="0" y1="0" x2=".35" y2="1">' + METAL_NARANJA + '</linearGradient>' +
-        '<linearGradient id="' + id + 'b" x1="0" y1="0" x2="1" y2="1">' + METAL_BRILLO + '</linearGradient></defs>' +
+        '<linearGradient id="' + id + 'b" x1="0" y1="0" x2="1" y2="1">' + METAL_BRILLO + '</linearGradient>' + METAL_BISEL(id) + '</defs>' +
       '<rect class="fm__cuerpo" x="1" y="1" width="26" height="24" rx="9" fill="url(#' + id + 'c)"/>' +
       '<rect x="1" y="1" width="26" height="24" rx="9" fill="url(#' + id + 'b)"/>' +
+      '<rect x="1.4" y="1.4" width="25.2" height="23.2" rx="8.6" fill="none" stroke="url(#' + id + 'e)" stroke-width=".8"/>' +
       '<rect class="fm__visor" x="4.5" y="7" width="19" height="11" rx="5.5"/>' +
       '<circle class="fm__ojo" cx="10.5" cy="12.5" r="2.6"/><circle class="fm__ojo" cx="17.5" cy="12.5" r="2.6"/>' +
       '<circle class="fm__pupila" cx="10.5" cy="12.8" r="1.25"/><circle class="fm__pupila" cx="17.5" cy="12.8" r="1.25"/></svg>';
