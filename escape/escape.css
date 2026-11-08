@@ -103,6 +103,11 @@
   .esc-tag {
     display: none;
   }
+  /* Sin la etiqueta, el título queda centrado en la píldora como en el sitio */
+  .esc-top .top-now-in {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
 }
 
 /* ---------- Piezas comunes ---------- */
