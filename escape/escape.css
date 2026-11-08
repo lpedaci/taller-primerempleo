@@ -732,8 +732,8 @@
   gap: 0.85rem 1rem;
   margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
-/* Desde 1280 px: las cinco salas en fila y el código al costado */
-@media (min-width: 1280px) {
+/* Desde 1440 px: las cinco salas en fila y el código al costado */
+@media (min-width: 1440px) {
   .tablero {
     grid-template-columns: minmax(0, 1fr) 21rem;
     align-items: stretch;
@@ -745,8 +745,8 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
-/* Entre 700 y 1279 px: el código ocupa todo el ancho, con las llaves al costado */
-@media (min-width: 700px) and (max-width: 1279px) {
+/* Entre 700 y 1439 px: el código ocupa todo el ancho, con las llaves al costado */
+@media (min-width: 700px) and (max-width: 1439px) {
   .codigo {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr);
@@ -4269,7 +4269,7 @@
   }
 }
 /* Código de la puerta: encabezado arriba, anillos a la izquierda y llaves y pistas a la derecha */
-@media (min-width: 700px) and (max-width: 1279px) {
+@media (min-width: 700px) and (max-width: 1439px) {
   .codigo {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(17rem, 24rem);
@@ -4312,4 +4312,16 @@
   }  .esc-foot__links {
     justify-items: start;
   }
+}
+/* Las cajas de las salas nunca se desbordan: la etiqueta de estado se acorta si falta lugar */
+.sala-tile {
+  min-width: 0;
+}
+.sala-tile__top {
+  min-width: 0;
+}
+.sala-tile__estado {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
