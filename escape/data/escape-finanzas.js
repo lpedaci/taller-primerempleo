@@ -24,8 +24,9 @@ window.ESC_DATA = {
     pista: "Te paso una ayuda.",
     festejo: "¡Subí de nivel!"
   },
-  /* Niveles de Chipi: uno por cada sala resuelta (0 a 5) */
-  niveles: ["Inicial", "Plus", "Premium", "Gold", "Black", "Titanium"],
+  /* Niveles de Chipi: uno por cada sala resuelta (0 a 5). Son hábitos, no categorías de tarjeta:
+     la Sala 3 enseña a desconfiar de la tarjeta, así que el premio no es "subir de tarjeta". */
+  niveles: ["Inicio", "Claridad", "Orden", "Prudencia", "Previsión", "Seguridad"],
 
   /* Modo simple (?modo=simple): mismas preguntas sin la capa de juego */
   simple: {
@@ -75,7 +76,7 @@ window.ESC_DATA = {
 
   saliste: {
     titulo: "¡Saliste!",
-    sub: "Abriste la puerta final y Chipi llegó al nivel Titanium.",
+    sub: "Abriste la puerta final y Chipi llegó al nivel Seguridad.",
     sub_simple: "Terminaste el cuestionario.",
     sello: "Tu sello",
     pistas_usadas: "Pistas usadas",
@@ -90,6 +91,8 @@ window.ESC_DATA = {
     fortaleza_firme: "Es tu frase con el puntaje más alto.",
     proximo: "Tu próximo paso",
     proximo_txt: "Es la frase con el puntaje más bajo. Repasá esa parte.",
+    parejas_t: "Tus frases",
+    parejas: "Tus cinco frases quedaron parejas. Elegí la sala que más te costó y repasala.",
     repasar: "Repasar la sala",
     codigo_t: "Tu código de resultado",
     codigo_ayuda: "Copialo y pegalo en el formulario de cierre que te pase tu docente.",

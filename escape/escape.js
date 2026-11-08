@@ -46,6 +46,11 @@
     else if (tipo !== "seleccion") s = s.replace(/[.,]/g, "");
     return s;
   }
+  /* Enlaces al sitio del taller: se abren en una pestaña nueva para no perder la partida */
+  function aTaller(href, inner, cls) {
+    return '<a class="' + cls + '" href="' + esc(href) + '" target="_blank" rel="noopener">' + inner +
+      ic("i-arrow-square-out", "ic-ext") + '<span class="sr-only"> (se abre en una pestaña nueva)</span></a>';
+  }
   function miles(digits) { return digits.replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
 
   /* ---------- Chipi: la tarjeta de la cuenta sueldo ----------
@@ -756,7 +761,7 @@
         '<p class="reflexion__estado" id="reflexion-estado"' + (st.reflexion ? "" : " hidden") + '>' + ic("j-check") + esc(T.reflexion_guardada) + '</p></div>' +
       '</form>' +
       '<div class="logro__acciones">' + btn +
-        (d.debrief.link ? '<a class="btn-juego btn-juego--sec btn-juego--ancho" href="' + esc(d.debrief.link.href) + '">' + ic(d.icono || "j-recibo") + '<span>' + esc(d.debrief.link.texto) + '</span></a>' : "") +
+        (d.debrief.link ? aTaller(d.debrief.link.href, ic(d.icono || "j-recibo") + '<span>' + esc(d.debrief.link.texto) + '</span>', "btn-juego btn-juego--sec btn-juego--ancho") : "") +
       '</div>' +
     '</div>';
   }
@@ -1055,10 +1060,14 @@
   function renderSaliste() {
     var X = D.saliste, A = D.autoeval.afirmaciones, pre = S.pre, post = S.post;
     var difs = A.map(function (_, i) { return post[i] - pre[i]; });
-    var maxDif = Math.max.apply(null, difs), iFuerte, fuerteTxt;
+    var parejas = post.every(function (v) { return v === post[0]; });
+    var maxDif = Math.max.apply(null, difs), iFuerte, fuerteTxt, iProx;
     if (maxDif > 0) { iFuerte = difs.indexOf(maxDif); fuerteTxt = X.fortaleza_sube; }
     else { iFuerte = post.indexOf(Math.max.apply(null, post)); fuerteTxt = X.fortaleza_firme; }
-    var iProx = post.indexOf(Math.min.apply(null, post));
+    /* El próximo paso es la frase más baja que no sea la fortaleza (en un empate, la primera) */
+    iProx = A.map(function (_, i) { return i; })
+      .filter(function (i) { return i !== iFuerte; })
+      .sort(function (a, b) { return post[a] - post[b] || a - b; })[0];
     var barras = A.map(function (a, i) {
       return '<li class="ad__fila"><p class="ad__frase">' + esc(a) + '</p>' +
         '<span class="ad__barra ad__barra--antes" style="--v:' + pre[i] / 4 + '"><b>' + pre[i] + '</b></span>' +
@@ -1092,16 +1101,19 @@
             '<p class="sr-only">Tus respuestas antes y después están en la tabla de este apartado.</p>' +
           '</section>' +
           '<div class="saliste__lado">' +
-            '<section class="tarjeta foco foco--fuerte"><p class="kicker kicker--ok">' + ic("j-check") + esc(X.fortaleza) + '</p><p class="foco__frase">' + esc(A[iFuerte]) + '</p><p class="foco__txt">' + esc(fuerteTxt) + '</p></section>' +
-            '<section class="tarjeta foco foco--prox"><p class="kicker kicker--juego">' + ic("j-flecha") + esc(X.proximo) + '</p><p class="foco__frase">' + esc(A[iProx]) + '</p><p class="foco__txt">' + esc(X.proximo_txt) + '</p>' +
-              '<button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir-sala="' + (iProx + 1) + '"><span>' + esc((ES_SIMPLE ? SIMPLE.repasar : X.repasar) + " " + (iProx + 1)) + '</span>' + ic("j-flecha") + '</button></section>' +
+            (parejas
+              ? '<section class="tarjeta foco foco--parejas"><p class="kicker kicker--juego">' + ic("j-lista") + esc(X.parejas_t) + '</p><p class="foco__frase">' + esc(X.parejas) + '</p>' +
+                  '<div class="foco__salas">' + D.salas.map(function (sa) { return '<button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir-sala="' + sa.id + '">' + esc((ES_SIMPLE ? "Pregunta " : "Sala ") + sa.id) + '</button>'; }).join("") + '</div></section>'
+              : '<section class="tarjeta foco foco--fuerte"><p class="kicker kicker--ok">' + ic("j-check") + esc(X.fortaleza) + '</p><p class="foco__frase">' + esc(A[iFuerte]) + '</p><p class="foco__txt">' + esc(fuerteTxt) + '</p></section>' +
+                '<section class="tarjeta foco foco--prox"><p class="kicker kicker--juego">' + ic("j-flecha") + esc(X.proximo) + '</p><p class="foco__frase">' + esc(A[iProx]) + '</p><p class="foco__txt">' + esc(X.proximo_txt) + '</p>' +
+                  '<button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir-sala="' + (iProx + 1) + '"><span>' + esc((ES_SIMPLE ? SIMPLE.repasar : X.repasar) + " " + (iProx + 1)) + '</span>' + ic("j-flecha") + '</button></section>') +
             '<section class="tarjeta codigo-res" aria-labelledby="codres-t"><h2 class="codigo-res__t" id="codres-t">' + esc(X.codigo_t) + '</h2>' +
               '<p class="codigo-res__v" id="codigo-res-v">' + esc(codigo) + '</p>' +
               '<p class="codigo-res__ayuda">' + esc(X.codigo_ayuda) + '</p>' +
               '<button type="button" class="btn-juego btn-juego--ancho" id="copiar-codigo">' + ic("i-copy") + '<span>' + esc(X.copiar) + '</span></button></section>' +
           '</div>' +
         '</div>' +
-        '<div class="acciones saliste__acciones"><a class="btn-juego btn-juego--sec" href="../#finanzas">' + ic("j-volver") + '<span>' + esc(T.volver_taller) + '</span></a>' +
+        '<div class="acciones saliste__acciones">' + aTaller("../#finanzas", ic("j-volver") + '<span>' + esc(T.volver_taller) + '</span>', "btn-juego btn-juego--sec") +
           '<button type="button" class="btn-juego btn-juego--sec" data-reiniciar-final>' + esc(X.volver) + '</button></div>' +
       '</section>';
     document.getElementById("copiar-codigo").addEventListener("click", function (e) {

@@ -278,9 +278,9 @@
 .ch__texto {
   fill: var(--ch-texto);
   font-family: var(--mono);
-  font-size: 9.5px;
+  font-size: 8.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
 }
 .ch__linea {
   fill: none;
@@ -553,13 +553,39 @@
   gap: 0.85rem 1rem;
   margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
-@media (min-width: 1100px) {
+/* Desde 1280 px: las cinco salas en fila y el código al costado */
+@media (min-width: 1280px) {
   .tablero {
-    grid-template-columns: minmax(0, 1fr) 22rem;
+    grid-template-columns: minmax(0, 1fr) 21rem;
     align-items: stretch;
   }
   .tablero__head {
     grid-column: 1 / -1;
+  }
+  .salas-tiles {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+/* Entre 700 y 1279 px: el código ocupa todo el ancho, con las llaves al costado */
+@media (min-width: 700px) and (max-width: 1279px) {
+  .codigo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr);
+    grid-template-areas: "head stats" "anillos stats" "txt stats" "ir stats";
+    column-gap: 1.5rem;
+    align-content: start;
+  }
+  .codigo__head { grid-area: head; }
+  .codigo__anillos { grid-area: anillos; max-width: 26rem; }
+  .codigo__txt { grid-area: txt; }
+  .codigo__ir { grid-area: ir; margin-top: 0.75rem; }
+  .codigo .stats {
+    grid-area: stats;
+    align-self: center;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    border-top: 0;
+    border-left: 1px solid var(--deep-soft);
   }
 }
 .tablero__head {
@@ -576,27 +602,18 @@
   color: var(--muted);
   font-size: 0.92rem;
 }
-/* Las 5 salas en una fila; si no entran, se deslizan de costado */
+/* Las salas se reacomodan según el ancho: siempre se ven todas, sin desplazamiento lateral */
 .salas-tiles {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(10.5rem, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
   gap: 0.75rem;
-  margin: 0 calc(var(--gutter) * -1);
-  padding: 0.15rem var(--gutter) 0.6rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--gutter);
+  margin: 0;
+  padding: 0;
   list-style: none;
-  scrollbar-width: thin;
 }
-.sala-tile {
-  scroll-snap-align: start;
-}
-@media (min-width: 1100px) {
+@media (max-width: 379px) {
   .salas-tiles {
-    margin: 0;
-    padding: 0 0 0.6rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 .sala-tile {
@@ -3932,5 +3949,35 @@
   .equipo,
   .is-pie-visible .equipo {
     transition: none;
+  }
+}
+
+/* Ícono de "se abre en una pestaña nueva" */
+.ic-ext {
+  width: 0.85rem !important;
+  height: 0.85rem !important;
+  opacity: 0.6;
+}
+/* Tarjeta única cuando las cinco frases quedan parejas */
+.foco__salas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+/* Celular: el foco nunca queda tapado por la barra fija del equipo */
+@media (max-width: 767px) {
+  html:has(.esc-body) {
+    scroll-padding-bottom: 6rem;
+  }
+}
+/* Celular: dos columnas, y la quinta sala ocupa la fila completa */
+@media (max-width: 559px) {
+  .salas-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sala-tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    min-height: 0;
   }
 }
