@@ -1625,9 +1625,9 @@ la empresa o el área].</pre>
         <div class="fin-fields">
           <div class="fin-field">
             <label for="pres-ingreso">Ingreso mensual</label>
-            <div class="fin-input"><span class="fin-affix">$</span><input id="pres-ingreso" type="number" inputmode="decimal" min="0" step="any" value="600000" aria-describedby="pres-ingreso-h pres-ingreso-e"></div>
+            <div class="fin-input"><span class="fin-affix">$</span><input id="pres-ingreso" type="text" inputmode="numeric" value="600.000" aria-describedby="pres-ingreso-h pres-ingreso-e" data-num autocomplete="off" maxlength="15"></div>
             <p class="fin-help" id="pres-ingreso-h">Lo que cobrás por mes, en pesos.</p>
-            <p class="fin-err" id="pres-ingreso-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="pres-ingreso-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
           <div class="fin-field">
             <span class="fin-label" id="pres-regla-l">Regla</span>
@@ -1649,9 +1649,9 @@ la empresa o el área].</pre>
         <div class="fin-fields">
           <div class="fin-field">
             <label for="hor-diario">Gastos hormiga por día</label>
-            <div class="fin-input"><span class="fin-affix">$</span><input id="hor-diario" type="number" inputmode="decimal" min="0" step="any" value="2500" aria-describedby="hor-diario-h hor-diario-e"></div>
+            <div class="fin-input"><span class="fin-affix">$</span><input id="hor-diario" type="text" inputmode="numeric" value="2.500" aria-describedby="hor-diario-h hor-diario-e" data-num autocomplete="off" maxlength="15"></div>
             <p class="fin-help" id="hor-diario-h">Un promedio de lo que gastás en cosas chicas cada día.</p>
-            <p class="fin-err" id="hor-diario-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="hor-diario-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
         </div>
         <div class="fin-results" aria-live="polite">
@@ -1665,9 +1665,9 @@ la empresa o el área].</pre>
         <div class="fin-fields">
           <div class="fin-field">
             <label for="fon-gastos">Gastos básicos por mes</label>
-            <div class="fin-input"><span class="fin-affix">$</span><input id="fon-gastos" type="number" inputmode="decimal" min="0" step="any" value="400000" aria-describedby="fon-gastos-h fon-gastos-e"></div>
+            <div class="fin-input"><span class="fin-affix">$</span><input id="fon-gastos" type="text" inputmode="numeric" value="400.000" aria-describedby="fon-gastos-h fon-gastos-e" data-num autocomplete="off" maxlength="15"></div>
             <p class="fin-help" id="fon-gastos-h">Alquiler, comida, servicios y transporte.</p>
-            <p class="fin-err" id="fon-gastos-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="fon-gastos-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
         </div>
         <div class="fin-meses" id="fon-meses" aria-hidden="true"></div>
@@ -1693,27 +1693,27 @@ la empresa o el área].</pre>
         <div class="fin-fields fin-fields--4">
           <div class="fin-field">
             <label for="int-inicial">Inversión inicial</label>
-            <div class="fin-input"><span class="fin-affix">u$s</span><input id="int-inicial" type="number" inputmode="decimal" min="0" step="any" value="200" aria-describedby="int-inicial-h int-inicial-e"></div>
+            <div class="fin-input"><span class="fin-affix">u$s</span><input id="int-inicial" type="text" inputmode="numeric" value="200" aria-describedby="int-inicial-h int-inicial-e" data-num autocomplete="off" maxlength="15"></div>
             <p class="fin-help" id="int-inicial-h">En dólares.</p>
-            <p class="fin-err" id="int-inicial-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="int-inicial-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
           <div class="fin-field">
             <label for="int-mensual">Aporte por mes</label>
-            <div class="fin-input"><span class="fin-affix">u$s</span><input id="int-mensual" type="number" inputmode="decimal" min="0" step="any" value="200" aria-describedby="int-mensual-h int-mensual-e"></div>
+            <div class="fin-input"><span class="fin-affix">u$s</span><input id="int-mensual" type="text" inputmode="numeric" value="200" aria-describedby="int-mensual-h int-mensual-e" data-num autocomplete="off" maxlength="15"></div>
             <p class="fin-help" id="int-mensual-h">Lo que sumás cada mes.</p>
-            <p class="fin-err" id="int-mensual-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="int-mensual-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
           <div class="fin-field">
             <label for="int-tasa">Tasa anual</label>
-            <div class="fin-input"><input id="int-tasa" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="int-tasa-h int-tasa-e"><span class="fin-affix">%</span></div>
+            <div class="fin-input"><input id="int-tasa" type="text" inputmode="decimal" value="12" aria-describedby="int-tasa-h int-tasa-e" data-num data-dec autocomplete="off" maxlength="6"><span class="fin-affix">%</span></div>
             <p class="fin-help" id="int-tasa-h">Rendimiento estimado por año.</p>
-            <p class="fin-err" id="int-tasa-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="int-tasa-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
           <div class="fin-field">
             <label for="int-anios">Años</label>
-            <div class="fin-input"><input id="int-anios" type="number" inputmode="decimal" min="0" step="1" value="33" aria-describedby="int-anios-h int-anios-e"></div>
+            <div class="fin-input"><input id="int-anios" type="text" inputmode="numeric" value="33" aria-describedby="int-anios-h int-anios-e" data-num autocomplete="off" maxlength="3"></div>
             <p class="fin-help" id="int-anios-h">Cuánto tiempo la mantenés.</p>
-            <p class="fin-err" id="int-anios-e" hidden>Ingresá un número mayor o igual a 0.</p>
+            <p class="fin-err" id="int-anios-e" hidden>Ingresá solo números, mayores o iguales a 0.</p>
           </div>
         </div>
         <div class="fin-results" aria-live="polite">

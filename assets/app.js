@@ -393,10 +393,37 @@
     };
     var pesos = function (n, dec) { return "$ " + fmt(n, dec); };
     var dolares = function (n) { return "u$s " + fmt(Math.round(n)); };
+    /* Campos numéricos: solo aceptan dígitos (y una coma decimal donde corresponde) y muestran
+       los separadores de miles a medida que se escribe, como en Argentina (1.000.000) */
+    var parseNum = function (s) { return Number(String(s).replace(/\./g, "").replace(",", ".")); };
+    var formatNum = function (input) {
+      var dec = input.hasAttribute("data-dec");
+      var raw = input.value, caret = input.selectionStart == null ? raw.length : input.selectionStart;
+      /* Cuántos dígitos (y coma) había antes del cursor, para dejarlo en el mismo lugar */
+      var before = raw.slice(0, caret).replace(dec ? /[^\d,]/g : /\D/g, "").length;
+      var clean = raw.replace(dec ? /[^\d,]/g : /\D/g, "");
+      if (dec) { var c = clean.indexOf(","); if (c >= 0) clean = clean.slice(0, c + 1) + clean.slice(c + 1).replace(/,/g, "").slice(0, 2); }
+      var parts = clean.split(","), ent = parts[0].replace(/^0+(?=\d)/, "");
+      var out = ent.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (parts.length > 1 ? "," + parts[1] : "");
+      input.value = out;
+      var pos = 0, seen = 0;
+      while (pos < out.length && seen < before) { if (/[\d,]/.test(out[pos])) seen++; pos++; }
+      if (document.activeElement === input) input.setSelectionRange(pos, pos);
+    };
+    $$("#finanzas input[data-num]").forEach(function (input) {
+      /* Una tecla que no es un número no llega a escribirse; si se pega un texto, se queda solo con sus números */
+      input.addEventListener("beforeinput", function (e) {
+        if (!e.data || e.data.length > 1 || e.inputType.indexOf("insert") !== 0) return;
+        var ok = input.hasAttribute("data-dec") ? /^[\d.,]+$/ : /^[\d.]+$/;
+        if (!ok.test(e.data)) e.preventDefault();
+      });
+      input.addEventListener("input", function () { formatNum(input); });
+      formatNum(input);
+    });
     /* Lee un campo numérico; si no es válido lo marca y devuelve null */
     var num = function (id) {
       var input = $("#" + id), field = input.closest(".fin-field"), err = $("#" + id + "-e");
-      var v = input.value === "" ? NaN : Number(input.value);
+      var v = input.value === "" ? NaN : parseNum(input.value);
       var ok = isFinite(v) && v >= 0;
       field.classList.toggle("is-error", !ok);
       input.setAttribute("aria-invalid", ok ? "false" : "true");
