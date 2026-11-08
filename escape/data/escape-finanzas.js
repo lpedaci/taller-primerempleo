@@ -1,5 +1,7 @@
 /* Contenido del escape room "Tu primer sueldo".
    Todo el texto visible, las respuestas, las pistas y los errores esperados se editan acá.
+   Las salas de este archivo son la versión inicial; las versiones intermedia y avanzada y las
+   palabras de la puerta final están en data/escape-versiones.js.
    Reglas de estilo: voseo, sin rayas largas y "|" como separador en títulos.
    Todos los montos, tasas y datos son ficticios. */
 window.ESC_DATA = {
@@ -7,10 +9,10 @@ window.ESC_DATA = {
   kicker: "Escape room de finanzas",
   historia: [
     "Es tu primer día de cobro. Fuiste a la empresa a firmar el recibo y la puerta de la oficina se trabó.",
-    "Para salir tenés que abrir 5 candados, uno por sala. Cada candado que abrís te da una letra del código de la puerta final."
+    "Para salir tenés que abrir 5 candados, uno por sala. Cada candado que abrís te da letras del código de la puerta final."
   ],
   datos_juego: [
-    { titulo: "5 salas", texto: "Se abren en orden y podés volver a las que ya resolviste." },
+    { titulo: "5 salas", texto: "Se abren en orden. Cada una tiene tres versiones y podés volver a jugarla para ganar insignias." },
     { titulo: "Sin límite de tiempo", texto: "No hay cuenta regresiva ni forma de perder." },
     { titulo: "Pistas a cambio de llaves", texto: "Empezás con 3 y ganás una por cada reflexión." }
   ],
@@ -60,14 +62,10 @@ window.ESC_DATA = {
 
   puerta: {
     titulo: "La puerta final",
-    texto: "Juntaste las cinco letras. Ordenalas para responder la pregunta y abrir la puerta.",
-    pregunta: "¿Qué necesitás para que tu sueldo te alcance?",
-    ayuda: "Una palabra de 5 letras, con las letras que juntaste.",
-    orden_mostrado: ["T", "S", "M", "A", "E"],
-    respuestas: ["METAS"],
-    errores: [
-      { id: "temas", valores: ["TEMAS"], mensaje: "Usaste todas las letras, pero esa palabra no responde la pregunta." }
-    ],
+    texto: "Juntaste todas las letras. Ordenalas para responder la pregunta y abrir la puerta.",
+    /* La pregunta y la palabra cambian en cada partida: están en data/escape-versiones.js */
+    ayuda: "Una palabra de {n} letras, con las letras que juntaste.",
+    anagrama: "Usaste todas las letras, pero esa palabra no responde la pregunta.",
     generico: "Todavía no. Probá ordenar las letras de otra manera.",
     falta: "Todavía te faltan letras. Resolvé las salas que quedan para abrir la puerta.",
     abierta: "¡La puerta se abrió!",
@@ -99,7 +97,7 @@ window.ESC_DATA = {
     copiar: "Copiar código",
     copiado: "Código copiado",
     volver: "Volver a jugar",
-    volver_confirmar: "¿Seguro? Se borra tu avance y empezás de cero."
+    volver_confirmar: "¿Seguro? Empezás una partida nueva, con otras versiones de las salas. Tus insignias se conservan."
   },
 
   textos: {
@@ -131,6 +129,7 @@ window.ESC_DATA = {
     reflexion_ok: "Reflexión guardada. Ganaste una llave.",
     reflexion_guardada: "Reflexión guardada.",
     fragmento: "Letra del código",
+    fragmento_2: "Letras del código",
     seguir: "Seguir a la sala",
     a_la_puerta: "Ir a la puerta final",
     tiempo_mostrar: "Mostrar tiempo",
@@ -144,8 +143,8 @@ window.ESC_DATA = {
     panel: "Panel",
     salas_t: "Salas",
     codigo_t: "Código de la puerta",
-    codigo_txt: "Juntá las 5 letras para abrir la puerta final.",
-    codigo_listo: "¡Tenés las 5 letras! Ya podés ir a la puerta final.",
+    codigo_txt: "Juntá las letras de las 5 salas para abrir la puerta final.",
+    codigo_listo: "¡Tenés todas las letras! Ya podés ir a la puerta final.",
     pistas_usadas: "Pistas usadas",
     llaves_extra: "+1 por reflexión",
     nivel: "Nivel",
@@ -170,8 +169,32 @@ window.ESC_DATA = {
     estado_libre: "Lista para jugar",
     logro_titulo: "¡Candado abierto!",
     logro_sub: "Ya tenés una letra más del código.",
+    logro_sub_2: "Ya tenés dos letras más del código.",
+    version: "Versión {d}",
+    repaso: "Repaso",
+    repaso_aviso: "Nueva versión de la sala: {d}.",
+    otra_version: "Jugar otra versión",
+    otra_version_txt: "Resolviste la versión {d}. Cada sala tiene tres versiones: jugá otra para sumar insignias.",
+    insignias_t: "Insignias",
+    insignias_intro: "Cada sala tiene tres versiones: inicial, intermedia y avanzada. Resolvé las cinco salas en una misma versión y ganás su insignia. Para cambiar de versión, volvé a jugar una sala que ya resolviste.",
+    insignias_ganadas: "ganadas",
+    insignias_descargar: "Descargar mis insignias",
+    insignias_descargadas: "Listo: se descargó la imagen con tus insignias.",
+    insignias_error: "No se pudo crear la imagen. Probá de nuevo.",
+    insignias_imagen_k: "Escape room de finanzas",
+    insignias_imagen_t: "Mis insignias",
+    insignias_imagen_pie: "Tu primer sueldo | Taller Del aula al primer trabajo",
+    insignia_nombre: "Insignia {d}",
+    insignia_desc: "Las cinco salas resueltas en su versión {d}.",
+    insignia_salas: "Salas resueltas en versión {d}",
+    insignia_ganada: "Ganada",
+    insignia_progreso: "{p} de {t} salas",
+    insignia_nueva: "¡Ganaste la insignia {d}!",
+    insignia_nueva_txt: "Resolviste las cinco salas en esa versión.",
+    reinicio_total: "Avance e insignias borrados. Empezás de cero.",
+    reinicio_partida: "Partida nueva. Tus insignias se conservan.",
     repasar: "Repasar",
-    reiniciar_confirmar: "¿Seguro? Se borra tu avance en el escape room."
+    reiniciar_confirmar: "¿Seguro? Se borran tu avance y tus insignias del escape room."
   },
 
   salas: [
@@ -251,8 +274,7 @@ window.ESC_DATA = {
         ],
         link: { texto: "Repasá cómo se lee un recibo", href: "../#recibo" }
       },
-      reflexion: "¿Qué dato del recibo te conviene revisar todos los meses, y por qué?",
-      fragmento: "M"
+      reflexion: "¿Qué dato del recibo te conviene revisar todos los meses, y por qué?"
     },
     {
       id: 2,
@@ -333,8 +355,7 @@ window.ESC_DATA = {
         ],
         link: { texto: "Probá la calculadora de gastos hormiga", href: "../#fin-hormiga" }
       },
-      reflexion: "¿Qué gasto hormiga tenés vos, o alguien que conocés, y cuánto suma en un mes?",
-      fragmento: "E"
+      reflexion: "¿Qué gasto hormiga tenés vos, o alguien que conocés, y cuánto suma en un mes?"
     },
     {
       id: 3,
@@ -419,8 +440,7 @@ window.ESC_DATA = {
         ],
         link: { texto: "Repasá cómo salir de deudas", href: "../#fin-deudas" }
       },
-      reflexion: "Antes de comprar algo en cuotas, ¿qué vas a mirar a partir de hoy?",
-      fragmento: "T"
+      reflexion: "Antes de comprar algo en cuotas, ¿qué vas a mirar a partir de hoy?"
     },
     {
       id: 4,
@@ -481,8 +501,7 @@ window.ESC_DATA = {
         ],
         link: { texto: "Probá el control de inflación", href: "../#fin-inflacion" }
       },
-      reflexion: "¿Para qué te gustaría ahorrar con tu primer sueldo, y dónde guardarías esa plata?",
-      fragmento: "A"
+      reflexion: "¿Para qué te gustaría ahorrar con tu primer sueldo, y dónde guardarías esa plata?"
     },
     {
       id: 5,
@@ -534,8 +553,7 @@ window.ESC_DATA = {
         ],
         link: { texto: "Repasá ejecución y seguridad", href: "../#fin-ejecucion" }
       },
-      reflexion: "¿Qué harías si te llega un mensaje pidiéndote un código?",
-      fragmento: "S"
+      reflexion: "¿Qué harías si te llega un mensaje pidiéndote un código?"
     }
   ]
 };

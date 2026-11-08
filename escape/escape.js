@@ -5,6 +5,8 @@
 (function () {
   "use strict";
   var D = window.ESC_DATA, E = window.ESC_ECONOMIA;
+  /* Versiones de las salas y palabras de la puerta final (data/escape-versiones.js) */
+  var V = window.ESC_VERSIONES || { dificultades: [{ id: "inicial", nombre: "Inicial" }], palabras: [{ palabra: "METAS", pregunta: "", errores: [] }], salas: {} };
   var T = D.textos, P = D.personaje, NIVELES = D.niveles, SIMPLE = D.simple;
   var root = document.documentElement;
   var app = document.getElementById("esc-app");
@@ -19,6 +21,7 @@
   var KEY = ES_SIMPLE ? "esc_estado_simple" : "esc_estado";
   var LOG = ES_SIMPLE ? "esc_eventos_simple" : "esc_eventos";
   var THEME_KEY = "primer-empleo-tema";
+  var KEY_INSIG = ES_SIMPLE ? "esc_insignias_simple" : "esc_insignias";
   var TOTAL = D.salas.length;
 
   /* ---------- Utilidades ---------- */
@@ -175,17 +178,84 @@
   }
 
   /* ---------- Estado guardado ---------- */
+  /* ---------- Insignias: una por dificultad. Se gana al resolver las 5 salas en esa versión.
+     Se guardan aparte del avance: "Volver a jugar" las conserva y "Empezar de cero" las borra. */
+  function cargarInsignias() {
+    try { var r = JSON.parse(localStorage.getItem(KEY_INSIG) || "null"); if (r && r.salas) return r; } catch (e) {}
+    return { salas: {} };
+  }
+  var INS = cargarInsignias();
+  function guardarInsignias() { try { localStorage.setItem(KEY_INSIG, JSON.stringify(INS)); } catch (e) {} }
+  function versionesHechas(id) { return INS.salas[id] || []; }
+  function progresoInsignia(vi) {
+    return D.salas.filter(function (s) { return versionesHechas(s.id).indexOf(vi) !== -1; }).length;
+  }
+  function insigniasGanadas() {
+    return V.dificultades.map(function (x, i) { return i; }).filter(function (i) { return progresoInsignia(i) === TOTAL; });
+  }
+  /* Marca la versión resuelta y devuelve las insignias que se acaban de ganar */
+  function marcarVersion(id, vi) {
+    var antes = insigniasGanadas(), l = INS.salas[id] || (INS.salas[id] = []);
+    if (l.indexOf(vi) === -1) l.push(vi);
+    guardarInsignias();
+    return insigniasGanadas().filter(function (i) { return antes.indexOf(i) === -1; });
+  }
+
+  /* ---------- Versiones de las salas y palabra final ---------- */
+  function cantVersiones(id) { return Math.max(1, (V.salas[id] || []).length); }
+  /* Elige una versión al azar, primero entre las que todavía no se resolvieron */
+  function elegirVersion(id, evitar) {
+    var n = cantVersiones(id), hechas = versionesHechas(id), op = [], i;
+    for (i = 0; i < n; i++) if (i !== evitar && hechas.indexOf(i) === -1) op.push(i);
+    if (!op.length) for (i = 0; i < n; i++) if (i !== evitar) op.push(i);
+    if (!op.length) op = [0];
+    return op[Math.floor(Math.random() * op.length)];
+  }
+  function mezclar(arr) {
+    var a = arr.slice(), i, j, t;
+    for (i = a.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function ordenLetras(largo) {
+    var idx = [], i, o;
+    for (i = 0; i < largo; i++) idx.push(i);
+    do { o = mezclar(idx); } while (largo > 1 && o.join() === idx.join());
+    return o;
+  }
+  function prepararPartida(s) {
+    s.versiones = {};
+    D.salas.forEach(function (x) { s.versiones[x.id] = elegirVersion(x.id); });
+    s.palabra = Math.floor(Math.random() * V.palabras.length);
+    s.orden = ordenLetras(V.palabras[s.palabra].palabra.length);
+    return s;
+  }
   function nuevoEstado() {
-    return {
+    return prepararPartida({
       v: 1, modo: MODO, pantalla: "intro", sala: 1,
       llaves: E.llaves_iniciales, pistas_pagadas: 0,
       pre: null, post: null, puerta: false, fin: false,
       tiempo_ms: 0, tiempo_visible: false,
       salas: {}
-    };
+    });
   }
   function cargar() {
-    try { var r = localStorage.getItem(KEY); if (r) { var s = JSON.parse(r); if (s && s.v === 1) return s; } } catch (e) {}
+    try {
+      var r = localStorage.getItem(KEY);
+      if (r) {
+        var s = JSON.parse(r);
+        if (s && s.v === 1) {
+          /* Partidas guardadas antes de las versiones: versión inicial y la palabra METAS */
+          if (!s.versiones) {
+            s.versiones = {};
+            D.salas.forEach(function (x) { s.versiones[x.id] = 0; });
+            s.palabra = 0;
+            s.orden = [2, 4, 0, 3, 1];
+          }
+          if (!V.palabras[s.palabra]) { s.palabra = 0; s.orden = ordenLetras(V.palabras[0].palabra.length); }
+          return s;
+        }
+      }
+    } catch (e) {}
     return nuevoEstado();
   }
   function guardar() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
@@ -204,9 +274,22 @@
     if (!S.salas[id]) S.salas[id] = { resuelta: false, intentos: 0, fallos_seguidos: 0, pistas: [], debrief: false, reflexion: "" };
     return S.salas[id];
   }
+  function palabraActual() { return V.palabras[S.palabra] || V.palabras[0]; }
+  /* Con 5 letras, una por sala; con 10, dos por sala */
+  function letrasPorSala() { return Math.max(1, Math.round(palabraActual().palabra.length / TOTAL)); }
+  function fragmento(id) { var n = letrasPorSala(); return palabraActual().palabra.substr((id - 1) * n, n); }
+  /* Datos de la sala con la versión que le tocó en esta partida */
   function datosSala(id) {
-    for (var i = 0; i < D.salas.length; i++) if (D.salas[i].id === id) return D.salas[i];
-    return null;
+    var base = null;
+    for (var i = 0; i < D.salas.length; i++) if (D.salas[i].id === id) base = D.salas[i];
+    if (!base) return null;
+    var vi = (S.versiones && S.versiones[id]) || 0;
+    if (vi >= cantVersiones(id)) vi = 0;
+    var d = Object.assign({}, base, (V.salas[id] || [])[vi] || {});
+    d.version = vi;
+    d.dificultad = V.dificultades[vi] || V.dificultades[0];
+    d.fragmento = fragmento(id);
+    return d;
   }
   function salaDesbloqueada(id) { return id === 1 || !!(S.salas[id - 1] && S.salas[id - 1].resuelta); }
   function resueltas() { return D.salas.filter(function (s) { return S.salas[s.id] && S.salas[s.id].resuelta; }).length; }
@@ -280,8 +363,9 @@
     barraPanel.hidden = enPanel;
     barraMarca.closest(".esc-top").classList.toggle("is-juego", !enPanel);
     var tag = "Escape room", titulo = D.titulo;
-    if (!enPanel && app.querySelector(".sala")) {
-      var d = datosSala(S.sala);
+    var juego = app.querySelector(".juego[data-sala]");
+    if (!enPanel && juego && app.querySelector(".sala")) {
+      var d = datosSala(Number(juego.getAttribute("data-sala")));
       tag = ES_SIMPLE ? preguntaDe(d.id) : "Sala " + d.id;
       titulo = ES_SIMPLE ? D.titulo : d.nombre;
     } else if (!enPanel && app.querySelector(".puerta")) {
@@ -289,6 +373,9 @@
     }
     barraTag.textContent = tag;
     barraTitulo.textContent = titulo;
+    var nav = document.getElementById("esc-insig-nav");
+    nav.hidden = enPanel || ES_SIMPLE;
+    if (!nav.hidden) { nav.innerHTML = insigniasNav(); nav.title = T.insignias_t + ": " + insigniasGanadas().length + " de " + V.dificultades.length; }
   }
   function ir(pantalla, sala) {
     S.pantalla = pantalla;
@@ -299,13 +386,13 @@
   /* ---------- Piezas compartidas ---------- */
   function fichasHTML() {
     return D.salas.map(function (s) {
-      var st = S.salas[s.id], l = st && st.resuelta ? s.fragmento : "";
+      var st = S.salas[s.id], l = st && st.resuelta ? fragmento(s.id) : "";
       return '<span class="ficha' + (l ? " is-llena" : "") + '">' + esc(l) + '</span>';
     }).join("");
   }
   function srCodigo() {
-    var cod = D.salas.filter(function (s) { return S.salas[s.id] && S.salas[s.id].resuelta; }).map(function (s) { return s.fragmento; });
-    return cod.length ? "Letras del código: " + cod.join(", ") + ". Faltan " + (TOTAL - cod.length) + "." : "Todavía no tenés letras del código.";
+    var cod = D.salas.filter(function (s) { return S.salas[s.id] && S.salas[s.id].resuelta; }).map(function (s) { return fragmento(s.id); });
+    return cod.length ? "Letras del código: " + cod.join(", ") + ". Faltan " + (TOTAL - cod.length) + " " + plural(TOTAL - cod.length, "sala", "salas") + "." : "Todavía no tenés letras del código.";
   }
   /* Tarjeta de nivel: el personaje con su nivel y cuánto falta para el próximo */
   function nivelHTML(expr, cls) {
@@ -377,12 +464,16 @@
   });
   dlgConfirmar.addEventListener("click", function (e) { if (e.target === dlgConfirmar) dlgConfirmar.close(); });
   dlgConfirmar.addEventListener("close", function () { if (confirmarDesde && document.contains(confirmarDesde)) confirmarDesde.focus(); });
-  function reiniciar(msg) {
+  function reiniciar(msg, borrarInsignias) {
     confirmar(msg || T.reiniciar_confirmar, function () {
       try { localStorage.removeItem(KEY); localStorage.removeItem(LOG); } catch (e) {}
+      if (borrarInsignias) {
+        try { localStorage.removeItem(KEY_INSIG); } catch (e) {}
+        INS = { salas: {} };
+      }
       S = nuevoEstado();
       ir("intro");
-      announce("Avance borrado. Empezás de cero.");
+      announce(borrarInsignias ? T.reinicio_total : T.reinicio_partida);
     });
   }
 
@@ -397,7 +488,7 @@
       '<h3 class="sala-tile__t">' + esc(s.titulo) + '</h3>' +
       '<p class="sala-tile__premio">' + lucesSala(s.id, resuelta) +
         '<span><span aria-hidden="true">' + esc(T.luz_de) + ' </span><span class="sr-only">' + esc((resuelta ? T.luz_encendida : T.luz_enciende).replace("{p}", P.nombre)) + ' </span><strong>' + esc(NIVELES[Math.min(s.id, NIVELES.length - 1)]) + '</strong></span></p>' +
-      '<div class="sala-tile__pie"><span class="sala-tile__letra" aria-hidden="true">' + (resuelta ? esc(s.fragmento) : "?") + '</span>' +
+      '<div class="sala-tile__pie"><span class="sala-tile__letra" aria-hidden="true">' + (resuelta ? esc(fragmento(s.id)) : "?") + '</span>' +
         '<button type="button" class="redondo" data-ir-sala="' + s.id + '"' + (libre ? "" : " disabled") + ' aria-label="' + esc(T.entrar + " " + s.id + ": " + s.titulo + (libre ? "" : ", " + T.estado_bloqueada)) + '">' + ic(libre ? "j-flecha" : "j-candado") + '</button></div>' +
     '</li>';
   }
@@ -411,7 +502,7 @@
     var anillos = D.salas.map(function (s) {
       var st = S.salas[s.id], ok = !!(st && st.resuelta);
       return '<li class="anillo' + (ok ? " is-ok" : "") + '"><svg viewBox="0 0 44 44" aria-hidden="true" focusable="false"><circle class="anillo__bg" cx="22" cy="22" r="18"/><circle class="anillo__fg" cx="22" cy="22" r="18" pathLength="100"/></svg>' +
-        '<span class="anillo__l" aria-hidden="true">' + (ok ? esc(s.fragmento) : "?") + '</span><span class="anillo__k" aria-hidden="true">Sala ' + s.id + '</span></li>';
+        '<span class="anillo__l" aria-hidden="true">' + (ok ? esc(fragmento(s.id)) : "?") + '</span><span class="anillo__k" aria-hidden="true">Sala ' + s.id + '</span></li>';
     }).join("");
     var todas = resueltas() === TOTAL;
     return '<section class="codigo" aria-labelledby="codigo-t">' +
@@ -472,6 +563,7 @@
         '<ol class="salas-tiles">' + D.salas.map(salaTile).join("") + '</ol>' +
         codigoCard() +
       '</section>' +
+      insigniasHTML() +
       (empezo ? "" : autoevalForm("autoeval-pre", "Antes de entrar", D.autoeval.titulo_pre.split("|").pop().trim(), D.autoeval.intro_pre, D.autoeval.boton_pre));
     conectarPre();
   }
@@ -580,7 +672,7 @@
       case "sobre":
         return '<span class="objeto-mini" aria-hidden="true"><span class="mini-sobre"><i></i></span></span>';
       case "etiqueta":
-        return '<span class="objeto-mini" aria-hidden="true"><span class="mini-etiqueta"><i></i><b>+10 %</b></span></span>';
+        return '<span class="objeto-mini" aria-hidden="true"><span class="mini-etiqueta"><i></i><b>' + esc(o.mini || "+10 %") + '</b></span></span>';
       case "celular":
         return '<span class="objeto-mini" aria-hidden="true"><span class="mini-cel"><i></i><i></i><i></i><i></i></span></span>';
       default:
@@ -625,7 +717,9 @@
         '<tfoot><tr><th scope="row" colspan="2">Subtotal contribuciones</th><td class="num">' + esc(o.contribuciones_total) + '</td></tr></tfoot></table></div></section>' +
       '<section class="esc-recibo__sec esc-recibo__sec--sueldo"><h3 class="esc-recibo__sec-t"><span>3</span>Remuneración bruta y deducciones</h3>' +
         '<div class="esc-recibo__tabla"><table>' + cab + '<tbody>' + filas(o.haberes, true) +
-        '<tr class="esc-recibo__bruto"><th scope="row" colspan="2">Sueldo bruto</th><td class="num">' + esc(o.bruto) + '</td></tr>' +
+        '<tr class="esc-recibo__bruto"><th scope="row" colspan="2">Sueldo bruto' + (o.no_remunerativos ? " remunerativo" : "") + '</th><td class="num">' + esc(o.bruto) + '</td></tr>' +
+        (o.no_remunerativos ? '<tr class="esc-recibo__subt"><th scope="row" colspan="3">No remunerativo (sin descuentos)</th></tr>' + filas(o.no_remunerativos, true) +
+          '<tr class="esc-recibo__subt"><th scope="row" colspan="3">Deducciones sobre lo remunerativo</th></tr>' : "") +
         filas(o.deducciones, false) + '</tbody></table></div>' +
         '<span class="esc-recibo__mancha" aria-hidden="true"></span></section>' +
       '<section class="esc-recibo__sec esc-recibo__sec--neto"><h3 class="esc-recibo__sec-t"><span>4</span>Remuneración neta</h3>' +
@@ -704,11 +798,12 @@
         recorrido(d.id) +
         '<section class="sala" aria-labelledby="sala-t">' +
           '<header class="sala__head">' + cabeceraSala('<p class="sala__n">' + ic(d.icono || "j-candado") + (ES_SIMPLE ? esc(preguntaDe(d.id)) : 'Sala ' + d.id + ' | ' + esc(d.nombre)) + '</p>') +
-            '<h1 class="sala__t" id="sala-t" tabindex="-1"' + (st.resuelta ? "" : " data-foco") + '>' + esc(d.titulo) + '</h1>' +
+            '<h1 class="sala__t" id="sala-t" tabindex="-1"' + (st.resuelta && !st.repaso ? "" : " data-foco") + '>' + esc(d.titulo) + '</h1>' +
+            '<p class="sala__version" data-tier="' + d.version + '">' + insigniaSVG(d.version, true, "sala__version-ic") + '<span>' + esc(T.version.replace("{d}", d.dificultad.nombre.toLowerCase())) + (st.repaso ? ' | ' + esc(T.repaso) : "") + '</span></p>' +
             (ES_SIMPLE ? "" : '<p class="sala__escena-txt">' + esc(d.escena) + '</p>') +
           '</header>' +
           escena +
-          '<div class="sala__panel" id="sala-panel">' + (st.resuelta ? logroHTML(d, st) : (previoHTML(d, st) + candadoHTML(d, st))) + '</div>' +
+          '<div class="sala__panel" id="sala-panel">' + (st.resuelta && !st.repaso ? logroHTML(d, st) : (previoHTML(d, st) + candadoHTML(d, st))) + '</div>' +
         '</section>' +
       '</div>';
     conectarSala(d, st);
@@ -858,21 +953,28 @@
       : '<div class="logro__head">' +
           '<div><p class="kicker kicker--ok">' + ic("j-check") + 'Sala ' + d.id + ' resuelta</p>' +
           '<h2 class="logro__t" id="logro-t" tabindex="-1"' + (st.resuelta ? " data-foco" : "") + '>' + esc(T.logro_titulo) + '</h2>' +
-          '<p class="logro__sub">' + esc(T.logro_sub) + '</p>' +
+          '<p class="logro__sub">' + esc(d.fragmento.length > 1 ? T.logro_sub_2 : T.logro_sub) + '</p>' +
           '<p class="sube" data-nivel="' + n + '"><span class="sube__punto" aria-hidden="true"></span>' + esc(T.subiste.replace("{n}", NIVELES[n])) + '</p></div>' +
           '<span class="logro__fuerte">' + fuerte("feliz", n, "fuerte--logro") + '</span>' +
         '</div>' +
         '<ul class="logro__stats">' +
           '<li><span class="mini-ic mini-ic--ok">' + ic("j-check") + '</span><span class="logro__v">' + st.intentos + '</span><span class="logro__k">' + plural(st.intentos, "intento", "intentos") + '</span></li>' +
           '<li><span class="mini-ic mini-ic--pista">' + ic("j-pista") + '</span><span class="logro__v">' + pistas + '</span><span class="logro__k">' + plural(pistas, "pista", "pistas") + '</span></li>' +
-          '<li><span class="mini-ic mini-ic--letra">' + ic("j-ficha") + '</span><span class="logro__v">' + esc(d.fragmento) + '</span><span class="logro__k">' + esc(T.fragmento) + '</span></li>' +
+          '<li><span class="mini-ic mini-ic--letra">' + ic("j-ficha") + '</span><span class="logro__v">' + esc(d.fragmento) + '</span><span class="logro__k">' + esc(d.fragmento.length > 1 ? T.fragmento_2 : T.fragmento) + '</span></li>' +
         '</ul>';
+    var nueva = st.insignia_nueva != null ? V.dificultades[st.insignia_nueva] : null;
+    var otra = '<div class="logro__otra">' +
+        (nueva ? '<p class="logro__insignia" data-tier="' + st.insignia_nueva + '">' + insigniaSVG(st.insignia_nueva, true, "logro__insignia-ic") + '<span><strong>' + esc(T.insignia_nueva.replace("{d}", nueva.nombre.toLowerCase())) + '</strong> ' + esc(T.insignia_nueva_txt) + '</span></p>' : "") +
+        '<p class="logro__otra-txt">' + esc(T.otra_version_txt.replace("{d}", d.dificultad.nombre.toLowerCase())) + '</p>' +
+        '<button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-repaso="' + d.id + '">' + ic("j-destello") + '<span>' + esc(T.otra_version) + '</span></button>' +
+      '</div>';
     return '<div class="tarjeta logro" id="logro">' + cabeza +
       '<div class="logro__clave">' +
         '<h3 class="logro__clave-t">' + ic("i-lightbulb") + esc(ES_SIMPLE ? "La idea clave" : T.debrief_titulo) + '</h3>' +
         d.debrief.texto.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join("") +
       '</div>' +
       extraHTML(d, st) +
+      otra +
       '<form class="reflexion" id="reflexion-form" novalidate>' +
         '<p class="reflexion__k">' + esc(T.reflexion_titulo) + (st.llave_reflexion || ES_SIMPLE ? "" : ' <span class="reflexion__premio">+1 ' + ic("j-llave") + '<span class="sr-only">' + esc(T.llave) + '</span></span>') + '</p>' +
         '<label class="reflexion__label" for="reflexion-input">' + esc(d.reflexion) + '</label>' +
@@ -1023,10 +1125,14 @@
     announce(anuncio);
   }
   function abrirCandado(d, st) {
+    var eraRepaso = !!st.repaso;
     st.resuelta = true;
+    st.repaso = false;
     st.fin = Date.now();
-    if (S.sala === d.id && datosSala(d.id + 1)) S.sala = d.id + 1;
-    registrar("sala_fin", { sala: d.id, intentos: st.intentos, pistas: st.pistas.length });
+    var nuevas = marcarVersion(d.id, d.version);
+    st.insignia_nueva = nuevas.length ? nuevas[0] : null;
+    if (!eraRepaso && S.sala === d.id && datosSala(d.id + 1)) S.sala = d.id + 1;
+    registrar("sala_fin", { sala: d.id, version: d.dificultad.id, repaso: eraRepaso, intentos: st.intentos, pistas: st.pistas.length });
     guardar();
     var cand = document.getElementById("candado");
     var mostrar = function () {
@@ -1036,7 +1142,10 @@
       if (!ES_SIMPLE) refrescarEquipo("letras");
       conectarLogro(d, st);
       document.getElementById("logro-t").focus();
-      announce(ES_SIMPLE ? T.correcto_simple : T.correcto + " " + T.fragmento + ": " + d.fragmento + ". " + T.subiste.replace("{n}", NIVELES[nivelActual()]) + ".");
+      var aviso = ES_SIMPLE ? T.correcto_simple : T.correcto + " " + (d.fragmento.length > 1 ? T.fragmento_2 : T.fragmento) + ": " + d.fragmento + ". " + T.subiste.replace("{n}", NIVELES[nivelActual()]) + ".";
+      if (st.insignia_nueva != null) aviso += " " + T.insignia_nueva.replace("{d}", V.dificultades[st.insignia_nueva].nombre.toLowerCase());
+      if (!ES_SIMPLE) sincronizarBarra();
+      announce(aviso);
     };
     if (reduceMotion.matches || ES_SIMPLE) { mostrar(); return; }
     cand.classList.add("is-abriendo");
@@ -1073,6 +1182,128 @@
     announce(gana ? T.reflexion_ok : T.reflexion_guardada);
   }
 
+  /* ---------- Volver a jugar una sala resuelta, con otra versión ---------- */
+  function repasarSala(id) {
+    var st = estadoSala(id), nueva = elegirVersion(id, S.versiones[id]);
+    S.versiones[id] = nueva;
+    st.repaso = true;
+    st.intentos = 0; st.fallos_seguidos = 0; st.pistas = [];
+    st.previo_ok = false; st.previo_marcas = null; st.previo_resp = null;
+    st.extra_resp = null; st.insignia_nueva = null;
+    registrar("repaso", { sala: id, version: V.dificultades[nueva].id });
+    ir("sala", id);
+    announce(T.repaso_aviso.replace("{d}", V.dificultades[nueva].nombre.toLowerCase()));
+  }
+
+  /* ---------- Insignias ---------- */
+  var INSIG_COLORES = [
+    { borde: "#b8742f", fondo: "#f6d7b4", cinta: "#d98f4a" },
+    { borde: "#7c869b", fondo: "#e7ebf2", cinta: "#9aa4b8" },
+    { borde: "#c8920f", fondo: "#fbe7a6", cinta: "#e4ae2c" }
+  ];
+  var INSIG_APAGADA = { borde: "#8f8ea0", fondo: "#e6e5ee", cinta: "#b9b8c6" };
+  function estrella(cx, cy, r) {
+    var pts = [], i, a, rr;
+    for (i = 0; i < 10; i++) {
+      a = Math.PI / 2 + i * Math.PI / 5; rr = i % 2 ? r * 0.45 : r;
+      pts.push((cx + rr * Math.cos(a)).toFixed(1) + "," + (cy - rr * Math.sin(a)).toFixed(1));
+    }
+    return '<polygon points="' + pts.join(" ") + '"/>';
+  }
+  /* Medalla con cintas: una, dos o tres estrellas según la dificultad. Los colores van en el
+     propio SVG para que la misma figura sirva en la página y en la imagen descargable. */
+  function insigniaSVG(i, ganada, cls, suelta) {
+    var c = ganada ? INSIG_COLORES[i] || INSIG_COLORES[0] : INSIG_APAGADA, n = i + 1, xs = n === 1 ? [32] : (n === 2 ? [25, 39] : [20, 32, 44]);
+    var estrellas = xs.map(function (x, k) { return estrella(x, n === 3 && k === 1 ? 26 : 30, n === 1 ? 9 : 7); }).join("");
+    return '<svg' + (suelta ? ' xmlns="http://www.w3.org/2000/svg" width="256" height="288"' : ' class="' + (cls || "") + '" aria-hidden="true" focusable="false"') + ' viewBox="0 0 64 72">' +
+      '<path d="M20 44 12 70l9-5 6 6 6-21z" fill="' + c.cinta + '"/><path d="M44 44l8 26-9-5-6 6-6-21z" fill="' + c.cinta + '"/>' +
+      '<circle cx="32" cy="30" r="25" fill="' + c.fondo + '" stroke="' + c.borde + '" stroke-width="4"/>' +
+      '<circle cx="32" cy="30" r="18" fill="none" stroke="' + c.borde + '" stroke-width="1.5" stroke-dasharray="3 3"/>' +
+      '<g fill="' + c.borde + '">' + estrellas + '</g>' +
+    '</svg>';
+  }
+  function insigniaEstado(i) {
+    var p = progresoInsignia(i);
+    return p === TOTAL ? T.insignia_ganada : T.insignia_progreso.replace("{p}", p).replace("{t}", TOTAL);
+  }
+  function insigniasHTML() {
+    var items = V.dificultades.map(function (dif, i) {
+      var p = progresoInsignia(i), ganada = p === TOTAL, nombre = dif.nombre.toLowerCase();
+      var salas = D.salas.map(function (s) {
+        var hecha = versionesHechas(s.id).indexOf(i) !== -1;
+        return '<li class="' + (hecha ? "is-hecha" : "") + '"><span class="sr-only">Sala ' + s.id + ': ' + (hecha ? "resuelta" : "pendiente") + '</span></li>';
+      }).join("");
+      return '<li class="insignia' + (ganada ? " is-ganada" : "") + '" data-tier="' + i + '">' + insigniaSVG(i, ganada, "insignia__img") +
+        '<div class="insignia__txt"><h3 class="insignia__t">' + esc(T.insignia_nombre.replace("{d}", nombre)) + '</h3>' +
+          '<p class="insignia__estado">' + (ganada ? ic("j-check") : "") + esc(insigniaEstado(i)) + '</p>' +
+          '<p class="insignia__d">' + esc(T.insignia_desc.replace("{d}", nombre)) + '</p>' +
+          '<ol class="insignia__salas" aria-label="' + esc(T.insignia_salas.replace("{d}", nombre)) + '">' + salas + '</ol>' +
+        '</div></li>';
+    }).join("");
+    var cant = insigniasGanadas().length;
+    return '<section class="insignias" aria-labelledby="insig-t">' +
+      '<div class="insignias__head"><div><h2 class="insignias__t" id="insig-t">' + esc(T.insignias_t) + '</h2>' +
+        '<p class="insignias__intro">' + esc(T.insignias_intro) + '</p></div>' +
+        '<div class="insignias__acc"><p class="insignias__n">' + cant + ' de ' + V.dificultades.length + ' ' + esc(T.insignias_ganadas) + '</p>' +
+        '<button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-descargar-insignias>' + ic("j-descarga") + '<span>' + esc(T.insignias_descargar) + '</span></button></div></div>' +
+      '<ul class="insignias__lista">' + items + '</ul>' +
+    '</section>';
+  }
+  /* Íconos de las insignias en la barra superior, dentro del juego */
+  function insigniasNav() {
+    var cant = insigniasGanadas().length;
+    return V.dificultades.map(function (dif, i) {
+      return insigniaSVG(i, progresoInsignia(i) === TOTAL, "esc-insig-nav__ic");
+    }).join("") + '<span class="sr-only">' + esc(T.insignias_t) + ': ' + cant + ' de ' + V.dificultades.length + ' ' + esc(T.insignias_ganadas) + '</span>';
+  }
+  /* Imagen descargable con las tres insignias */
+  function cargarImagen(svg) {
+    return new Promise(function (ok, mal) {
+      var img = new Image();
+      img.onload = function () { ok(img); };
+      img.onerror = mal;
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    });
+  }
+  function descargarInsignias() {
+    var W = 1200, H = 630, c = document.createElement("canvas");
+    c.width = W; c.height = H;
+    var g = c.getContext("2d");
+    var fuente = getComputedStyle(root).getPropertyValue("--display").trim() || "sans-serif";
+    var cuerpo = getComputedStyle(root).getPropertyValue("--body").trim() || "sans-serif";
+    var listas = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    listas.then(function () {
+      return Promise.all(V.dificultades.map(function (d, i) { return cargarImagen(insigniaSVG(i, progresoInsignia(i) === TOTAL, "", true)); }));
+    }).then(function (imgs) {
+      g.fillStyle = "#24242a"; g.fillRect(0, 0, W, H);
+      g.fillStyle = "rgba(240, 140, 62, 0.16)";
+      g.beginPath(); g.arc(W - 60, H + 40, 330, 0, Math.PI * 2); g.fill();
+      g.fillStyle = "#d9b25a"; g.font = "600 26px " + cuerpo; g.fillText(T.insignias_imagen_k, 80, 92);
+      g.fillStyle = "#f4f3fa"; g.font = "700 60px " + fuente; g.fillText(T.insignias_imagen_t, 80, 156);
+      V.dificultades.forEach(function (d, i) {
+        var cx = 260 + i * 340, ganada = progresoInsignia(i) === TOTAL;
+        g.drawImage(imgs[i], cx - 96, 210, 192, 216);
+        g.textAlign = "center";
+        g.fillStyle = "#f4f3fa"; g.font = "700 34px " + fuente; g.fillText(d.nombre, cx, 478);
+        g.fillStyle = ganada ? "#f6c94e" : "#b9b8c6"; g.font = "500 26px " + cuerpo; g.fillText(insigniaEstado(i), cx, 518);
+        g.textAlign = "left";
+      });
+      g.fillStyle = "#8f8ea0"; g.font = "500 22px " + cuerpo;
+      g.fillText(T.insignias_imagen_pie, 80, 588);
+      var f = new Date(), fecha = String(f.getDate()).padStart(2, "0") + "/" + String(f.getMonth() + 1).padStart(2, "0") + "/" + f.getFullYear();
+      g.textAlign = "right"; g.fillText(fecha, W - 80, 588); g.textAlign = "left";
+      var bajar = function (url) {
+        var a = document.createElement("a");
+        a.href = url; a.download = "insignias-tu-primer-sueldo.png";
+        document.body.appendChild(a); a.click(); a.remove();
+      };
+      if (c.toBlob) c.toBlob(function (b) { var u = URL.createObjectURL(b); bajar(u); window.setTimeout(function () { URL.revokeObjectURL(u); }, 2000); });
+      else bajar(c.toDataURL("image/png"));
+      registrar("insignias_descarga", { ganadas: insigniasGanadas().length });
+      announce(T.insignias_descargadas);
+    }).catch(function () { announce(T.insignias_error); });
+  }
+
   /* ---------- Objetos (diálogo modal) ---------- */
   var abridor = null;
   function abrirObjeto(d, id, btn) {
@@ -1093,10 +1324,10 @@
 
   /* ---------- Puerta final ---------- */
   function renderPuerta() {
-    var pu = D.puerta, todas = resueltas() === TOTAL;
-    var letras = pu.orden_mostrado.map(function (l) {
-      var s = D.salas.filter(function (x) { return x.fragmento === l; })[0];
-      var ok = s && S.salas[s.id] && S.salas[s.id].resuelta;
+    var pu = D.puerta, todas = resueltas() === TOTAL, pal = palabraActual(), n = letrasPorSala();
+    var letras = S.orden.map(function (idx) {
+      var sid = Math.floor(idx / n) + 1, l = pal.palabra.charAt(idx);
+      var ok = S.salas[sid] && S.salas[sid].resuelta;
       return '<li class="puerta__letra' + (ok ? " is-llena" : "") + '">' + (ok ? esc(l) : "?") + '</li>';
     }).join("");
     var cuerpo = !todas
@@ -1104,9 +1335,9 @@
       : (S.puerta
         ? '<p class="candado__fb" data-tipo="ok">' + ic("i-check-circle-fill") + '<span>' + esc(pu.abierta) + '</span></p><button type="button" class="btn-juego btn-juego--ancho" data-ir="post"><span>' + esc(D.autoeval.boton_post) + '</span>' + ic("j-flecha") + '</button>'
         : '<form class="candado__form" id="puerta-form" novalidate>' +
-            '<label class="candado__label" for="puerta-input">' + esc(pu.pregunta) + '</label>' +
-            '<p class="candado__ayuda" id="puerta-ayuda">' + esc(pu.ayuda) + '</p>' +
-            '<div class="candado__campo"><input class="candado__input candado__input--palabra" id="puerta-input" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" maxlength="8" aria-describedby="puerta-ayuda puerta-fb"></div>' +
+            '<label class="candado__label" for="puerta-input">' + esc(pal.pregunta) + '</label>' +
+            '<p class="candado__ayuda" id="puerta-ayuda">' + esc(pu.ayuda.replace("{n}", pal.palabra.length)) + '</p>' +
+            '<div class="candado__campo"><input class="candado__input candado__input--palabra" id="puerta-input" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" maxlength="14" aria-describedby="puerta-ayuda puerta-fb"></div>' +
             '<p class="candado__fb" id="puerta-fb" hidden></p>' +
             '<button type="submit" class="btn-juego btn-juego--ancho"><span>' + esc(pu.boton) + '</span>' + ic("j-flecha") + '</button>' +
           '</form>');
@@ -1117,7 +1348,7 @@
           '<p class="kicker kicker--juego">' + ic("j-puerta") + esc(T.codigo_t) + '</p>' +
           '<h1 class="sala__t" id="puerta-t" tabindex="-1" data-foco>' + esc(pu.titulo) + '</h1>' +
           '<p class="sala__escena-txt">' + esc(pu.texto) + '</p>' +
-          '<ol class="puerta__letras" aria-label="Letras que juntaste, desordenadas">' + letras + '</ol>' +
+          '<ol class="puerta__letras' + (pal.palabra.length > 6 ? " puerta__letras--largas" : "") + '" aria-label="Letras que juntaste, desordenadas">' + letras + '</ol>' +
           cuerpo +
         '</div>' +
       '</section>';
@@ -1129,8 +1360,10 @@
       e.preventDefault();
       var v = normalizar(inp.value, "palabra");
       if (!v) { mostrarFeedback("puerta-fb", "error", T.vacio); announce(T.vacio); inp.focus(); return; }
-      var ok = pu.respuestas.some(function (r) { return normalizar(r, "palabra") === v; }), err = null;
-      if (!ok) pu.errores.forEach(function (er) { if (!err && er.valores.some(function (x) { return normalizar(x, "palabra") === v; })) err = er; });
+      var correcta = normalizar(pal.palabra, "palabra"), ok = v === correcta, err = null;
+      if (!ok) (pal.errores || []).forEach(function (er) { if (!err && er.valores.some(function (x) { return normalizar(x, "palabra") === v; })) err = er; });
+      /* Usó exactamente las letras, pero en otro orden */
+      if (!ok && !err && v.split("").sort().join("") === correcta.split("").sort().join("")) err = { id: "anagrama", mensaje: pu.anagrama };
       registrar("puerta_final", { valor_normalizado: v, error_esperado: err ? err.id : null, correcto: ok });
       if (!ok) {
         var msg = err ? err.mensaje : pu.generico;
@@ -1272,8 +1505,11 @@
     if (e.target.closest("[data-ir-puerta]")) { ir(ES_SIMPLE ? "post" : "puerta"); return; }
     var p = e.target.closest("[data-ir]");
     if (p) { ir(p.getAttribute("data-ir")); return; }
-    if (e.target.closest("[data-reiniciar]")) { reiniciar(); return; }
-    if (e.target.closest("[data-reiniciar-final]")) reiniciar(D.saliste.volver_confirmar);
+    var rp = e.target.closest("[data-repaso]");
+    if (rp) { repasarSala(Number(rp.getAttribute("data-repaso"))); return; }
+    if (e.target.closest("[data-descargar-insignias]")) { descargarInsignias(); return; }
+    if (e.target.closest("[data-reiniciar]")) { reiniciar(null, true); return; }
+    if (e.target.closest("[data-reiniciar-final]")) reiniciar(D.saliste.volver_confirmar, false);
   });
 
   /* En el celular, la barra fija del equipo se esconde cuando aparece el pie de página */

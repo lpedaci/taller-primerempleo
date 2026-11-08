@@ -103,13 +103,37 @@ Sueldo ficticio: bruto $1.000.000. Palabra final: METAS.
 
 ### Puerta final
 
-Sin cambios.
+- **[Cambio] Palabra al azar por partida:** METAS, RENTA, DISCIPLINA o PLANIFICAR, cada una con su pregunta. Las de 5 letras dan una letra por sala; las de 10, dos letras por sala.
+- Las letras se muestran desordenadas en un orden distinto en cada partida. Si la persona usa todas las letras en otro orden, el mensaje lo dice: "Usaste todas las letras, pero esa palabra no responde la pregunta."
+- Las palabras y sus preguntas están en `escape/data/escape-versiones.js`.
+
+---
+
+## 6 bis. Versiones de las salas e insignias [Nuevo]
+
+Para que no se aprendan un único camino, cada sala tiene tres versiones con distinta dificultad. La versión inicial es el contenido de la sección 6 (`escape/data/escape-finanzas.js`); la intermedia y la avanzada están en `escape/data/escape-versiones.js` y solo reemplazan los campos que cambian.
+
+| Sala | Inicial | Intermedia | Avanzada |
+|---|---|---|---|
+| 1. El recibo | Bruto $1.000.000 y la nota da el 17 %. Neto **$830.000** | Básico $1.100.000 + horas extras $100.000; hay que sumar 11 + 3 + 3. Neto **$996.000** | Básico $1.000.000 + suma no remunerativa $100.000 sin descuentos. Neto **$930.000** |
+| 2. El presupuesto | Café $3.000 × 22 días hábiles = **$66.000** | Café $2.500 + alfajor $1.500, × 22 = **$88.000** | Café $3.000 × 22 + delivery $12.000 × 4 sábados = **$114.000** |
+| 3. La tarjeta | Sigla que suma todos los costos: **CFT** o **CFTEA** | Total de la oferta que conviene: B, 12 × $28.000 = **$336.000** (la A cuesta $366.000) | Otros folletos: cuánto más cuesta la A que la B, $430.000 − $396.000 = **$34.000** |
+| 4. La inflación | Sobre de $100.000, suba del 10 %. Falta **$10.000** | Dos subas del 10 % acumuladas: $121.000. Falta **$21.000** | Cuenta remunerada que rindió 4 % ($104.000) y suba del 10 %. Falta **$6.000** |
+| 5. Los mensajes | SMS con link acortado, WhatsApp que pide un código y mail de premio; real: aviso de la app | Tasa de envío urgente, app de "asistencia" y cambio de alias del alquiler; real: aviso de pago con QR | Mail de ARCA desde un dominio falso, trabajo que cobra matrícula y transferencia "por error"; real: aviso de ingreso que manda al teléfono del dorso de la tarjeta |
+
+- Cada versión tiene sus errores esperados, sus dos pistas y su explicación. En la sala 3 avanzada y la sala 4 avanzada cambia también la pregunta extra (qué incluye el CFT; rendimiento frente a inflación).
+- **Sorteo:** al empezar una partida, cada sala toma una versión al azar, priorizando las que la persona todavía no resolvió. La versión queda guardada en la partida.
+- **Repaso:** en una sala resuelta, el botón "Jugar otra versión" cambia a otra versión y vuelve a abrir el candado. La letra del código y el avance no se pierden.
+- **Insignias:** hay tres, una por dificultad (inicial, intermedia y avanzada). Se gana cada una al resolver las cinco salas en esa versión, así que hay que recorrer las salas más de una vez.
+  - En el panel, debajo de las salas, una sección muestra las tres insignias con su avance por sala y el botón "Descargar mis insignias", que genera una imagen PNG con las tres.
+  - Dentro de las salas, la barra superior muestra los íconos de las tres insignias.
+  - Se guardan en `localStorage` con la clave `esc_insignias`, aparte del avance. "Volver a jugar", al final, las conserva; "Empezar de cero" las borra.
 
 ---
 
 ## 7. Autoevaluación, datos y modo simple
 
-Sin cambios: mismas 5 afirmaciones con escala de 1 a 4, eventos en `localStorage` con prefijo `esc_`, código de resultado `ESC-[modo]-[pre]-[post]-[pistas]-[salas]` con botón de copia y `?modo=simple` como cuestionario lineal sin capa de juego.
+Mismas 5 afirmaciones con escala de 1 a 4, eventos en `localStorage` con prefijo `esc_` (ahora también `repaso` e `insignias_descarga`, y `sala_fin` registra la versión), código de resultado `ESC-[modo]-[pre]-[post]-[pistas]-[salas]` con botón de copia y `?modo=simple` como cuestionario lineal sin capa de juego.
 
 ---
 

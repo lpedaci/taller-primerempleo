@@ -4325,3 +4325,232 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* =========================================================
+   Versiones de las salas e insignias
+   ========================================================= */
+/* Letras del código: con palabras de 10 letras, cada sala da dos */
+.ficha,
+.sala-tile__letra {
+  width: auto;
+  min-width: 1.7rem;
+  padding-inline: 0.25rem;
+}
+.sala-tile__letra {
+  min-width: 2.25rem;
+}
+.puerta__letras--largas .puerta__letra {
+  width: 2.6rem;
+  height: 3rem;
+  font-size: 1.3rem;
+}
+/* Recibo: subtítulos de lo no remunerativo */
+.esc-recibo .esc-recibo__subt th {
+  padding-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+/* Versión de la sala, debajo del título */
+.sala__version {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: -0.2rem 0 0.75rem;
+  padding: 0.25rem 0.8rem 0.25rem 0.35rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--display);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.sala__version-ic {
+  width: 1.5rem;
+  height: auto;
+}
+/* Logro: insignia nueva y otra versión */
+.logro__otra {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: 1.1rem;
+  background: var(--surface-2);
+}
+.logro__otra-txt {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.logro__insignia {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  line-height: 1.4;
+}
+.logro__insignia strong {
+  font-family: var(--display);
+}
+.logro__insignia-ic {
+  flex: 0 0 auto;
+  width: 3rem;
+  height: auto;
+}
+/* Sección de insignias en el panel */
+.insignias {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.15rem, 3vw, 1.75rem);
+  border: 1px solid var(--esc-borde);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--esc-sombra);
+}
+.insignias__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem 2rem;
+  margin-bottom: 1.25rem;
+}
+.insignias__t {
+  margin: 0 0 0.35rem;
+  font-size: 1.35rem;
+}
+.insignias__intro {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.insignias__acc {
+  display: grid;
+  justify-items: end;
+  gap: 0.5rem;
+}
+.insignias__n {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.insignias__lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.insignia {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1.5px dashed var(--rule);
+  border-radius: 1.25rem;
+}
+.insignia.is-ganada {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--juego-metal) 60%, var(--surface));
+  background: var(--juego-soft);
+}
+.insignia__img {
+  width: 4.25rem;
+  height: auto;
+}
+.insignia__t {
+  margin: 0 0 0.15rem;
+  font-size: 1.1rem;
+}
+.insignia__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0 0 0.35rem;
+  font-family: var(--display);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.insignia__estado .ic {
+  width: 1rem;
+  height: 1rem;
+  color: var(--esc-ok, var(--yes));
+}
+.insignia__d {
+  margin: 0 0 0.55rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.insignia__salas {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.insignia__salas li {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+.insignia__salas li.is-hecha {
+  background: var(--juego-metal);
+  box-shadow: inset 0 0 0 1.5px #8a6410;
+}
+@media (max-width: 899px) {
+  .insignias__lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .insignias__acc {
+    justify-items: start;
+  }
+}
+/* Íconos de las insignias en la barra superior */
+.esc-insig-nav {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.esc-insig-nav__ic {
+  width: 1.45rem;
+  height: auto;
+}
+@media (max-width: 479px) {
+  .esc-insig-nav {
+    padding: 0.25rem 0.4rem;
+    gap: 0;
+  }
+  .esc-insig-nav__ic {
+    width: 1.15rem;
+  }
+}
+.equipo .ficha {
+  width: auto;
+}
+@media (max-width: 767px) {
+  .equipo .ficha {
+    min-width: 1.3rem;
+    padding-inline: 0.15rem;
+  }
+}
+/* En el celular, dentro del juego, la barra muestra "Sala N" y las insignias; el nombre no entra */
+@media (max-width: 479px) {
+  .esc-top.is-juego .now-title {
+    display: none;
+  }
+}
