@@ -258,6 +258,7 @@
     else if (p === "saliste" && S.post) renderSaliste();
     else renderPanel();
     conectarEquipo();
+    sincronizarBarra();
     pedirMirada();
     if (S.pre) correrTiempo();
     guardar();
@@ -267,6 +268,27 @@
       window.scrollTo(0, 0);
     }
     primerRender = false;
+  }
+  /* Barra superior: en el panel lleva al taller; dentro del juego, vuelve al panel y dice dónde estás */
+  var barraMarca = document.querySelector(".esc-brand"), barraPanel = document.getElementById("esc-panel");
+  var barraTag = document.querySelector(".esc-top .now-tag"), barraTitulo = document.querySelector(".esc-top .now-title");
+  barraPanel.querySelector("span").textContent = ES_SIMPLE ? "Inicio" : T.panel;
+  barraPanel.addEventListener("click", function () { ir("intro"); });
+  function sincronizarBarra() {
+    var enPanel = !!app.querySelector(".portada, .simple-intro");
+    barraMarca.hidden = !enPanel;
+    barraPanel.hidden = enPanel;
+    barraMarca.closest(".esc-top").classList.toggle("is-juego", !enPanel);
+    var tag = "Escape room", titulo = D.titulo;
+    if (!enPanel && app.querySelector(".sala")) {
+      var d = datosSala(S.sala);
+      tag = ES_SIMPLE ? preguntaDe(d.id) : "Sala " + d.id;
+      titulo = ES_SIMPLE ? D.titulo : d.nombre;
+    } else if (!enPanel && app.querySelector(".puerta")) {
+      tag = T.codigo_t;
+    }
+    barraTag.textContent = tag;
+    barraTitulo.textContent = titulo;
   }
   function ir(pantalla, sala) {
     S.pantalla = pantalla;
@@ -657,9 +679,8 @@
 
   /* ---------- Sala ---------- */
   /* Encabezado compacto: volver y número de sala en una misma línea */
-  function cabeceraSala(chip) {
-    return '<div class="sala__barra"><button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir="intro">' + ic("j-volver") + '<span>' + esc(ES_SIMPLE ? "Inicio" : T.panel) + '</span></button>' + (chip || "") + '</div>';
-  }
+  /* El botón para volver al panel y el nombre de la sala viven en la barra superior */
+  function cabeceraSala() { return ""; }
   function renderSala(id) {
     var d = datosSala(id) || datosSala(1), st = estadoSala(d.id);
     if (!salaDesbloqueada(d.id)) { d = datosSala(1); st = estadoSala(1); }
@@ -1093,7 +1114,6 @@
       '<section class="puerta" aria-labelledby="puerta-t">' +
         '<div class="puerta__arte" aria-hidden="true"><div class="puerta__hoja' + (S.puerta ? " is-abierta" : "") + '"><span class="puerta__pomo"></span></div>' + fuerte(S.puerta ? "feliz" : "normal", nivelActual(), "fuerte--puerta") + '</div>' +
         '<div class="tarjeta puerta__card">' +
-          '<div class="sala__barra"><button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-ir="intro">' + ic("j-volver") + '<span>' + esc(T.panel) + '</span></button></div>' +
           '<p class="kicker kicker--juego">' + ic("j-puerta") + esc(T.codigo_t) + '</p>' +
           '<h1 class="sala__t" id="puerta-t" tabindex="-1" data-foco>' + esc(pu.titulo) + '</h1>' +
           '<p class="sala__escena-txt">' + esc(pu.texto) + '</p>' +

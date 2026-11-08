@@ -99,8 +99,38 @@
 .esc-tag {
   background: var(--juego-metal);
 }
+.esc-top [hidden] {
+  display: none !important;
+}
+/* Dentro del juego: botón para volver al panel */
+.esc-panel {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0 1.05rem 0 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--juego-metal);
+  color: var(--on-juego-metal);
+  font: inherit;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease);
+}
+.esc-panel .ic {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.esc-panel:hover {
+  transform: translateX(-3px);
+}
 @media (max-width: 479px) {
-  .esc-tag {
+  /* En el panel se oculta la etiqueta; dentro del juego queda, porque dice en qué sala estás */
+  .esc-top:not(.is-juego) .esc-tag {
     display: none;
   }
   /* Sin la etiqueta, el título queda centrado en la píldora como en el sitio */
@@ -4214,4 +4244,72 @@
 .fuerte.is-cohibido .ch__pupilas,
 .fuerte.is-cohibido .ch__cejas {
   transition-duration: 0.22s;
+}
+
+/* =========================================================
+   Salas y código en tablet y monitores medianos: sin columnas vacías
+   ========================================================= */
+/* Tablet vertical: tres salas arriba y dos abajo, de ancho completo */
+@media (min-width: 560px) and (max-width: 899px) {
+  .salas-tiles {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .sala-tile {
+    grid-column: span 2;
+  }
+  .sala-tile:nth-child(4),
+  .sala-tile:nth-child(5) {
+    grid-column: span 3;
+  }
+}
+/* Desde 900 px: las cinco salas en una fila que ocupa todo el ancho */
+@media (min-width: 900px) {
+  .salas-tiles {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+/* Código de la puerta: encabezado arriba, anillos a la izquierda y llaves y pistas a la derecha */
+@media (min-width: 700px) and (max-width: 1279px) {
+  .codigo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 24rem);
+    grid-template-areas: "head head" "anillos stats" "txt stats" "ir ir";
+    column-gap: 1.75rem;
+    align-items: center;
+  }
+  .codigo__head { grid-area: head; }
+  .codigo__anillos { grid-area: anillos; max-width: none; }
+  .codigo__txt { grid-area: txt; align-self: start; }
+  .codigo__ir { grid-area: ir; }
+  .codigo .stats {
+    grid-area: stats;
+    align-self: center;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+    border-top: 0;
+    border-left: 1px solid var(--deep-soft);
+  }
+}
+/* Pie de página en monitores medianos: dos columnas para que los nombres no se partan */
+@media (min-width: 900px) and (max-width: 1149px) {
+  .esc-foot__in {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 0;
+  }
+  .esc-foot__col + .esc-foot__col {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .esc-foot__col:nth-child(even) {
+    margin-left: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--rule);
+  }
+  .esc-foot__col:nth-child(n + 3) {
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+  }  .esc-foot__links {
+    justify-items: start;
+  }
 }
