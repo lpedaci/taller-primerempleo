@@ -34,7 +34,7 @@ El repositorio es público, así que este documento no incluye las respuestas de
 ## 3. Identidad visual
 
 - **Capa de juego reutilizable:** llaves, candados, letras del código, sellos e insignias llevan sus propios colores e íconos (tokens `--juego-*`), para poder sumar juegos en otros apartados.
-- **Fuerte, el personaje:** una caja fuerte de tela naranja con visor oscuro, ojos y cejas, una perilla de combinación y cinco luces, una por candado abierto.
+- **Fuerte, el personaje:** una caja fuerte de metal anodizado naranja, con textura de metal cepillado y un reflejo en diagonal, visor oscuro, ojos y cejas, una perilla de combinación y cinco luces, una por candado abierto. La misma textura se usa en todas sus versiones: la grande, la mini que firma los mensajes, la del banner del sitio y la de la página de error.
   - **Expresiones:** normal, feliz, preocupado y pensando, según lo que pasa en la sala.
   - **Mirada:** cuando está tranquilo, a veces sigue el cursor, a veces mira de frente o de costado. Si el cursor se le posa encima, mira para otro lado, cohibido.
   - **Niveles:** sube uno por sala resuelta. Son hábitos, no categorías de tarjeta: inicio, claridad, orden, prudencia, previsión y seguridad.
@@ -190,6 +190,7 @@ escape/data/escape-economia.js  Llaves, pistas y sellos
 - Fuerte, las insignias y los objetos decorativos llevan `aria-hidden`; la información que transmiten también está en texto.
 - El progreso no depende solo del color: las luces se cuentan y las insignias dicen su estado.
 - Todo el movimiento se apaga con `prefers-reduced-motion`.
+- **Última revisión:** sitio, escape room y las dos páginas de error, en tema claro y oscuro y a 1700, 1366, 1024, 768 y 375 px. Sin errores de contraste, nombres accesibles, objetivos táctiles, estructura de títulos, ids o anclas, y sin desplazamiento lateral. Se corrigió el contraste del crédito del pie del sitio.
 
 ---
 

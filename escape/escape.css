@@ -280,7 +280,14 @@
 .ch__punto {
   fill: none;
   stroke: rgba(255, 255, 255, 0.1);
-  stroke-width: 1.1;
+  stroke-width: 0.5;
+}
+/* Cepillado del metal: una línea clara y una oscura, muy finas */
+.ch__punto--osc {
+  stroke: rgba(90, 36, 4, 0.12);
+}
+.ch__reflejo-metal {
+  pointer-events: none;
 }
 .ch__puerta {
   fill: none;
@@ -4220,7 +4227,7 @@
   width: 1.9rem;
   height: auto;
 }
-.fm__cuerpo { fill: #f08c3e; }
+.fm__cuerpo { stroke: #a24f15; stroke-width: 0.6; }
 .fm__visor,
 .fm__pupila { fill: #18181d; }
 .fm__ojo { fill: #fbfaf5; }
