@@ -3910,3 +3910,22 @@
     width: 5.5rem;
   }
 }
+
+/* Celular: la barra fija del equipo se corre hacia abajo al llegar al pie de página */
+@media (max-width: 767px) {
+  .equipo {
+    transition: transform 0.35s var(--ease), opacity 0.35s var(--ease), visibility 0s linear 0s;
+  }
+  .is-pie-visible .equipo {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(140%);
+    transition: transform 0.35s var(--ease), opacity 0.35s var(--ease), visibility 0s linear 0.35s;
+  }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .equipo,
+  .is-pie-visible .equipo {
+    transition: none;
+  }
+}

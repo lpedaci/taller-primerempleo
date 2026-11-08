@@ -1144,6 +1144,14 @@
     if (e.target.closest("[data-reiniciar-final]")) reiniciar(D.saliste.volver_confirmar);
   });
 
+  /* En el celular, la barra fija del equipo se esconde cuando aparece el pie de página */
+  var pie = document.querySelector(".esc-foot");
+  if (pie && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      document.body.classList.toggle("is-pie-visible", entries[0].isIntersecting);
+    }).observe(pie);
+  }
+
   /* En el modo simple no se muestra la capa de juego, tampoco en la barra superior */
   if (ES_SIMPLE) {
     var tag = document.querySelector(".esc-tag");
