@@ -217,6 +217,149 @@ if (location.pathname.indexOf("/taller-primerempleo/") !== 0) document.querySele
 @keyframes e404-flotar { 50% { transform: translateY(-3px); } }
 @keyframes e404-cola { from { transform: rotate(-4deg); } to { transform: rotate(5deg); } }
 @keyframes e404-display { 0%, 80% { opacity: 1; } 81%, 100% { opacity: 0.55; } }
+/* Pie de página del escape room: en su 404 se usa el mismo que en el juego */
+.esc-foot { display: none; }
+.is-escape .foot { display: none; }
+.is-escape .esc-foot { display: block; }
+/* ---------- Pie de página: tarjeta clara con secciones ---------- */
+.esc-foot {
+  padding-bottom: 1.5rem;
+}
+.esc-foot__in {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+@media (min-width: 900px) {
+  .esc-foot__in {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 0;
+  }
+  .esc-foot__col + .esc-foot__col {
+    padding-left: 1.5rem;
+    margin-left: 1.5rem;
+    border-left: 1px solid var(--rule);
+  }
+}
+@media (max-width: 899px) {
+  .esc-foot__col + .esc-foot__col {
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+  }
+}
+.esc-foot__col p,
+.esc-foot__col ul {
+  margin: 0;
+}
+.esc-foot__t {
+  margin-bottom: 0.3rem !important;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.esc-foot__desc {
+  color: var(--muted);
+}
+.esc-foot__k {
+  margin-bottom: 0.6rem;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.esc-foot__lista {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  list-style: none;
+}
+.esc-foot__lista li {
+  display: grid;
+  line-height: 1.3;
+}
+.esc-foot__lista small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.esc-foot__lista strong {
+  font-family: var(--display);
+  font-weight: 600;
+}
+.esc-foot__persona {
+  display: flex !important;
+  align-items: center;
+  gap: 0.55rem;
+}
+.esc-foot__persona a,
+.esc-foot__persona > span:not(.esc-foot__ic) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.25rem;
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 600;
+  text-decoration: none;
+}
+.esc-foot__persona a:hover {
+  color: var(--l1);
+}
+.esc-foot__ic {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--t1) 40%, var(--surface));
+  color: var(--l1);
+}
+.esc-foot__ic .ic {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.esc-foot__ext {
+  width: 0.8rem !important;
+  height: 0.8rem !important;
+  opacity: 0.5;
+}
+.esc-foot__links {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+.esc-foot__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1rem 0 0.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.25s var(--ease);
+}
+.esc-foot__links a:hover {
+  border-color: var(--ink);
+}
+.esc-foot__links .ic {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: var(--surface-2);
+}
 @keyframes lost-rise { from { opacity: 0; transform: translateY(22px); } }
 @keyframes gato-respira { 0%, 100% { transform: none; } 50% { transform: scale(1.012, 1.04); } }
 @keyframes gato-hamaca { from { transform: rotate(-4deg); } to { transform: rotate(5deg); } }
@@ -230,6 +373,7 @@ if (location.pathname.indexOf("/taller-primerempleo/") !== 0) document.querySele
 <body id="top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 <symbol id="i-arrow-right" viewBox="0 0 512 512"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 109.3 160 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></symbol>
 <symbol id="i-arrow-square-out" viewBox="0 0 512 512"><path fill="currentColor" d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0-201.4 201.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3 448 192c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 96C35.8 96 0 131.8 0 176L0 432c0 44.2 35.8 80 80 80l256 0c44.2 0 80-35.8 80-80l0-80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 80c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l80 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 96z"/></symbol>
 <symbol id="i-chalkboard-teacher" viewBox="0 0 640 512"><path fill="currentColor" d="M192 384c53 0 96 43 96 96 0 17.7-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32 0-53 43-96 96-96l96 0zM544 32c35.3 0 64 28.7 64 64l0 288c0 33.1-25.2 60.4-57.5 63.7l-6.5 .3-211.1 0c-5.1-24.2-16.3-46.1-32.1-64l51.2 0 0-32c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32l0 32 32 0 0-288-352 0 0 57.3c-14.8-6-31-9.3-48-9.3-5.4 0-10.8 .3-16 1l0-49c0-35.3 28.7-64 64-64l352 0zM144 352a80 80 0 1 1 0-160 80 80 0 1 1 0 160z"/></symbol>
 <symbol id="i-linkedin-logo-fill" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z"/></symbol>
@@ -346,6 +490,34 @@ if (location.pathname.indexOf("/taller-primerempleo/") !== 0) document.querySele
     </div>
     <p class="foot-credit">Webmaster y diseño UX/UI del sitio: Lic. Lourdes Pedaci</p>
   </div></div>
+</footer>
+<footer class="esc-foot">
+  <div class="wrap">
+    <div class="esc-foot__in">
+      <div class="esc-foot__col">
+        <p class="esc-foot__t">Tu primer sueldo</p>
+        <p class="esc-foot__desc">Escape room de finanzas personales del taller Del aula al primer trabajo.</p>
+      </div>
+      <div class="esc-foot__col">
+        <h2 class="esc-foot__k">Créditos</h2>
+        <ul class="esc-foot__lista">
+          <li><small>Contenido de finanzas</small><strong>Lic. Kevin Giampieri</strong></li>
+          <li><small>Gamificación y diseño instruccional</small><strong>Lic. Lourdes Pedaci</strong></li>
+        </ul>
+      </div>
+      <div class="esc-foot__col">
+        <h2 class="esc-foot__k">Docentes del taller</h2>
+        <ul class="esc-foot__lista">
+          <li class="esc-foot__persona"><span class="esc-foot__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin-logo-fill"/></svg></span><a href="https://www.linkedin.com/in/lourdes-pedaci/" target="_blank" rel="noopener noreferrer">Lic. Lourdes Pedaci<svg class="ic esc-foot__ext" aria-hidden="true" focusable="false"><use href="#i-arrow-square-out"/></svg><span class="sr-only"> (perfil de LinkedIn, se abre en una pestaña nueva)</span></a></li>
+          <li class="esc-foot__persona"><span class="esc-foot__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin-logo-fill"/></svg></span><a href="https://www.linkedin.com/in/julieta-taraborrelli-7bb06767/" target="_blank" rel="noopener noreferrer">Lic. Julieta Taraborrelli<svg class="ic esc-foot__ext" aria-hidden="true" focusable="false"><use href="#i-arrow-square-out"/></svg><span class="sr-only"> (perfil de LinkedIn, se abre en una pestaña nueva)</span></a></li>
+          <li class="esc-foot__persona"><span class="esc-foot__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chalkboard-teacher"/></svg></span><span>Lic. Bettyna González</span></li>
+        </ul>
+      </div>
+      <nav class="esc-foot__col esc-foot__links" aria-label="Pie de página">
+        <a href="#top" data-ancla><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg>Volver al inicio</a>
+      </nav>
+    </div>
+  </div>
 </footer>
 <script>
 (function () {
