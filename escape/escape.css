@@ -4638,3 +4638,11 @@
     display: none;
   }
 }
+/* Clasificar gastos: el aviso queda con el mismo aire arriba y abajo, y se señalan los que faltan */
+.clasif #previo-fb:not([hidden]) {
+  margin: 0 0 1rem;
+}
+.clasif__item.is-falta {
+  border-color: var(--no);
+  box-shadow: inset 0 0 0 1px var(--no);
+}

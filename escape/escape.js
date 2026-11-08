@@ -849,9 +849,20 @@
     st.previo_resp = resp;
     var fb = document.getElementById("previo-fb");
     if (falta) {
+      /* Si no marcó nada, se lo dice; si faltan algunos, nombra cuáles y los señala */
+      var faltan = [];
+      p.items.forEach(function (it, i) { if (resp[i] == null) faltan.push(i); });
+      var nombres = faltan.map(function (i) { return p.items[i].texto; });
+      var lista = nombres.length > 1 ? nombres.slice(0, -1).join(", ") + " y " + nombres[nombres.length - 1] : nombres[0];
+      var msg = faltan.length === p.items.length ? T.previo_nada
+        : (faltan.length === 1 ? T.previo_falta_uno : T.previo_falta_varios.replace("{n}", faltan.length)).replace("{lista}", lista);
+      form.querySelectorAll(".clasif__item").forEach(function (f, i) { f.classList.toggle("is-falta", faltan.indexOf(i) !== -1); });
       fb.hidden = false; fb.setAttribute("data-tipo", "error");
-      fb.innerHTML = ic("i-x-circle-fill") + "<span>" + esc(p.falta) + "</span>";
-      announce(p.falta);
+      fb.innerHTML = ic("i-x-circle-fill") + "<span>" + esc(msg) + "</span>";
+      fb.classList.remove("is-nuevo"); void fb.offsetWidth; fb.classList.add("is-nuevo");
+      announce(msg);
+      var primero = form.querySelectorAll(".clasif__item")[faltan[0]];
+      if (primero) primero.querySelector("input").focus();
       return;
     }
     var marcas = resp.map(function (r, i) { return r !== p.items[i].correcta; });
