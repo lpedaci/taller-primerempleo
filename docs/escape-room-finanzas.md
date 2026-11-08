@@ -123,10 +123,13 @@ Para que no se aprendan un único camino, cada sala tiene tres versiones con dis
 
 - Cada versión tiene sus errores esperados, sus dos pistas y su explicación. En la sala 3 avanzada y la sala 4 avanzada cambia también la pregunta extra (qué incluye el CFT; rendimiento frente a inflación).
 - **Sorteo:** al empezar una partida, cada sala toma una versión al azar, priorizando las que la persona todavía no resolvió. La versión queda guardada en la partida.
+- **Dónde se ve la versión:** en escritorio (desde 1024 px), en el centro de la barra superior de cada sala, con su medalla. En tablet y celular, debajo del título de la sala, porque en la barra no entra.
 - **Repaso:** en una sala resuelta, el botón "Jugar otra versión" cambia a otra versión y vuelve a abrir el candado. La letra del código y el avance no se pierden.
-- **Insignias:** hay tres, una por dificultad (inicial, intermedia y avanzada). Se gana cada una al resolver las cinco salas en esa versión, así que hay que recorrer las salas más de una vez.
+- **Insignias:** hay tres medallas, una por dificultad: bronce (inicial), plata (intermedia) y oro (avanzada), con un candado grabado. Se gana cada una al resolver las cinco salas en esa versión, así que hay que recorrer las salas más de una vez. Sin ganar, la medalla se ve tenue.
   - En el panel, debajo de las salas, una sección muestra las tres insignias con su avance por sala y el botón "Descargar mis insignias", que genera una imagen PNG con las tres.
   - Dentro de las salas, la barra superior muestra los íconos de las tres insignias.
+  - Las tarjetas de las salas ya no muestran su letra: las letras se ven en el código de la puerta. En el celular, la barra de estado resume las letras con un conteo ("3/5").
+  - El código de la puerta va al costado de las salas desde 1600 px; por debajo, ocupa todo el ancho debajo de ellas.
   - Se guardan en `localStorage` con la clave `esc_insignias`, aparte del avance. "Volver a jugar", al final, las conserva; "Empezar de cero" las borra.
 
 ---

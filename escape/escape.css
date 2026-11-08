@@ -732,8 +732,8 @@
   gap: 0.85rem 1rem;
   margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
-/* Desde 1440 px: las cinco salas en fila y el código al costado */
-@media (min-width: 1440px) {
+/* Desde 1600 px: las cinco salas en fila y el código al costado */
+@media (min-width: 1600px) {
   .tablero {
     grid-template-columns: minmax(0, 1fr) 21rem;
     align-items: stretch;
@@ -745,8 +745,8 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
-/* Entre 700 y 1439 px: el código ocupa todo el ancho, con las llaves al costado */
-@media (min-width: 700px) and (max-width: 1439px) {
+/* Entre 700 y 1599 px: el código ocupa todo el ancho, con las llaves al costado */
+@media (min-width: 700px) and (max-width: 1599px) {
   .codigo {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr);
@@ -4269,7 +4269,7 @@
   }
 }
 /* Código de la puerta: encabezado arriba, anillos a la izquierda y llaves y pistas a la derecha */
-@media (min-width: 700px) and (max-width: 1439px) {
+@media (min-width: 700px) and (max-width: 1599px) {
   .codigo {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(17rem, 24rem);
@@ -4551,6 +4551,90 @@
 /* En el celular, dentro del juego, la barra muestra "Sala N" y las insignias; el nombre no entra */
 @media (max-width: 479px) {
   .esc-top.is-juego .now-title {
+    display: none;
+  }
+}
+
+/* Las tarjetas de las salas ya no muestran la letra: el botón va a la derecha */
+.sala-tile__pie {
+  justify-content: flex-end;
+}
+/* Código de la puerta al costado (desde 1600 px): más liviano */
+@media (min-width: 1600px) {
+  .codigo {
+    gap: 0.25rem;
+  }
+  .codigo .stats {
+    gap: 0.45rem;
+    padding-top: 0.85rem;
+  }
+  .codigo .stat {
+    gap: 0.45rem;
+    padding: 0.4rem 0.6rem 0.4rem 0.4rem;
+    border-radius: 0.9rem;
+  }
+  .codigo .stat__ic {
+    flex-basis: 1.8rem;
+    height: 1.8rem;
+  }
+  .codigo .stat__ic .ic {
+    width: 1rem;
+    height: 1rem;
+  }
+  .codigo .stat__v {
+    font-size: 1.1rem;
+  }
+  .codigo .stat__badge {
+    display: none;
+  }
+}
+/* Barra de estado en el celular: las letras se resumen en "3/5" para que no se desborde */
+.equipo__v--letras {
+  display: none;
+}
+@media (max-width: 767px) {
+  .equipo__tile--letras .fichas {
+    display: none;
+  }
+  .equipo__v--letras {
+    display: inline;
+  }
+  .equipo__tile--letras {
+    flex: 0 0 auto;
+  }
+}
+/* Versión de la sala: en escritorio, en el centro de la barra superior; en tablet y celular,
+   debajo del título, porque en la barra no entra */
+.esc-version {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .esc-top .top-in {
+    position: relative;
+  }
+  .esc-version:not([hidden]) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0.3rem 0.9rem 0.3rem 0.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--on-deep);
+    font-family: var(--display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+  }
+  .esc-version__ic {
+    width: 1.5rem;
+    height: auto;
+  }
+  .sala__version {
     display: none;
   }
 }

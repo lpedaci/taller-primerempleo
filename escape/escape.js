@@ -6,7 +6,7 @@
   "use strict";
   var D = window.ESC_DATA, E = window.ESC_ECONOMIA;
   /* Versiones de las salas y palabras de la puerta final (data/escape-versiones.js) */
-  var V = window.ESC_VERSIONES || { dificultades: [{ id: "inicial", nombre: "Inicial" }], palabras: [{ palabra: "METAS", pregunta: "", errores: [] }], salas: {} };
+  var V = window.ESC_VERSIONES || { dificultades: [{ id: "inicial", nombre: "Inicial", metal: "Bronce" }], palabras: [{ palabra: "METAS", pregunta: "", errores: [] }], salas: {} };
   var T = D.textos, P = D.personaje, NIVELES = D.niveles, SIMPLE = D.simple;
   var root = document.documentElement;
   var app = document.getElementById("esc-app");
@@ -363,9 +363,13 @@
     barraPanel.hidden = enPanel;
     barraMarca.closest(".esc-top").classList.toggle("is-juego", !enPanel);
     var tag = "Escape room", titulo = D.titulo;
-    var juego = app.querySelector(".juego[data-sala]");
+    var juego = app.querySelector(".juego[data-sala]"), version = document.getElementById("esc-version");
+    version.hidden = true;
     if (!enPanel && juego && app.querySelector(".sala")) {
-      var d = datosSala(Number(juego.getAttribute("data-sala")));
+      var d = datosSala(Number(juego.getAttribute("data-sala"))), stv = estadoSala(d.id);
+      /* En escritorio, la versión de la sala va en el centro de la barra */
+      version.innerHTML = insigniaSVG(d.version, true, "esc-version__ic") + '<span>' + esc(T.version.replace("{d}", d.dificultad.nombre.toLowerCase())) + (stv.repaso ? ' | ' + esc(T.repaso) : "") + '</span>';
+      version.hidden = false;
       tag = ES_SIMPLE ? preguntaDe(d.id) : "Sala " + d.id;
       titulo = ES_SIMPLE ? D.titulo : d.nombre;
     } else if (!enPanel && app.querySelector(".puerta")) {
@@ -488,7 +492,7 @@
       '<h3 class="sala-tile__t">' + esc(s.titulo) + '</h3>' +
       '<p class="sala-tile__premio">' + lucesSala(s.id, resuelta) +
         '<span><span aria-hidden="true">' + esc(T.luz_de) + ' </span><span class="sr-only">' + esc((resuelta ? T.luz_encendida : T.luz_enciende).replace("{p}", P.nombre)) + ' </span><strong>' + esc(NIVELES[Math.min(s.id, NIVELES.length - 1)]) + '</strong></span></p>' +
-      '<div class="sala-tile__pie"><span class="sala-tile__letra" aria-hidden="true">' + (resuelta ? esc(fragmento(s.id)) : "?") + '</span>' +
+      '<div class="sala-tile__pie">' +
         '<button type="button" class="redondo" data-ir-sala="' + s.id + '"' + (libre ? "" : " disabled") + ' aria-label="' + esc(T.entrar + " " + s.id + ": " + s.titulo + (libre ? "" : ", " + T.estado_bloqueada)) + '">' + ic(libre ? "j-flecha" : "j-candado") + '</button></div>' +
     '</li>';
   }
@@ -508,7 +512,7 @@
     return '<section class="codigo" aria-labelledby="codigo-t">' +
       '<div class="codigo__head"><h2 class="codigo__t" id="codigo-t">' + ic("j-puerta") + esc(T.codigo_t) + '</h2><span class="codigo__n">' + resueltas() + '/' + TOTAL + '</span></div>' +
       '<ol class="codigo__anillos">' + anillos + '</ol>' +
-      '<p class="codigo__txt">' + esc(todas ? T.codigo_listo : T.codigo_txt) + '<span class="sr-only"> ' + srCodigo() + '</span></p>' +
+      '<p class="codigo__txt' + (todas && !S.fin ? " sr-only" : "") + '">' + esc(todas ? T.codigo_listo : T.codigo_txt) + '<span class="sr-only"> ' + srCodigo() + '</span></p>' +
       (todas && !S.fin ? '<button type="button" class="btn-juego btn-juego--claro btn-juego--chico btn-juego--ancho codigo__ir" data-ir-puerta><span>' + esc(T.a_la_puerta) + '</span>' + ic("j-flecha") + '</button>' : "") +
       statsCard() +
     '</section>';
@@ -626,7 +630,7 @@
         '<span class="equipo__ic">' + ic("j-reloj") + '</span><span class="equipo__k">' + esc(T.tiempo) + '</span>' +
         '<span class="equipo__v equipo__v--tiempo" id="equipo-tiempo-valor">' + (S.tiempo_visible ? formatoTiempo(S.tiempo_ms) : esc(T.oculto)) + '</span>' +
         '<span class="sr-only">. ' + (S.tiempo_visible ? T.tiempo_ocultar : T.tiempo_mostrar) + '</span></button></p>' +
-      '<p class="equipo__tile equipo__tile--letras"><span class="equipo__ic">' + ic("j-ficha") + '</span><span class="equipo__k">' + esc(T.letras) + '</span><span class="fichas" aria-hidden="true">' + fichasHTML() + '</span><span class="sr-only">' + srCodigo() + '</span></p>' +
+      '<p class="equipo__tile equipo__tile--letras"><span class="equipo__ic">' + ic("j-ficha") + '</span><span class="equipo__k">' + esc(T.letras) + '</span><span class="fichas" aria-hidden="true">' + fichasHTML() + '</span><span class="equipo__v equipo__v--letras" aria-hidden="true">' + resueltas() + '/' + TOTAL + '</span><span class="sr-only">' + srCodigo() + '</span></p>' +
     '</div>';
   }
   /* Barra de progreso del juego: nivel del personaje, pasos de las salas y equipo */
@@ -964,7 +968,7 @@
         '</ul>';
     var nueva = st.insignia_nueva != null ? V.dificultades[st.insignia_nueva] : null;
     var otra = '<div class="logro__otra">' +
-        (nueva ? '<p class="logro__insignia" data-tier="' + st.insignia_nueva + '">' + insigniaSVG(st.insignia_nueva, true, "logro__insignia-ic") + '<span><strong>' + esc(T.insignia_nueva.replace("{d}", nueva.nombre.toLowerCase())) + '</strong> ' + esc(T.insignia_nueva_txt) + '</span></p>' : "") +
+        (nueva ? '<p class="logro__insignia" data-tier="' + st.insignia_nueva + '">' + insigniaSVG(st.insignia_nueva, true, "logro__insignia-ic") + '<span><strong>' + esc(T.insignia_nueva.replace("{m}", nueva.metal.toLowerCase())) + '</strong> ' + esc(T.insignia_nueva_txt.replace("{d}", nueva.nombre.toLowerCase())) + '</span></p>' : "") +
         '<p class="logro__otra-txt">' + esc(T.otra_version_txt.replace("{d}", d.dificultad.nombre.toLowerCase())) + '</p>' +
         '<button type="button" class="btn-juego btn-juego--sec btn-juego--chico" data-repaso="' + d.id + '">' + ic("j-destello") + '<span>' + esc(T.otra_version) + '</span></button>' +
       '</div>';
@@ -1143,7 +1147,7 @@
       conectarLogro(d, st);
       document.getElementById("logro-t").focus();
       var aviso = ES_SIMPLE ? T.correcto_simple : T.correcto + " " + (d.fragmento.length > 1 ? T.fragmento_2 : T.fragmento) + ": " + d.fragmento + ". " + T.subiste.replace("{n}", NIVELES[nivelActual()]) + ".";
-      if (st.insignia_nueva != null) aviso += " " + T.insignia_nueva.replace("{d}", V.dificultades[st.insignia_nueva].nombre.toLowerCase());
+      if (st.insignia_nueva != null) aviso += " " + T.insignia_nueva.replace("{m}", V.dificultades[st.insignia_nueva].metal.toLowerCase());
       if (!ES_SIMPLE) sincronizarBarra();
       announce(aviso);
     };
@@ -1201,26 +1205,20 @@
     { borde: "#7c869b", fondo: "#e7ebf2", cinta: "#9aa4b8" },
     { borde: "#c8920f", fondo: "#fbe7a6", cinta: "#e4ae2c" }
   ];
-  var INSIG_APAGADA = { borde: "#8f8ea0", fondo: "#e6e5ee", cinta: "#b9b8c6" };
-  function estrella(cx, cy, r) {
-    var pts = [], i, a, rr;
-    for (i = 0; i < 10; i++) {
-      a = Math.PI / 2 + i * Math.PI / 5; rr = i % 2 ? r * 0.45 : r;
-      pts.push((cx + rr * Math.cos(a)).toFixed(1) + "," + (cy - rr * Math.sin(a)).toFixed(1));
-    }
-    return '<polygon points="' + pts.join(" ") + '"/>';
-  }
-  /* Medalla con cintas: una, dos o tres estrellas según la dificultad. Los colores van en el
-     propio SVG para que la misma figura sirva en la página y en la imagen descargable. */
+  /* Medalla de bronce, plata u oro con cintas y un candado grabado. Los colores van en el propio
+     SVG para que la misma figura sirva en la página y en la imagen descargable. */
   function insigniaSVG(i, ganada, cls, suelta) {
-    var c = ganada ? INSIG_COLORES[i] || INSIG_COLORES[0] : INSIG_APAGADA, n = i + 1, xs = n === 1 ? [32] : (n === 2 ? [25, 39] : [20, 32, 44]);
-    var estrellas = xs.map(function (x, k) { return estrella(x, n === 3 && k === 1 ? 26 : 30, n === 1 ? 9 : 7); }).join("");
-    return '<svg' + (suelta ? ' xmlns="http://www.w3.org/2000/svg" width="256" height="288"' : ' class="' + (cls || "") + '" aria-hidden="true" focusable="false"') + ' viewBox="0 0 64 72">' +
+    /* Sin ganar, la medalla conserva su metal pero se ve tenue */
+    var c = INSIG_COLORES[i] || INSIG_COLORES[0];
+    return '<svg' + (suelta ? ' xmlns="http://www.w3.org/2000/svg" width="256" height="288"' : ' class="' + (cls || "") + '" aria-hidden="true" focusable="false"') + ' viewBox="0 0 64 72"><g' + (ganada ? "" : ' opacity=".38"') + '>' +
       '<path d="M20 44 12 70l9-5 6 6 6-21z" fill="' + c.cinta + '"/><path d="M44 44l8 26-9-5-6 6-6-21z" fill="' + c.cinta + '"/>' +
       '<circle cx="32" cy="30" r="25" fill="' + c.fondo + '" stroke="' + c.borde + '" stroke-width="4"/>' +
-      '<circle cx="32" cy="30" r="18" fill="none" stroke="' + c.borde + '" stroke-width="1.5" stroke-dasharray="3 3"/>' +
-      '<g fill="' + c.borde + '">' + estrellas + '</g>' +
-    '</svg>';
+      '<circle cx="32" cy="30" r="18.5" fill="none" stroke="' + c.borde + '" stroke-width="1.6" opacity=".55"/>' +
+      '<path d="M15 23a18 18 0 0 1 12-10" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".6"/>' +
+      '<path d="M26.5 28v-3.5a5.5 5.5 0 0 1 11 0V28" fill="none" stroke="' + c.borde + '" stroke-width="3" stroke-linecap="round"/>' +
+      '<rect x="23" y="27.5" width="18" height="13" rx="3.5" fill="' + c.borde + '"/>' +
+      '<circle cx="32" cy="33" r="2" fill="' + c.fondo + '"/><path d="M32 34.5v2.8" stroke="' + c.fondo + '" stroke-width="1.8" stroke-linecap="round"/>' +
+    '</g></svg>';
   }
   function insigniaEstado(i) {
     var p = progresoInsignia(i);
@@ -1234,7 +1232,7 @@
         return '<li class="' + (hecha ? "is-hecha" : "") + '"><span class="sr-only">Sala ' + s.id + ': ' + (hecha ? "resuelta" : "pendiente") + '</span></li>';
       }).join("");
       return '<li class="insignia' + (ganada ? " is-ganada" : "") + '" data-tier="' + i + '">' + insigniaSVG(i, ganada, "insignia__img") +
-        '<div class="insignia__txt"><h3 class="insignia__t">' + esc(T.insignia_nombre.replace("{d}", nombre)) + '</h3>' +
+        '<div class="insignia__txt"><h3 class="insignia__t">' + esc(T.insignia_nombre.replace("{m}", dif.metal.toLowerCase())) + '</h3>' +
           '<p class="insignia__estado">' + (ganada ? ic("j-check") : "") + esc(insigniaEstado(i)) + '</p>' +
           '<p class="insignia__d">' + esc(T.insignia_desc.replace("{d}", nombre)) + '</p>' +
           '<ol class="insignia__salas" aria-label="' + esc(T.insignia_salas.replace("{d}", nombre)) + '">' + salas + '</ol>' +
@@ -1282,10 +1280,11 @@
       g.fillStyle = "#f4f3fa"; g.font = "700 60px " + fuente; g.fillText(T.insignias_imagen_t, 80, 156);
       V.dificultades.forEach(function (d, i) {
         var cx = 260 + i * 340, ganada = progresoInsignia(i) === TOTAL;
-        g.drawImage(imgs[i], cx - 96, 210, 192, 216);
+        g.drawImage(imgs[i], cx - 88, 196, 176, 198);
         g.textAlign = "center";
-        g.fillStyle = "#f4f3fa"; g.font = "700 34px " + fuente; g.fillText(d.nombre, cx, 478);
-        g.fillStyle = ganada ? "#f6c94e" : "#b9b8c6"; g.font = "500 26px " + cuerpo; g.fillText(insigniaEstado(i), cx, 518);
+        g.fillStyle = "#f4f3fa"; g.font = "700 34px " + fuente; g.fillText(d.metal, cx, 448);
+        g.fillStyle = "#b9b8c6"; g.font = "500 22px " + cuerpo; g.fillText(T.insignia_version.replace("{d}", d.nombre.toLowerCase()), cx, 482);
+        g.fillStyle = ganada ? "#f6c94e" : "#b9b8c6"; g.font = "600 24px " + cuerpo; g.fillText(insigniaEstado(i), cx, 520);
         g.textAlign = "left";
       });
       g.fillStyle = "#8f8ea0"; g.font = "500 22px " + cuerpo;

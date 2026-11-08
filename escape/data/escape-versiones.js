@@ -7,9 +7,9 @@
    Todos los montos, tasas, nombres y dominios son ficticios. Reglas de estilo: voseo y sin rayas largas. */
 window.ESC_VERSIONES = {
   dificultades: [
-    { id: "inicial", nombre: "Inicial" },
-    { id: "intermedia", nombre: "Intermedia" },
-    { id: "avanzada", nombre: "Avanzada" }
+    { id: "inicial", nombre: "Inicial", metal: "Bronce" },
+    { id: "intermedia", nombre: "Intermedia", metal: "Plata" },
+    { id: "avanzada", nombre: "Avanzada", metal: "Oro" }
   ],
 
   /* Palabra de la puerta final: una al azar por partida.
