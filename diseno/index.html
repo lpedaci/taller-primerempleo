@@ -19,7 +19,7 @@
 </script>
 <style>
 /* Página de documentación para el portfolio: usa los tokens del sitio y del escape room */
-.ds { padding: calc(var(--top-h) + 2rem) 0 var(--sec); }
+.ds { padding: calc(var(--top-h) + 2rem) 0 0; }
 .ds section { scroll-margin-top: calc(var(--top-h) + 1.5rem); }
 .ds-hero {
   display: grid;
@@ -51,7 +51,7 @@
 .ds-hero h1 em { font-style: normal; background: linear-gradient(transparent 60%, var(--t3) 60%, var(--t3) 92%, transparent 92%); }
 :root[data-theme="dark"] .ds-hero h1 em { background: none; color: var(--t3); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ds-hero h1 em { background: none; color: var(--t3); } }
-.ds-lead { max-width: 60ch; margin: 0 0 1.25rem; color: var(--muted); font-size: 1.08rem; line-height: 1.55; }
+.ds-lead { max-width: none; margin: 0 0 1.25rem; color: var(--muted); font-size: 1.08rem; line-height: 1.55; }
 .ds-roles { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
 .ds-roles li { padding: 0.35rem 0.85rem; border: 1px solid var(--rule); border-radius: 999px; font-family: var(--display); font-weight: 500; font-size: 0.9rem; }
 .ds-indice h2 { margin: 0 0 0.9rem; font-size: 1.1rem; }
@@ -64,7 +64,7 @@
 .ds-indice a:hover { background: var(--deep-soft); }
 .ds-sec { margin-top: clamp(3rem, 7vw, 5rem); }
 .ds-sec > h2 { margin: 0 0 0.5rem; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.02em; }
-.ds-sec > p { max-width: 70ch; margin: 0 0 1.75rem; color: var(--muted); line-height: 1.6; }
+.ds-sec > p { max-width: none; margin: 0 0 1.75rem; color: var(--muted); line-height: 1.6; }
 .ds-sub { margin: 2.75rem 0 1rem; font-size: 1.2rem; }
 .ds-grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .ds-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
@@ -103,7 +103,7 @@
 /* Componentes */
 .ds-comp { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
 .ds-comp + .ds-comp { margin-top: 1rem; }
-.ds-nota, .ds-sec > p.ds-nota { max-width: 72ch; margin: 1.6rem 0 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+.ds-nota, .ds-sec > p.ds-nota { max-width: none; margin: 1.6rem 0 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
 .ds-nota .fuerte-mini { vertical-align: middle; }
 /* Personaje e insignias */
 .ds-fuertes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
@@ -125,12 +125,13 @@
 .ds-ok { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.1rem 0.6rem; border-radius: 999px; background: var(--yes-soft); color: var(--yes); font-family: var(--display); font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
 .ds-fix { background: var(--l2-soft); color: var(--ink); }
 .ds-tabla-wrap { overflow-x: auto; border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); }
-.ds-lista { max-width: 72ch; margin: 0; padding-left: 1.2rem; line-height: 1.65; }
+.ds-lista { max-width: none; margin: 0; padding-left: 1.2rem; line-height: 1.65; }
 .ds-lista li + li { margin-top: 0.35rem; }
 .ds-grid3 .ds-card p { margin: 0; line-height: 1.6; color: var(--muted); }
 .ds-grid3 .ds-sub { margin-bottom: 0.75rem; }
 .ds-arbol li { margin: 0.45rem 0; }
-.ds-pie { margin-top: var(--sec); color: var(--muted); font-size: 0.9rem; }
+.ds-foot { margin-top: var(--sec); }
+.ds-pie-x { margin-top: var(--sec); color: var(--muted); font-size: 0.9rem; }
 @media (max-width: 1023px) {
   .ds-hero, .ds-grid3 { grid-template-columns: minmax(0, 1fr); }
   .ds-flujo { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -153,6 +154,10 @@
 <symbol id="i-moon" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256S114.6 512 256 512c68.8 0 131.3-27.2 177.3-71.4 7.3-7 9.4-17.9 5.3-27.1s-13.7-14.9-23.8-14.1c-4.9 .4-9.8 .6-14.8 .6-101.6 0-184-82.4-184-184 0-72.1 41.5-134.6 102.1-164.8 9.1-4.5 14.3-14.3 13.1-24.4S322.6 8.5 312.7 6.3C294.4 2.2 275.4 0 256 0z"/></symbol>
 <symbol id="i-sun" viewBox="0 0 576 512"><path fill="currentColor" d="M288-32c8.4 0 16.3 4.4 20.6 11.7L364.1 72.3 468.9 46c8.2-2 16.9 .4 22.8 6.3S500 67 498 75.1l-26.3 104.7 92.7 55.5c7.2 4.3 11.7 12.2 11.7 20.6s-4.4 16.3-11.7 20.6L471.7 332.1 498 436.8c2 8.2-.4 16.9-6.3 22.8S477 468 468.9 466l-104.7-26.3-55.5 92.7c-4.3 7.2-12.2 11.7-20.6 11.7s-16.3-4.4-20.6-11.7L211.9 439.7 107.2 466c-8.2 2-16.8-.4-22.8-6.3S76 445 78 436.8l26.2-104.7-92.6-55.5C4.4 272.2 0 264.4 0 256s4.4-16.3 11.7-20.6L104.3 179.9 78 75.1c-2-8.2 .3-16.8 6.3-22.8S99 44 107.2 46l104.7 26.2 55.5-92.6 1.8-2.6c4.5-5.7 11.4-9.1 18.8-9.1zm0 144a144 144 0 1 0 0 288 144 144 0 1 0 0-288zm0 240a96 96 0 1 1 0-192 96 96 0 1 1 0 192z"/></symbol>
 <symbol id="i-lock" viewBox="0 0 448 512"><path fill="currentColor" d="M144 144v48h160v-48a80 80 0 1 0-160 0zm-64 48v-48a144 144 0 1 1 288 0v48h16a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V256a64 64 0 0 1 64-64h16z"/></symbol>
+<symbol id="i-linkedin-logo-fill" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z"/></symbol>
+<symbol id="i-chalkboard-teacher" viewBox="0 0 640 512"><path fill="currentColor" d="M192 384c53 0 96 43 96 96 0 17.7-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32 0-53 43-96 96-96l96 0zM544 32c35.3 0 64 28.7 64 64l0 288c0 33.1-25.2 60.4-57.5 63.7l-6.5 .3-211.1 0c-5.1-24.2-16.3-46.1-32.1-64l51.2 0 0-32c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32l0 32 32 0 0-288-352 0 0 57.3c-14.8-6-31-9.3-48-9.3-5.4 0-10.8 .3-16 1l0-49c0-35.3 28.7-64 64-64l352 0zM144 352a80 80 0 1 1 0-160 80 80 0 1 1 0 160z"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 109.3 160 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></symbol>
+<symbol id="i-arrow-square-out" viewBox="0 0 512 512"><path fill="currentColor" d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0-201.4 201.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3 448 192c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 96C35.8 96 0 131.8 0 176L0 432c0 44.2 35.8 80 80 80l256 0c44.2 0 80-35.8 80-80l0-80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 80c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l80 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 96z"/></symbol>
 <symbol id="j-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 <symbol id="j-flecha" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></g></symbol>
 </svg>
@@ -174,9 +179,9 @@
 
     <div class="ds-hero">
       <section class="ds-card" aria-labelledby="ds-t">
-        <p class="ds-kicker">Caso de estudio | Documentación de diseño</p>
+        <p class="ds-kicker">Documentación de diseño</p>
         <h1 id="ds-t">Del aula al <em>primer trabajo</em></h1>
-        <p class="ds-lead">Mapa del sitio y design system del taller de inserción laboral y de su escape room de finanzas, <b>Tu primer sueldo</b>. Reúne la arquitectura de la información, los tokens, los componentes, el personaje, la capa de gamificación y el análisis de UX/UI, accesibilidad y QA.</p>
+        <p class="ds-lead">Cómo está organizado el sitio del taller de inserción laboral y su escape room de finanzas, <b>Tu primer sueldo</b>: la estructura de páginas, los colores, la tipografía, los componentes, el personaje, la capa de juego y la revisión de UX/UI, accesibilidad y QA.</p>
         <ul class="ds-roles" aria-label="Roles">
           <li>Desarrollo web</li>
           <li>Diseño UX/UI</li>
@@ -200,7 +205,7 @@
     <!-- 1. Mapa del sitio -->
     <section class="ds-sec" id="mapa" aria-labelledby="mapa-t">
       <h2 id="mapa-t">Mapa del sitio</h2>
-      <p>Dos productos que comparten design system: una página única con el recorrido del taller y una página propia para el escape room. El juego no es una parada del mapa, para no romper las dos líneas de una hora; se entra desde los apartados que trabaja.</p>
+      <p>Son dos productos con el mismo design system: una página única con el recorrido del taller y una página aparte para el escape room. El juego no es una parada del mapa, para no romper las dos líneas de una hora; se llega desde los apartados del recibo y de finanzas.</p>
       <div class="ds-grid2">
         <div class="ds-card">
           <h3 class="ds-sub" style="margin-top:0">Sitio del taller <span class="ds-pastilla">/</span></h3>
@@ -276,7 +281,7 @@
     <!-- 2. Flujo -->
     <section class="ds-sec" id="flujo" aria-labelledby="flujo-t">
       <h2 id="flujo-t">Flujo del escape room</h2>
-      <p>Diseño instruccional en seis momentos: activar lo que se sabe, practicar con error productivo, explicar, transferir y volver a medir. Duración: 30 a 35 minutos de juego y 10 de puesta en común.</p>
+      <p>La secuencia didáctica tiene seis momentos: medir lo que se sabe, explorar, resolver con pistas y mensajes que explican el error, cerrar con lo aprendido y volver a medir. Dura entre 30 y 35 minutos, más 10 de puesta en común.</p>
       <ol class="ds-flujo">
         <li><b>Autoevaluación</b><span>Cinco frases con escala de 1 a 4, antes de entrar.</span></li>
         <li><b>Inspeccionar</b><span>Objetos hechos en HTML: recibo, folletos, celular.</span></li>
@@ -290,7 +295,7 @@
     <!-- 3. Design system del taller -->
     <section class="ds-sec" id="taller" aria-labelledby="taller-t">
       <h2 id="taller-t">Design system del taller</h2>
-      <p>Tokens en <code>:root</code> de <code>assets/styles.css</code>, redefinidos para el tema oscuro. Cada muestra lee su valor en vivo: cambiá el tema arriba a la derecha para ver la otra paleta.</p>
+      <p>Los tokens están en <code>:root</code> de <code>assets/styles.css</code> y se redefinen para el tema oscuro. Cada muestra lee el valor en vivo: con el botón de arriba a la derecha se ve la otra paleta.</p>
 
       <h3 class="ds-sub">Superficies y texto</h3>
       <ul class="ds-swatches" data-tokens="--bg:Fondo|--surface:Superficie|--surface-2:Superficie 2|--ink:Texto|--muted:Texto secundario|--rule:Líneas|--deep:Carbón|--on-deep:Sobre carbón"></ul>
@@ -337,7 +342,7 @@
     <!-- 4. Design system del escape room -->
     <section class="ds-sec" id="juego" aria-labelledby="juego-t">
       <h2 id="juego-t">Design system del escape room</h2>
-      <p>Una capa de gamificación sobre el mismo sistema: tokens propios (<code>--juego-*</code>), iconografía de juego, un personaje y medallas. Está pensada para reutilizarse en otros apartados.</p>
+      <p>La capa de juego se apoya en el mismo sistema y suma tokens propios (<code>--juego-*</code>), íconos de juego, un personaje y medallas. Está armada para poder reutilizarla en otros apartados.</p>
 
       <h3 class="ds-sub">Tokens de la capa de juego</h3>
       <ul class="ds-swatches" data-tokens="--juego:Juego|--juego-soft:Juego suave|--juego-metal:Latón|--esc-boton:Botón del juego|--esc-ok:Candado abierto"></ul>
@@ -347,7 +352,7 @@
       <p class="ds-nota">Los tonos del taller, sin los verdes: en el sistema, el verde es el color de afirmación y el de Finanzas personales.</p>
 
       <h3 class="ds-sub">Fuerte, el personaje</h3>
-      <p class="ds-nota" style="margin:0 0 1.75rem">Una caja fuerte de metal anodizado naranja, con visor, cejas, perilla de combinación y cinco luces, una por candado abierto. Une las dos ideas del juego: cerraduras y guardar la plata. Sigue el cursor cuando está tranquilo, se cohíbe si lo descubrís mirando y reacciona a cada intento.</p>
+      <p class="ds-nota" style="margin:0 0 1.75rem">Una caja fuerte de metal anodizado naranja, con visor, cejas, perilla de combinación y cinco luces, una por candado abierto. Junta las dos ideas del juego: abrir cerraduras y guardar la plata. Cuando está tranquilo sigue el cursor, si lo descubrís mirando se hace el distraído y reacciona a cada intento.</p>
       <ul class="ds-fuertes">
         <li><svg class="fuerte ds-fuerte" data-expr="normal" data-nivel="1" viewBox="0 0 164 150" aria-hidden="true" focusable="false"><defs><linearGradient id="fu1c" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#ffd9b3"/><stop offset=".16" stop-color="#f8a35a"/><stop offset=".42" stop-color="#df762b"/><stop offset=".52" stop-color="#f6a463"/><stop offset=".6" stop-color="#e5823a"/><stop offset=".85" stop-color="#b85a1c"/><stop offset="1" stop-color="#8f420f"/></linearGradient><linearGradient id="fu1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".38"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".68" stop-color="#fff" stop-opacity=".14"/><stop offset=".74" stop-color="#fff" stop-opacity="0"/></linearGradient><radialGradient id="fu1m" cx="35%" cy="30%" r="75%"><stop class="ch__st-metal-luz" offset="0"/><stop class="ch__st-metal" offset=".6"/><stop class="ch__st-metal-sombra" offset="1"/></radialGradient><pattern id="fu1t" width="4" height="2.4" patternUnits="userSpaceOnUse"><path class="ch__punto" d="M0 .6h4"/><path class="ch__punto ch__punto--osc" d="M0 1.8h4"/></pattern></defs><ellipse class="ch__sombra" cx="80" cy="143" rx="50" ry="5"/><g class="ch__g"><g class="ch__destellos"><path d="M148 12l5-8M156 26l8-3M136 6l1-8"/></g><rect class="ch__bisagra" x="11" y="42" width="15" height="20" rx="7" fill="url(#fu1m)"/><rect class="ch__bisagra" x="11" y="92" width="15" height="20" rx="7" fill="url(#fu1m)"/><rect class="ch__cuerpo" x="20" y="16" width="120" height="122" rx="46" fill="url(#fu1c)"/><rect class="ch__tejido" x="20" y="16" width="120" height="122" rx="46" fill="url(#fu1t)"/><rect class="ch__reflejo-metal" x="20" y="16" width="120" height="122" rx="46" fill="url(#fu1b)"/><rect class="ch__puerta" x="29" y="25" width="102" height="104" rx="38"/><rect class="ch__visor" x="36" y="44" width="88" height="50" rx="25"/><path class="ch__brillo" d="M45 60c2-6 7-9.5 13-10.5"/><g class="ch__ojos ch__ojos--abiertos"><g class="ch__mirada"><circle class="ch__ojo" cx="63" cy="69" r="11"/><circle class="ch__ojo" cx="97" cy="69" r="11"/><g class="ch__pupilas"><circle class="ch__muesca" cx="63" cy="70" r="5.6"/><circle class="ch__muesca" cx="97" cy="70" r="5.6"/><circle class="ch__reflejo" cx="61" cy="67.6" r="1.7"/><circle class="ch__reflejo" cx="95" cy="67.6" r="1.7"/></g></g></g><g class="ch__cejas"><path class="ch__ceja ch__ceja--izq" d="M55.5 53.5q7.5-4.2 15 -0.6"/><path class="ch__ceja ch__ceja--der" d="M89.5 52.9q7.5-3.6 15 0.6"/></g><g class="ch__ojos ch__ojos--felices"><path class="ch__estrella" d="M63 57l3.4 8.6 8.6 3.4-8.6 3.4-3.4 8.6-3.4-8.6-8.6-3.4 8.6-3.4zM97 57l3.4 8.6 8.6 3.4-8.6 3.4-3.4 8.6-3.4-8.6-8.6-3.4 8.6-3.4z"/></g><rect class="ch__panel" x="47" y="104" width="66" height="14" rx="7"/><circle class="ch__luz is-on" cx="56" cy="111" r="4"/><circle class="ch__luz" cx="68" cy="111" r="4"/><circle class="ch__luz" cx="80" cy="111" r="4"/><circle class="ch__luz" cx="92" cy="111" r="4"/><circle class="ch__luz" cx="104" cy="111" r="4"/><g class="ch__dial-g"><circle class="ch__dial-aro" cx="141" cy="78" r="16" fill="url(#fu1m)"/><circle class="ch__dial" cx="141" cy="78" r="9.5"/><path class="ch__dial-marca" d="M141 70.5v5"/></g></g></svg><span>Normal</span></li>
         <li><svg class="fuerte ds-fuerte" data-expr="feliz" data-nivel="5" viewBox="0 0 164 150" aria-hidden="true" focusable="false"><defs><linearGradient id="fu2c" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#ffd9b3"/><stop offset=".16" stop-color="#f8a35a"/><stop offset=".42" stop-color="#df762b"/><stop offset=".52" stop-color="#f6a463"/><stop offset=".6" stop-color="#e5823a"/><stop offset=".85" stop-color="#b85a1c"/><stop offset="1" stop-color="#8f420f"/></linearGradient><linearGradient id="fu2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".38"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".68" stop-color="#fff" stop-opacity=".14"/><stop offset=".74" stop-color="#fff" stop-opacity="0"/></linearGradient><radialGradient id="fu2m" cx="35%" cy="30%" r="75%"><stop class="ch__st-metal-luz" offset="0"/><stop class="ch__st-metal" offset=".6"/><stop class="ch__st-metal-sombra" offset="1"/></radialGradient><pattern id="fu2t" width="4" height="2.4" patternUnits="userSpaceOnUse"><path class="ch__punto" d="M0 .6h4"/><path class="ch__punto ch__punto--osc" d="M0 1.8h4"/></pattern></defs><ellipse class="ch__sombra" cx="80" cy="143" rx="50" ry="5"/><g class="ch__g"><g class="ch__destellos"><path d="M148 12l5-8M156 26l8-3M136 6l1-8"/></g><rect class="ch__bisagra" x="11" y="42" width="15" height="20" rx="7" fill="url(#fu2m)"/><rect class="ch__bisagra" x="11" y="92" width="15" height="20" rx="7" fill="url(#fu2m)"/><rect class="ch__cuerpo" x="20" y="16" width="120" height="122" rx="46" fill="url(#fu2c)"/><rect class="ch__tejido" x="20" y="16" width="120" height="122" rx="46" fill="url(#fu2t)"/><rect class="ch__reflejo-metal" x="20" y="16" width="120" height="122" rx="46" fill="url(#fu2b)"/><rect class="ch__puerta" x="29" y="25" width="102" height="104" rx="38"/><rect class="ch__visor" x="36" y="44" width="88" height="50" rx="25"/><path class="ch__brillo" d="M45 60c2-6 7-9.5 13-10.5"/><g class="ch__ojos ch__ojos--abiertos"><g class="ch__mirada"><circle class="ch__ojo" cx="63" cy="69" r="11"/><circle class="ch__ojo" cx="97" cy="69" r="11"/><g class="ch__pupilas"><circle class="ch__muesca" cx="63" cy="70" r="5.6"/><circle class="ch__muesca" cx="97" cy="70" r="5.6"/><circle class="ch__reflejo" cx="61" cy="67.6" r="1.7"/><circle class="ch__reflejo" cx="95" cy="67.6" r="1.7"/></g></g></g><g class="ch__cejas"><path class="ch__ceja ch__ceja--izq" d="M55.5 53.5q7.5-4.2 15 -0.6"/><path class="ch__ceja ch__ceja--der" d="M89.5 52.9q7.5-3.6 15 0.6"/></g><g class="ch__ojos ch__ojos--felices"><path class="ch__estrella" d="M63 57l3.4 8.6 8.6 3.4-8.6 3.4-3.4 8.6-3.4-8.6-8.6-3.4 8.6-3.4zM97 57l3.4 8.6 8.6 3.4-8.6 3.4-3.4 8.6-3.4-8.6-8.6-3.4 8.6-3.4z"/></g><rect class="ch__panel" x="47" y="104" width="66" height="14" rx="7"/><circle class="ch__luz is-on" cx="56" cy="111" r="4"/><circle class="ch__luz is-on" cx="68" cy="111" r="4"/><circle class="ch__luz is-on" cx="80" cy="111" r="4"/><circle class="ch__luz is-on" cx="92" cy="111" r="4"/><circle class="ch__luz is-on" cx="104" cy="111" r="4"/><g class="ch__dial-g"><circle class="ch__dial-aro" cx="141" cy="78" r="16" fill="url(#fu2m)"/><circle class="ch__dial" cx="141" cy="78" r="9.5"/><path class="ch__dial-marca" d="M141 70.5v5"/></g></g></svg><span>Feliz</span></li>
@@ -381,7 +386,7 @@
     <!-- 5. Análisis -->
     <section class="ds-sec" id="analisis" aria-labelledby="analisis-t">
       <h2 id="analisis-t">Análisis UX/UI, accesibilidad y QA</h2>
-      <p>Revisión del sitio, del escape room y de las dos páginas 404, en tema claro y oscuro, a 1700, 1366, 1024, 768 y 375 px. Las pruebas se hicieron en el navegador con scripts de verificación y recorridos manuales.</p>
+      <p>Se revisaron el sitio, el escape room y las dos páginas 404, en tema claro y oscuro, a 1700, 1366, 1024, 768 y 375 px de ancho. Las pruebas se hicieron en el navegador, con scripts de verificación y recorridos a mano.</p>
       <div class="ds-tabla-wrap">
         <table class="ds-tabla">
           <thead><tr><th scope="col">Aspecto</th><th scope="col">Qué se revisó</th><th scope="col">Resultado</th></tr></thead>
@@ -421,14 +426,44 @@
         </div>
         <div class="ds-card">
           <h3 class="ds-sub" style="margin-top:0">Rejugar sin memorizar</h3>
-          <p>Cada sala tiene tres versiones y la palabra final cambia por partida. Las insignias de bronce, plata y oro motivan a volver a jugar las salas en otra dificultad en lugar de repetir un único camino.</p>
+          <p>Cada sala tiene tres versiones y la palabra final cambia en cada partida. Las insignias de bronce, plata y oro invitan a volver a jugar las salas en otra dificultad, en lugar de repetir siempre el mismo camino.</p>
         </div>
       </div>
-      <p class="ds-pie">Taller "Del aula al primer trabajo" | Contenido de finanzas: Lic. Kevin Giampieri | Desarrollo web, diseño UX/UI, gamificación y diseño instruccional: Lic. Lourdes Pedaci.</p>
     </section>
 
   </div>
 </main>
+
+<footer class="esc-foot ds-foot">
+  <div class="wrap">
+    <div class="esc-foot__in">
+      <div class="esc-foot__col">
+        <p class="esc-foot__t">Mapa y design system</p>
+        <p class="esc-foot__desc">Documentación de diseño del taller Del aula al primer trabajo y del escape room Tu primer sueldo.</p>
+      </div>
+      <div class="esc-foot__col">
+        <h2 class="esc-foot__k">Créditos</h2>
+        <ul class="esc-foot__lista">
+          <li><small>Contenido de finanzas</small><strong>Lic. Kevin Giampieri</strong></li>
+          <li><small>Desarrollo web, diseño UX/UI, gamificación y diseño instruccional</small><strong>Lic. Lourdes Pedaci</strong></li>
+        </ul>
+      </div>
+      <div class="esc-foot__col">
+        <h2 class="esc-foot__k">Docentes del taller</h2>
+        <ul class="esc-foot__lista">
+          <li class="esc-foot__persona"><span class="esc-foot__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin-logo-fill"/></svg></span><a href="https://www.linkedin.com/in/lourdes-pedaci/" target="_blank" rel="noopener noreferrer">Lic. Lourdes Pedaci<svg class="ic esc-foot__ext" aria-hidden="true" focusable="false"><use href="#i-arrow-square-out"/></svg><span class="sr-only"> (perfil de LinkedIn, se abre en una pestaña nueva)</span></a></li>
+          <li class="esc-foot__persona"><span class="esc-foot__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin-logo-fill"/></svg></span><a href="https://www.linkedin.com/in/julieta-taraborrelli-7bb06767/" target="_blank" rel="noopener noreferrer">Lic. Julieta Taraborrelli<svg class="ic esc-foot__ext" aria-hidden="true" focusable="false"><use href="#i-arrow-square-out"/></svg><span class="sr-only"> (perfil de LinkedIn, se abre en una pestaña nueva)</span></a></li>
+          <li class="esc-foot__persona"><span class="esc-foot__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chalkboard-teacher"/></svg></span><span>Lic. Bettyna González</span></li>
+        </ul>
+      </div>
+      <nav class="esc-foot__col esc-foot__links" aria-label="Pie de página">
+        <a href="../"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg>Ver el taller</a>
+        <a href="../escape/"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>Ver el escape room</a>
+        <a href="#top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg>Volver al inicio</a>
+      </nav>
+    </div>
+  </div>
+</footer>
 <script>
 (function () {
   var root = document.documentElement, btn = document.getElementById("theme-btn");
