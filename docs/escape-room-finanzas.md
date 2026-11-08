@@ -27,6 +27,7 @@ El repositorio es público, así que este documento no incluye las respuestas de
   - **Recibo de sueldo:** una franja al final del apartado que invita a la Sala 1.
   - **Finanzas personales:** un banner al cierre del apartado, después de la actividad, con Fuerte animado.
 - **Volver al taller:** solo desde el panel principal del juego (flecha de la barra superior, en pestaña nueva). Dentro de las salas, la barra lleva al panel.
+- **Documentación de diseño:** `diseno/index.html` muestra el mapa del sitio, el design system del taller y del juego, a Fuerte, las insignias y la revisión de accesibilidad. Se llega desde un banner al principio de Referencias, en el sitio. Fuerte y las insignias de esa página son copias del código del juego: si cambian, hay que volver a generarlas.
 - **Página de error:** si una dirección dentro de `escape/` no existe, la `404.html` del sitio muestra su versión del juego: la gatita del taller duerme arriba de Fuerte, con el pie de página del escape room.
 
 ---

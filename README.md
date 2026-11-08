@@ -25,6 +25,7 @@ Está desarrollado con HTML, CSS y JavaScript sin frameworks ni proceso de compi
 - **Accesibilidad:** HTML semántico, enlace para saltar al contenido, estados anunciados a lectores de pantalla, foco visible y respeto por la preferencia de movimiento reducido. El escape room sigue las pautas WCAG 2.2 AA.
 - **Animaciones explicativas:** tres composiciones HyperFrames (lectura de un ATS, titular de LinkedIn y método STAR) incrustadas en vivo, que heredan el tema del sitio.
 - **Gamificación:** un escape room de finanzas con su propia capa visual, un personaje, niveles e insignias (ver más abajo).
+- **Documentación de diseño:** una página aparte (`diseno/`), con acceso desde un banner al principio de Referencias, que muestra el mapa del sitio, el design system del taller y del escape room, el personaje, las insignias, la revisión de UX/UI, accesibilidad y QA, y las decisiones de diseño.
 - **Páginas 404 con personaje:** la gatita del taller duerme en la 404 del sitio y, si la ruta perdida está dentro del escape room, duerme arriba de Fuerte.
 
 ## Créditos
@@ -87,6 +88,7 @@ escape/escape.js               Lógica del juego: salas, versiones, insignias y 
 escape/data/escape-finanzas.js Textos y contenido de las salas (versión inicial)
 escape/data/escape-versiones.js Versiones intermedia y avanzada, y palabras de la puerta final
 escape/data/escape-economia.js Llaves, costo de las pistas y sellos
+diseno/index.html              Documentación de diseño: mapa del sitio y design system
 docs/                          Documentación del escape room
 videos/<nombre>/               Composiciones HyperFrames: ats, linkedin, star
 videos/_shared/                Base común de las composiciones (mg.css, mg-embed.js, gsap)
