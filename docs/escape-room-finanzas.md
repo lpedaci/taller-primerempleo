@@ -28,6 +28,7 @@ El repositorio es público, así que este documento no incluye las respuestas de
   - **Finanzas personales:** un banner al cierre del apartado, después de la actividad, con Fuerte animado.
 - **Volver al taller:** solo desde el panel principal del juego (flecha de la barra superior, en pestaña nueva). Dentro de las salas, la barra lleva al panel.
 - **Documentación de diseño:** `diseno/index.html` muestra el mapa del sitio, el design system del taller y del juego, a Fuerte, las insignias y la revisión de accesibilidad. Se llega desde un banner al principio de Referencias, en el sitio. Fuerte y las insignias de esa página son copias del código del juego: si cambian, hay que volver a generarlas.
+- **Tarjeta para compartir:** `assets/img/og-escape.png` (1200 × 630), con las etiquetas Open Graph y de Twitter en `escape/index.html`. Sigue el bento de la tarjeta del sitio: a la izquierda el título y las cinco salas con sus colores, a la derecha Fuerte en la vitrina oscura con su globo. Si Fuerte o los colores de las salas cambian, hay que volver a generarla.
 - **Página de error:** si una dirección dentro de `escape/` no existe, la `404.html` del sitio muestra su versión del juego: la gatita del taller duerme arriba de Fuerte, con el pie de página del escape room.
 
 ---
@@ -178,6 +179,7 @@ escape/escape.js                Lógica: salas, versiones, puerta, insignias, Fu
 escape/data/escape-finanzas.js  Textos, autoevaluación, personaje y salas en versión inicial
 escape/data/escape-versiones.js Dificultades, palabras de la puerta y versiones intermedia y avanzada
 escape/data/escape-economia.js  Llaves, pistas y sellos
+assets/img/og-escape.png        Tarjeta para compartir el escape room
 404.html                        Página de error del sitio, con la versión del escape room
 ```
 

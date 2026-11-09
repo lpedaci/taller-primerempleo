@@ -71,6 +71,8 @@ Una actividad de 30 a 35 minutos, aparte de las dos horas del taller, pensada de
 - **Modo simple:** con `?modo=simple` en la dirección, las mismas preguntas se responden como cuestionario, sin la capa de juego.
 - **Privacidad:** el avance y las insignias se guardan solo en el navegador (`localStorage`); no se envía nada a ningún servidor.
 
+El escape room tiene su propia tarjeta para compartir en redes (`assets/img/og-escape.png`), así el enlace muestra a Fuerte y las cinco salas en lugar de la tarjeta del taller.
+
 Todos los montos, tasas, nombres y dominios del juego son ficticios. La documentación de diseño y contenido está en [`docs/escape-room-finanzas.md`](docs/escape-room-finanzas.md).
 
 ## Estructura de archivos
